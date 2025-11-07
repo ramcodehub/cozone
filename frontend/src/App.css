@@ -4,5 +4,6 @@
   box-sizing: border-box;
 }
 body{
-  font-family: 'Satoshi', sans-serif;;
+  font-family: 'Satoshi', sans-serif;
+  background: var(--off-white);
 }
