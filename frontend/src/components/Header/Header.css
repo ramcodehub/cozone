@@ -1,16 +1,25 @@
 .header {
-  height: 70px;
   box-sizing: border-box;
-  padding: 1.4rem 3rem;
+  padding: 1rem 3rem;
   z-index: 70;
+  transition: transform 0.5s ease-in-out, background-color 0.3s ease;
+
 }
 .fixed-header {
-  background-color: #000000;
+  background-color: #ffffff;
   box-shadow: 0 0 20px #181818;
   transition: 0.3s ease;
 }
+.header-hide {
+  transform: translateY(-120%);
+}
+
+.header-show {
+  transform: translateY(0);
+}
+
 .header img {
-  height: 70px;
+  height: 60px;
 }
 
 .header-nav > ul {
