@@ -37,3 +37,9 @@
 .card-two:hover img {
   transform: scale(1.1); 
 }
+
+@media (min-width: 1440px) {
+    .card-two {
+        width: 400px;       
+    }
+}
