@@ -36,7 +36,7 @@ const WhyChooseUs = () => {
       <div className="container">
         <div className="d-flex align-tems-center justify-content-center row g-4">
         {features.map((item, index) => (
-            <div className="col-md-4" key={index}>
+            <div className=" col-md-6 col-lg-6 col-xl-4" key={index}>
             <div className="feature-card">
                 <div className="circle">
                 <i className={item.icon}></i>

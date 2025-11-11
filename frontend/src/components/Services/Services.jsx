@@ -43,7 +43,7 @@ const Services = () => {
             <div className='image-wrapper'>
             <img src={Service} alt={service.title} />
             </div>
-            <div className='w-100 card-two-content pt-2 pb-4 px-2'>
+            <div className='w-100 card-two-content p-2'>
               <h3>{service.title}</h3>
               <p>{service.desc}</p>
               <Button variant="primary" icon={<i className="bi bi-arrow-right"></i>}>

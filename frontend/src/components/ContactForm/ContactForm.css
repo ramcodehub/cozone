@@ -1,0 +1,129 @@
+/* MAIN GRID LAYOUT */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+/* LEFT IMAGE */
+.left-image {
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.left-overlay {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(255,255,255,0.05), rgba(255,255,255,0.05));
+}
+
+/* RIGHT FORM */
+.right-form {
+  padding: 48px 32px;  /* ✅ reduced horizontal padding */
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;         /* ✅ full width */
+  margin: 0;           /* ✅ remove centering */
+  box-sizing: border-box;
+}
+
+.right-form h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.right-form .lead {
+  color: #444;
+  margin-bottom: 26px;
+  font-size: 15px;
+}
+
+/* FORM */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact-form .row {
+    margin: 0;
+  display: flex;
+  gap: 16px;
+}
+
+.contact-form .row input {
+  flex: 1;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #d7d7d7;
+  border-radius: 6px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.15s ease;
+  box-sizing: border-box;
+}
+
+textarea {
+  margin-top: 4px;
+  resize: vertical; /* keep it clean */
+}
+
+input:focus,
+textarea:focus {
+  border-color: #000;
+}
+
+/* SUBMIT ROW */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.submit-btn {
+  background: #002c6a; /* navy */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submit-btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* STATUS MESSAGE */
+.status.success { color: green; }
+.status.error { color: #c0392b; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .left-image {
+    height: 260px;
+  }
+
+  .right-form {
+    padding: 28px;
+  }
+
+  .contact-form .row {
+    flex-direction: column;
+  }
+}

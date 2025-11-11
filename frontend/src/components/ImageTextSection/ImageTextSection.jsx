@@ -14,7 +14,6 @@ const ImageTextSection = ({
           reverse ? "flex-md-row-reverse" : ""
         }`}
       >
-        {/* Image Section (60%) */}
         <div className="col-12 col-md-7 mb-3 mb-md-0">
           <img
             src={image}
@@ -24,7 +23,7 @@ const ImageTextSection = ({
           />
         </div>
 
-        {/* Text Section (40%) */}
+
         <div className="col-12 col-md-5">
           <div className={`${reverse ? "pe-md-4" : "ps-md-4"}`}>
             <h1 className="fw-bold">{title}</h1>
