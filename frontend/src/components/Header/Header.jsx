@@ -13,10 +13,8 @@ const Header = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Make header sticky after 50px
+    
       setSticky(currentScrollY > 50);
-
-      // Hide when scrolling down, show when scrolling up
       if (currentScrollY > lastScrollY && currentScrollY > 20) {
         setVisible(false);
       } else {

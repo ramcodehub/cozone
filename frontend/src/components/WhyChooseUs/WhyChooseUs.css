@@ -1,0 +1,41 @@
+.feature-card {
+  position: relative;
+  padding: 2rem 1.5rem 1.5rem;
+  border-radius: 12px;
+  background: #fff;
+  margin-top: 50px;
+}
+.underline{
+    font-size: 4rem;
+}
+
+.feature-card h1 {
+  font-size: 2rem;
+  height: 100px;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.feature-card p {
+  font-size: 1rem;
+  margin-top: 1rem;
+  line-height: 1.6;
+}
+
+.circle {
+  position: absolute;
+  top: -35px;
+  left: 20%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid #25B7A3;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  color: #000000;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
