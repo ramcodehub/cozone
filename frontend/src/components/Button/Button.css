@@ -1,3 +1,32 @@
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.8rem 2rem;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.primaryBtn:hover {
+  background-color: #111; 
+}
+
+.primaryBtn .btn-icon {
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.primaryBtn:hover .btn-icon {
+  transform: translateX(4px); 
+}
+
 .secondaryBtn{
     padding: 0.6rem 1.8rem;
     border: none;

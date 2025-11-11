@@ -10,3 +10,10 @@ body{
 .cursive {
   font-family: 'Lobster', cursive;
 }
+
+.cursive-heading{
+  font-family: 'Dynalight', cursive;
+  font-size: 3.4rem;
+  font-weight: 600;
+  color: var(--muted-navy);
+}
