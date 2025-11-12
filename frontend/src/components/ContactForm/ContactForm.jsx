@@ -50,7 +50,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="contact-layout">
+    <div className="contact-layout ">
       {/* LEFT IMAGE */}
       <div
         className="left-image"

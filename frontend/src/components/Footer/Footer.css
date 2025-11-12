@@ -1,0 +1,7 @@
+footer{
+    background: var(--teal);
+}
+
+footer a:hover {
+  color: var(--muted-navy) !important;
+}

@@ -1,4 +1,4 @@
-/* MAIN GRID LAYOUT */
+
 .contact-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -6,7 +6,6 @@
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
 }
 
-/* LEFT IMAGE */
 .left-image {
   background-size: cover;
   background-position: center center;
@@ -21,15 +20,14 @@
   background: linear-gradient(rgba(255,255,255,0.05), rgba(255,255,255,0.05));
 }
 
-/* RIGHT FORM */
 .right-form {
-  padding: 48px 32px;  /* ✅ reduced horizontal padding */
+  padding: 48px 32px;  
   background: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;         /* ✅ full width */
-  margin: 0;           /* ✅ remove centering */
+  width: 100%;         
+  margin: 0;         
   box-sizing: border-box;
 }
 
@@ -44,7 +42,7 @@
   font-size: 15px;
 }
 
-/* FORM */
+
 .contact-form {
   display: flex;
   flex-direction: column;
@@ -75,7 +73,7 @@ textarea {
 
 textarea {
   margin-top: 4px;
-  resize: vertical; /* keep it clean */
+  resize: vertical;
 }
 
 input:focus,
@@ -83,7 +81,6 @@ textarea:focus {
   border-color: #000;
 }
 
-/* SUBMIT ROW */
 .actions {
   display: flex;
   align-items: center;
@@ -91,7 +88,7 @@ textarea:focus {
 }
 
 .submit-btn {
-  background: #002c6a; /* navy */
+  background: #002c6a; 
   color: white;
   border: none;
   padding: 12px 20px;
