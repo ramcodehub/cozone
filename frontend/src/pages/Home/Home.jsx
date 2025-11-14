@@ -32,7 +32,7 @@ const Home = () => {
         title="Beautiful Landscape"
         description="This is a beautiful mountain landscape captured during sunrise. The air was crisp and the light was golden, creating an unforgettable view. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam."
       /> */}
-      {/* <GalleryImages/> */}
+      <GalleryImages/>
     </div>
   )
 }

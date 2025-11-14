@@ -40,11 +40,12 @@ const Header = () => {
         <ul className="list-unstyled m-0 p-0 d-flex gap position-relative">    
           <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Home</Link></li>
           <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">About</Link></li>
+          <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Amenities</Link></li>
           <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Pricing</Link></li>
           <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Gallery</Link></li>
         </ul>
       </nav>
-      <Button variant="secondary" className="navBar-Btn ms-4">Get Started</Button>
+      <Button variant="secondary" className="navBar-Btn">Get Started</Button>
     </header>
   );
 };

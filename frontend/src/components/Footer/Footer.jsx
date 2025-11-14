@@ -5,7 +5,7 @@ import "./Footer.css";
 const Footer = () => {
   return (
     <footer className="text-white pt-5 mt-5" >
-      <div className="pb-2">
+      <div className="">
         <div className="row gy-4 px-5">
           <div className="col-md-3">
             <div
@@ -37,7 +37,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="col-md-3 d-flex flex-column align-items-start ">
+          <div className="col-md-3 d-flex flex-column align-items-start justify-content-center">
             <h5 className="fw-semibold fs-3 mb-2">Get In Touch</h5>
             <ul className="list-unstyled small">
               <li className="mb-2 fs-6">
@@ -52,7 +52,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="col-md-6 d-flex justify-content-center fl" style={{gap:'6rem'}}>
+          <div className="col-md-6 d-flex align-items-center justify-content-center fl" style={{gap:'6rem'}}>
             <div>
                 <h3 className="fw-bold mb-2" >Insights</h3>
                 <ul className="list-unstyled small mb-4">
@@ -66,7 +66,7 @@ const Footer = () => {
             </div>
 
             <div>
-                <h3 className="fw-semibold mb-2" >Services</h3>
+                <h3 className="fw-semibold mt-3 mb-2" >Services</h3>
             <ul className="list-unstyled small">
               <li><a href="#" className="text-decoration-none text-light fw-medium fs-6">Private Cabins </a></li>
               <li><a href="#" className="text-decoration-none text-light fw-medium fs-6">Dedicated Desk</a></li>
@@ -80,8 +80,8 @@ const Footer = () => {
           </div>
         </div>
 
-        <hr className="mt-5" />
-        <div className="text-center fs-6 text-white pb-1">
+        <hr className="mt-5"/>
+        <div className="text-center fs-6 text-white pb-3" >
           ©2025 All Rights Reserved. CoZone.
         </div>
       </div>

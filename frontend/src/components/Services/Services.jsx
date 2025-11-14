@@ -47,7 +47,7 @@ const Services = () => {
               <h3>{service.title}</h3>
               <p>{service.desc}</p>
               <Button variant="primary" icon={<i className="bi bi-arrow-right"></i>}>
-                Learn More
+                Explore More
               </Button>
             </div>
           </div>
