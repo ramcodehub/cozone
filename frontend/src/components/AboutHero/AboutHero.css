@@ -70,3 +70,59 @@
 .img-box:hover img {
   transform: scale(1.1); 
 }
+
+@media (min-width: 1400px) {
+  .img-2{
+    right:70px;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .img-2{
+    display:none;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-hero {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .hero-left, .hero-right {
+    max-width: 100%;
+    width: 100%;
+  }
+  .img-box {
+  width: 360px;
+  height: 280px;
+}
+.img-2{
+  right: 70px;
+}
+  
+}
+
+@media (max-width: 576px) {
+
+  .about-hero {
+    padding: 2rem 0rem;
+  }
+  .hero-left{
+    padding-left: 1rem;
+  }
+  .img-2{
+    display:none;
+  }
+  .img-1{
+    bottom: 20px;
+  }
+  .img-3{
+    top: 40px;
+  }
+
+  .img-box {
+    width: 260px;
+    height: 200px;
+  }
+
+}

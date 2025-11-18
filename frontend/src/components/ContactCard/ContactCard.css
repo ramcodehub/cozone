@@ -10,7 +10,7 @@
   max-width: 400px;
 }
 @media (max-width:768px){
-  .contact-car{
+  .contact-card{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,5 +21,15 @@
   .contact-card img{
     width: 320px !important;
   }
+  
+}
+
+@media (min-width:1400px) {
+  
+  .contact-card p {
+  font-size: 22px !important;
+  
+  /* max-width: 50ch; */
+}
   
 }
