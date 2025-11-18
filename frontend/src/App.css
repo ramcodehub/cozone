@@ -8,6 +8,9 @@ body{
   background: var(--off-white);
   overflow-x: hidden;
 }
+.cozone{
+  padding-top: 6rem;
+}
 .cursive {
   font-family: 'Lobster', cursive;
 }

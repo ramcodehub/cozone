@@ -29,8 +29,8 @@ const ImageTextSection = ({
             <h1 className="fw-bold">{title}</h1>
             <p className="text-muted">{text}</p>
             <Button variant="primary" icon={<i className="bi bi-arrow-right"></i>}>
-                Explore More
-              </Button>
+              Explore More
+            </Button>
           </div>
         </div>
       </div>

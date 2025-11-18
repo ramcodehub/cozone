@@ -39,7 +39,7 @@ const Header = () => {
       <nav className="d-flex justify-content-between header-nav">
         <ul className="list-unstyled m-0 p-0 d-flex gap position-relative">    
           <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Home</Link></li>
-          <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">About</Link></li>
+          <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/about">About</Link></li>
           <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Amenities</Link></li>
           <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Pricing</Link></li>
           <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Gallery</Link></li>
