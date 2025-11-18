@@ -45,7 +45,7 @@ const Header = () => {
           <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Gallery</Link></li>
         </ul>
       </nav>
-      <Button variant="secondary" className="navBar-Btn">Get Started</Button>
+      <Button variant="secondary" className="navBar-Btn" scrollToForm>Get Started</Button>
     </header>
   );
 };

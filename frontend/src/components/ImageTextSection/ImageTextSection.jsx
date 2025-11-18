@@ -6,6 +6,7 @@ const ImageTextSection = ({
   title,
   text,
   reverse = false,
+  to
 }) => {
   return (
     <div className="container my-4">
@@ -28,7 +29,7 @@ const ImageTextSection = ({
           <div className={`${reverse ? "pe-md-4" : "ps-md-4"}`}>
             <h1 className="fw-bold">{title}</h1>
             <p className="text-muted">{text}</p>
-            <Button variant="primary" icon={<i className="bi bi-arrow-right"></i>}>
+            <Button variant="primary" icon={<i className="bi bi-arrow-right"></i>} to={to}>
               Explore More
             </Button>
           </div>
