@@ -41,7 +41,7 @@ const Header = () => {
           <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Home</Link></li>
           <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/about">About</Link></li>
           <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Amenities</Link></li>
-          <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Pricing</Link></li>
+          <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/plans">Pricing</Link></li>
           <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Gallery</Link></li>
         </ul>
       </nav>

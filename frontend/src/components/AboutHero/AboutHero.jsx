@@ -21,7 +21,7 @@ const AboutHero = () => {
           work feel effortless.
         </p>
 
-        <Button variant="primary" icon={<i className="bi bi-arrow-right"></i>}>
+        <Button variant="primary" icon={<i className="bi bi-arrow-right"></i>} scrollToForm>
             Get Started
         </Button>
       </div>
