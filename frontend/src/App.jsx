@@ -16,6 +16,8 @@ import CustomBuiltOfficeSpaces from './pages/Services/CustomBuiltOfficeSpaces';
 import DayPass from './pages/Services/DayPass';
 import Gallery from './pages/Gallery/Gallery';
 
+import ErrorPage from './components/ErrorPage/ErrorPage';
+
 function App() {
   return (
     <>
@@ -23,6 +25,7 @@ function App() {
       <Header />
       <div className='cozone'>
         <Routes>
+          <Route path='*' element={<ErrorPage/>}/>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
           <Route path='/plans' element={<Plans />} />
