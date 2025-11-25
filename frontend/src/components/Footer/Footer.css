@@ -5,3 +5,8 @@ footer{
 footer a:hover {
   color: var(--muted-navy) !important;
 }
+
+footer .social-media-links a:hover{
+  color: white !important;
+  opacity: 0.9 !important;
+}

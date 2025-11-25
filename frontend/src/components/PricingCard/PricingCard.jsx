@@ -7,7 +7,7 @@ const PricingCard = ({ heading, navLink, points, onEnquire }) => {
   return (
     <>
         <div className='pricing-card-outline '>
-            <div className='d-flex flex-column justify-content-between pricing-card p-4'>
+            <div className='d-flex flex-column justify-content-between pricing-card  p-4'>
                 <div className='d-flex flex-column gap-2'>
                     <div className='d-flex justify-content-between mt-4 pricing-heading'>
                         <h4 className='fw-semibold' >{heading}</h4>

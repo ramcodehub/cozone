@@ -30,8 +30,7 @@ const About = () => {
         </div>
 
         <Facilities/>
-        <ContactCard heading='Join Us'
-                     content="Whether you need a private cabin, a hot desk, or a meeting room, Co-Work Zone gives you the flexibility to work your way. Grow your business, build your network, and achieve more — all in a space designed for success."
+        <ContactCard content="Whether you need a private cabin, a hot desk, or a meeting room, Co-Work Zone gives you the flexibility to work your way. Grow your business, build your network, and achieve more — all in a space designed for success."
                      image={Img}
                      action="scroll"/>
         </div>
