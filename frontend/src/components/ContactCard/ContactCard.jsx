@@ -32,8 +32,8 @@ const ContactCard = ({
 
   return (
     <>
-      <div className="d-flex align-items-center my-5 contact-card gap-5 px-5 py-5">
-        <div className="d-flex flex-column align-items-start gap-2">
+      <div className="d-flex align-items-center my-5 bg-white contact-card gap-5 px-5 py-5">
+        <div className="d-flex flex-column align-items-start gap-3">
           <h1 className="fw-bold">Join Us</h1>
           <p className="text-start">{content}</p>
 

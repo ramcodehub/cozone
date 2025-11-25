@@ -14,6 +14,7 @@ import ConferenceRooms from './pages/Services/ConferenceRooms';
 import VirtualZone from './pages/Services/VirtualZone';
 import CustomBuiltOfficeSpaces from './pages/Services/CustomBuiltOfficeSpaces';
 import DayPass from './pages/Services/DayPass';
+import Gallery from './pages/Gallery/Gallery';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
           <Route path='/plans' element={<Plans />} />
+          <Route path='/gallery' element={<Gallery />} />
 
           {/* Service Pages */}
           <Route path='/day-pass' element={<DayPass />} />

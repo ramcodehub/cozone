@@ -1,10 +1,16 @@
 .header {
+  position: fixed;   /* ADD THIS */
+  top: 0;            /* ADD THIS */
+  left: 0;           /* ADD THIS */
+  width: 100%;       /* ENSURE FULL WIDTH */
+
   box-sizing: border-box;
   padding: 1rem 3rem;
-  z-index: 70;
+  z-index: 999;      /* increase above mobile menu */
+  
   transition: transform 0.5s ease-in-out, background-color 0.3s ease;
-
 }
+
 .fixed-header {
   background-color: #ffffff;
   box-shadow: 0 0 20px #181818;

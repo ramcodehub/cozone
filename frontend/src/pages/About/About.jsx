@@ -3,6 +3,7 @@ import AboutHero from '../../components/AboutHero/AboutHero'
 import Facilities from '../../components/Facilities/Facilities'
 import ContactCard from '../../components/ContactCard/ContactCard'
 import Img from '../../assets/img/contactcard.jpg'
+import Service from '../../assets/img/services.jpg'
 import './About.css'
 
 const About = () => {
@@ -10,6 +11,24 @@ const About = () => {
     <div className='d-flex flex-column gap-2'>
         <AboutHero/>
         <div className='about'>
+          <div className='my-5'>
+             <h1 className='fw-bold my-2 cursive-heading text-black aft'>Who we are</h1>
+            <div className="row gx-0 who-we-are pt-3 ps-3">
+                <div className="col-lg-6 d-flex flex-column justify-content-center" >
+                    <div className="content" >
+                        <h2>Built for the Way You Work</h2>
+                        <p className='fs-5'>
+                            CoZone began with a simple belief — that the right environment can transform the way people work. What started as a compact creative space has now grown into a full-fledged coworking ecosystem supporting individuals, startups, and emerging businesses.
+                            <br />Our journey is rooted in innovation, accessibility, and community. Every space we create reflects our commitment to comfort, productivity, and the evolving needs of modern professionals.
+                        </p>
+                    </div>
+                </div>
+            <div className="col-lg-6 d-flex align-items-center image-col">
+                <img src={Service} className="img-fluid about-imgg" alt=""/>
+            </div>
+          </div>
+          </div>
+
           <div className="mt-4">
           <h2 className="fw-bold">Our <span className='cursive-heading fs-1'>Mission</span></h2>
           <p className="fs-5" style={{ color: '#555' }}>

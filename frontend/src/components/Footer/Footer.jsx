@@ -8,7 +8,7 @@ const Footer = () => {
     <footer className="text-white pt-5 mt-5" >
       <div className="">
         <div className="row gy-4 px-5">
-          <div className="col-md-3">
+          <div className="col-md-6 col-lg-3">
             <div
               className="p-4 text-white text-center rounded-4 shadow"
               style={{
@@ -37,7 +37,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="col-md-3 d-flex flex-column align-items-start justify-content-center">
+          <div className=" col-md-6 col-lg-3 d-flex flex-column align-items-start justify-content-center">
             <h5 className="fw-semibold fs-3 mb-2">Get In Touch</h5>
             <ul className="list-unstyled small">
               <li className="mb-2 fs-6">
@@ -52,15 +52,15 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="col-md-6 d-flex align-items-center justify-content-center fl" style={{gap:'6rem'}}>
+          <div className="col-md-12 col-lg-6 d-flex align-items-center justify-content-center fl" style={{gap:'6rem'}}>
             <div>
               <h3 className="fw-bold mb-2">Insights</h3>
               <ul className="list-unstyled small mb-4">
                 <li><Link to="/" className="text-decoration-none text-light fw-medium fs-6">Home</Link></li>
                 <li><Link to="/about" className="text-decoration-none text-light fw-medium fs-6">About</Link></li>
-                <li><a href="#" className="text-decoration-none text-light fw-medium fs-6">Amenities</a></li>
+                <li><Link to="/amenities" className="text-decoration-none text-light fw-medium fs-6">Amenities</Link></li>
                 <li><Link to="/plans" className="text-decoration-none text-light fw-medium fs-6">Pricing</Link></li>
-                <li><a href="#" className="text-decoration-none text-light fw-medium fs-6">Gallery</a></li>
+                <li><Link to="/gallery" className="text-decoration-none text-light fw-medium fs-6">Gallery</Link></li>
               </ul>
             </div>
 
