@@ -45,3 +45,7 @@
 .header-link:hover {
   color: var(--dark-blue);
 }
+
+a.header-link.active{
+  color: var(--dark-blue) !important;
+}

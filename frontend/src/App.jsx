@@ -15,6 +15,7 @@ import VirtualZone from './pages/Services/VirtualZone';
 import CustomBuiltOfficeSpaces from './pages/Services/CustomBuiltOfficeSpaces';
 import DayPass from './pages/Services/DayPass';
 import Gallery from './pages/Gallery/Gallery';
+import Amenities from './pages/Amenities/Amenities';
 
 import ErrorPage from './components/ErrorPage/ErrorPage';
 
@@ -28,6 +29,7 @@ function App() {
           <Route path='*' element={<ErrorPage/>}/>
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
+          <Route path='/amenities' element={<Amenities />} />
           <Route path='/plans' element={<Plans />} />
           <Route path='/gallery' element={<Gallery />} />
 

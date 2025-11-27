@@ -25,12 +25,13 @@ const Home = () => {
         title="Image on Right"
         text="This section displays the image on the left and text on the right."
         reverse={true}
+        to='/amenities'
       />
       <ImageTextSection
         image="https://placehold.co/1500x800"
         title="Image on Left"
         text="This section displays the image on the left and text on the right."
-        to='/about'
+        to='/gallery'
       />
       </div>
       <Services/>

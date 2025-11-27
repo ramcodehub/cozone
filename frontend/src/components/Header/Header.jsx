@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import logo from '../../assets/img/logoWithBg-removebg-preview.png';
 import Button from '../Button/Button';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import MobileNavigation from '../MobileNavigation/MobileNavigation'; 
 import './Header.css';
 
@@ -37,16 +37,15 @@ const Header = () => {
       `}
     >
 
-      <img src={logo} alt="Logo" />
-
+      <NavLink to='/'><img src={logo} alt="Logo" /></NavLink>
 
       <nav className="d-flex justify-content-between header-nav d-none d-lg-flex">
         <ul className="list-unstyled m-0 p-0 d-flex gap position-relative">
-          <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Home</Link></li>
-          <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/about">About</Link></li>
-          <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/amenities">Amenities</Link></li>
-          <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/plans">Pricing</Link></li>
-          <li><Link className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/gallery">Gallery</Link></li>
+          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Home</NavLink></li>
+          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/about">About</NavLink></li>
+          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/amenities">Amenities</NavLink></li>
+          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/plans">Pricing</NavLink></li>
+          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/gallery">Gallery</NavLink></li>
         </ul>
       </nav>
 

@@ -32,7 +32,7 @@ const Facilities = () => {
 
   return (
     <section className="facilities-section">
-      <h1 className="fw-bold facilities-heading">What’s Around Co-Work Zone</h1>
+      <h1 className="fw-bold facilities-heading">What’s Around Co-Zone</h1>
       <p className="facilities-desc">
         Our coworking space is located in a convenient, connected area 
         surrounded by everything you need:

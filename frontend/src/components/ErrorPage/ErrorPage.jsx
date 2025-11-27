@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 
 export default function ErrorPage() {
-  const navigate = useNavigate();
 
   return (
     <div className="d-flex flex-column align-items-center justify-content-center" style={{height:'80dvh'}}>
