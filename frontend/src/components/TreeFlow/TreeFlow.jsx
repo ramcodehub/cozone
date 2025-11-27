@@ -2,7 +2,7 @@ import React from "react";
 import "./TreeFlow.css";
 
 const nodes = [
-  { id: "parent", label: "Amenities", x: 50, y: 5, icon: "bi-grid-3x3-gap-fill" , details: "Our coworking space is packed with thoughtful amenities that make your workday smoother, easier, and more enjoyable."},
+  { id: "parent", label: "Amenities", x: 50, y: 0, icon: "bi-grid-3x3-gap-fill" , details: "Our coworking space is packed with thoughtful amenities that make your workday smoother, easier, and more enjoyable."},
 
   {
     id: "c1",
@@ -106,6 +106,7 @@ export default function TreeFlow() {
         {nodes
           .filter((n) => n.id !== "parent")
           .map((child) => {
+           
             const startX = 50;
             const startY = 5;
             const endX = child.x;
