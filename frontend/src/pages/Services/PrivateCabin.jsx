@@ -4,7 +4,7 @@ import PrivateCabinData from '../../config/services/PrivateCabinData'
 
 const PrivateCabin = () => {
   return (
-    <div className='about'>
+    <div>
       <PageBuilder sections={PrivateCabinData.sections} />
     </div>
   )

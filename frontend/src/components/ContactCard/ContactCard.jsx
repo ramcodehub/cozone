@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "../Button/Button";
 import ServiceEnquiryModal from "../ServiceEnquiryModal/ServiceEnquiryModal";
 import Img from '../../assets/img/contactcard.jpg'
+import Img1 from '../../assets/img/contactcardbg.jpg'
 import "./ContactCard.css";
 import { useNavigate } from "react-router-dom";
 
@@ -32,10 +33,11 @@ const ContactCard = ({
 
   return (
     <>
-      <div className="d-flex align-items-center my-5 bg-white contact-card gap-5 px-5 py-5">
+      <div className="contact-card-bg">
+        <div className="d-flex align-items-center shadow-lg contact-card gap-5 px-4 py-3">
         <div className="d-flex flex-column align-items-start gap-3">
           <h1 className="fw-bold">Join Us</h1>
-          <p className="text-start">{content}</p>
+          <p className="text-start text-white">{content}</p>
 
           <Button
             variant="primary"
@@ -47,6 +49,7 @@ const ContactCard = ({
         </div>
 
         <img src={image || Img} className="rounded-4" />
+      </div>
       </div>
 
       

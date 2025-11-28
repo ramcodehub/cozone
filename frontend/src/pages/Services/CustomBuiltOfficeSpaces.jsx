@@ -4,7 +4,7 @@ import CustomBuiltOfficeSpacesData from '../../config/services/CustomBuiltOffice
 
 const CustomBuiltOfficeSpaces = () => {
   return (
-    <div className='about'>
+    <div>
       <PageBuilder sections={CustomBuiltOfficeSpacesData.sections} />
     </div>
   )

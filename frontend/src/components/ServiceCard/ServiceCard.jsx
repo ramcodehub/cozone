@@ -3,7 +3,7 @@ import './ServiceCard.css'
 
 export default function ServiceCard({ data }) {
   return (
-    <div className="sc-wrapper pb-4">
+    <div className="sc-wrapper about pb-5">
 
       <div className="sc-header">
         <h1>{data.title}</h1>

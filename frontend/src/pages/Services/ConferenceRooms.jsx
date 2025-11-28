@@ -4,7 +4,7 @@ import ConferenceRoomsData from '../../config/services/ConferenceRoomsData'
 
 const ConferenceRooms = () => {
   return (
-    <div className='about'>
+    <div className=''>
       <PageBuilder sections={ConferenceRoomsData.sections} />
     </div>
   )

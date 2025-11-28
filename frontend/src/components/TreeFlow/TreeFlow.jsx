@@ -72,7 +72,7 @@ const nodes = [
   {
     id: "c8",
     label: "Lounge Area",
-    icon: "bi-sofa",
+    icon: "bi-tv-fill",
     details:
       "Comfortable lounge space for casual meetings, brainstorming, and relaxation.",
     x: 90,

@@ -4,7 +4,7 @@ import VirtualZoneData from '../../config/services/VirtualZoneData'
 
 const VirtualZone = () => {
   return (
-    <div className='about'>
+    <div>
       <PageBuilder sections={VirtualZoneData.sections} />
     </div>
   )

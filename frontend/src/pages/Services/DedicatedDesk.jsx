@@ -4,7 +4,7 @@ import DedicatedDeskData from '../../config/services/DedicatedDeskData'
 
 const DedicatedDesk = () => {
   return (
-    <div className='about'>
+    <div>
       <PageBuilder sections={DedicatedDeskData.sections} />
     </div>
   )

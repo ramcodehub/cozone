@@ -1,8 +1,21 @@
-.contact-card{
-  border: 2px solid black;
-  border-radius: 24px;
-  background: white;
+.contact-card-bg{
+  background-color: #359e8f;
+  background-color: white;
+  padding: 3rem 4rem;
+  border-radius: 24px  24px 0 0;
+  border-bottom: 2px solid grey;
 }
+
+.contact-card{
+  border-radius: 24px;
+  /* background: #51aa9e; */
+  background: #43aea0;
+
+  color: white;
+
+}
+
+
 .contact-card h1 {
   font-weight: 600;
 }
@@ -12,7 +25,7 @@
   /* max-width: 50ch; */
 }
 .contact-card img {
-  border: 2px solid black;
+  /* border: 2px solid black; */
   max-width: 400px;
 }
 @media (max-width:768px){
@@ -26,6 +39,9 @@
   
   .contact-card img{
     width: 320px !important;
+  }
+  .contact-card-bg{
+    padding: 1rem;
   }
   
 }

@@ -2,6 +2,10 @@
     padding: 0 5%;
 }
 
+.values .value-card{
+  background: white;
+}
+
 .who-we-are {
   display: flex;
   flex-wrap: wrap; 

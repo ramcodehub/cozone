@@ -1,12 +1,12 @@
 import React from 'react'
 import TreeFlow from '../../components/TreeFlow/TreeFlow'
-import Hero from '../../components/Hero/Hero'
+import ChairLoader from '../../components/ChairLoader/ChairLoader'
 import img from '../../assets/img/AmenitiesHero.png'
 import './Amenities.css'
 
 const Amenities = () => {
   return (
-    <div className='amenities-page '  style={{paddingBottom:'10rem'}}> 
+    <div className='amenities-page '> 
        <div className='px-3 '>
         <section
           className="amenities-hero rounded-4"
@@ -25,9 +25,10 @@ const Amenities = () => {
           <h1 className='fw-bold'>Amenities Crafted for &nbsp;<span className='cursive-heading'>Productivity and Comfort</span></h1>
           <p className='fs-5'>Great ideas need the right environment — and we’ve built ours to fuel productivity, collaboration, and creativity. With modern amenities at every corner, you can focus on building, scaling, and creating without worrying about the small things. Everything you need is already here, designed to keep your workflow smooth and your energy high throughout the day.</p>
         </div>
-     <div className='' style={{padding:'3rem 0 10rem'}}>
+     <div className='full-tree'>
       <TreeFlow/>
     </div>
+    <ChairLoader/>
       </div>
     </div>
   )

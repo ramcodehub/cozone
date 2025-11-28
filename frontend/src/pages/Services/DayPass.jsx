@@ -4,7 +4,7 @@ import DayPassData from '../../config/services/DayPassData.js'
 
 const DayPass = () => {
   return (
-    <div className='about'>
+    <div>
       <PageBuilder sections={DayPassData.sections}/>
     </div>
   )
