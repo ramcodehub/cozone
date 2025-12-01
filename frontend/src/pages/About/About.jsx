@@ -10,8 +10,8 @@ const About = () => {
   return (
     <div className='d-flex flex-column gap-2'>
         <AboutHero/>
-        <div className='about'>
-          <div className='my-5'>
+        <div className='about aboutt'>
+          <div className='my-5' data-aos="fade-up">
              <h1 className='fw-bold my-2 cursive-heading text-black aft'>Who we are</h1>
             <div className="row gx-0 who-we-are pt-3 ps-3">
                 <div className="col-lg-6 d-flex flex-column justify-content-center" >
@@ -29,7 +29,7 @@ const About = () => {
           </div>
           </div>
 
-          <div className="mt-4">
+          <div className="mt-4" data-aos="fade-up">
           <h2 className="fw-bold aft">Our <span className='cursive-heading fs-1'>Mission</span></h2>
           <div className='ps-3'>
             <p className="fs-5" style={{ color: '#555' }}>
@@ -40,7 +40,7 @@ const About = () => {
           </p>
           </div>
         </div>
-        <div className="mt-4">
+        <div className="mt-4" data-aos="fade-up">
           <h2 className="fw-bold aft">Our <span className='cursive-heading fs-1'>Vision</span></h2>
           <div className='ps-3'>
             <p className="fs-5" style={{ color: '#555' }}>
@@ -53,7 +53,7 @@ const About = () => {
           <section class="py-4 values">
           <div class="container p-0 m-0">
             <div class="row mb-2">
-              <div class="col-lg-8">
+              <div class="col-lg-8" data-aos="fade-up">
                 <h2 className="fw-bold aft">Our <span className='cursive-heading fs-1'>Values</span></h2>
                 <p class="text-muted fs-5 ps-3">The principles that guide our community and workspace culture.</p>
               </div>
@@ -61,7 +61,7 @@ const About = () => {
 
             <div class="row g-4 ps-3 justify-content-center">
 
-              <div class="col-lg-4 col-md-6">
+              <div class="col-lg-4 col-md-6" data-aos="fade-up">
                 <div class="p-4 h-100 border value-card rounded shadow-sm">
                   <i class="bi bi-shield-check fs-1 mb-3"></i>
                   <h3 class="fw-bold mb-2">Integrity</h3>
@@ -71,7 +71,7 @@ const About = () => {
                 </div>
               </div>
 
-              <div class="col-lg-4 col-md-6">
+              <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay='200'>
                 <div class="p-4 h-100 border value-card rounded shadow-sm">
                   <i class="bi bi-people fs-1 mb-3"></i>
                   <h3 class="fw-bold mb-2">Collaboration</h3>
@@ -81,7 +81,7 @@ const About = () => {
                 </div>
               </div>
 
-              <div class="col-lg-4 col-md-6">
+              <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay='400'>
                 <div class="p-4 h-100 border value-card rounded shadow-sm">
                   <i class="bi bi-lightbulb fs-1 mb-3"></i>
                   <h3 class="fw-bold mb-2">Innovation</h3>
@@ -91,7 +91,7 @@ const About = () => {
                 </div>
               </div>
 
-              <div class="col-lg-4 col-md-6">
+              <div class="col-lg-4 col-md-6" data-aos="fade-up" >
                 <div class="p-4 h-100 border value-card rounded shadow-sm">
                   <i class="bi bi-heart fs-1 mb-3"></i>
                   <h3 class="fw-bold mb-2">Inclusivity</h3>
@@ -101,7 +101,7 @@ const About = () => {
                 </div>
               </div>
 
-              <div class="col-lg-4 col-md-6">
+              <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay='200'>
                 <div class="p-4 h-100 border value-card rounded shadow-sm">
                   <i class="bi bi-star fs-1 mb-3"></i>
                   <h3 class="fw-bold mb-2">Excellence</h3>

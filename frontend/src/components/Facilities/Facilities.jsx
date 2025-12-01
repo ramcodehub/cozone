@@ -11,27 +11,31 @@ const Facilities = () => {
     {
       image: Img1,
       title: "Food & Cafés",
-      description: "Enjoy a wide range of restaurants and cafés just steps away."
+      description: "Enjoy a wide range of restaurants and cafés just steps away.",
+      AOSDelay: 0
     },
     {
       image: Img2,
       title: "Transport Connectivity",
-      description: "Well-connected with public transport for a smooth commute."
+      description: "Well-connected with public transport for a smooth commute.",
+      AOSDelay: 200
     },
     {
       image: Img3,
       title: "Sarath City Mall",
-      description: "Shop, dine, and unwind at one of the city's largest malls."
+      description: "Shop, dine, and unwind at one of the city's largest malls.",
+      AOSDelay: 400
     },
     {
       image: Img4,
       title: "Professional Support",
-      description: "Access essential services and support for your business."
+      description: "Access essential services and support for your business.",
+      AOSDelay: 600
     }
   ];
 
   return (
-    <section className="facilities-section">
+    <section className="facilities-section" data-aos="fade-up">
       <h1 className="fw-bold facilities-heading">What’s Around Co-Zone</h1>
       <p className="facilities-desc">
         Our coworking space is located in a convenient, connected area 
@@ -44,6 +48,7 @@ const Facilities = () => {
             image={item.image}
             title={item.title}
             description={item.description}
+            AOSDelay={item.AOSDelay}
           />
         ))}
       </div>

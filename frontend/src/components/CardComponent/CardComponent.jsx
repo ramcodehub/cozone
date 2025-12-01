@@ -1,9 +1,9 @@
 import React from "react";
 import "./CardComponent.css";
 
-const CardComponent = ({ image, title, description }) => {
+const CardComponent = ({ image, title, description, AOSDelay }) => {
   return (
-    <div className="custom-card">
+    <div className="custom-card" data-aos="fade-up" data-aos-delay={AOSDelay}>
       <img src={image} alt={title} className="card-img" />
 
       {/* Overlay container */}

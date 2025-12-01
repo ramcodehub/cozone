@@ -21,7 +21,8 @@ export default function PricingPlans({ plans }) {
       "Ergonomic Chairs & Desks",
       "Charging Ports & 24/7 Power Backup",
       "Air Conditioning & Security Personnel"
-    ]
+    ],
+    AOSDelay:0
   },
   {
     "heading": "Dedicated Desk / Hot Desk",
@@ -33,7 +34,8 @@ export default function PricingPlans({ plans }) {
       "Ergonomic Chairs & Desks",
       "Charging Ports & 24/7 Power Backup",
       "Air Conditioning & Security Personnel"
-    ]
+    ],
+    AOSDelay:200
   },
   {
     "heading": "Day Pass",
@@ -45,7 +47,8 @@ export default function PricingPlans({ plans }) {
       "Ergonomic Chairs & Desks",
       "Charging Ports & 24/7 Power Backup",
       "Air Conditioning & Security Personnel"
-    ]
+    ],
+    AOSDelay:400
   },
   {
     "heading": "Conference Rooms",
@@ -56,7 +59,8 @@ export default function PricingPlans({ plans }) {
       "High-Speed WiFi & Wired Internet",
       "Access to Pantry & Drinking Water",
       "Air Conditioning & 24/7 Power Backup"
-    ]
+    ],
+    AOSDelay:600
   },
   {
     "heading": "Communication / Virtual Zone",
@@ -64,7 +68,8 @@ export default function PricingPlans({ plans }) {
     "points": [
       "Not for Company Registration or GST Filing",
       "Professional business address"
-    ]
+    ],
+    AOSDelay:0
   },
   {
     "heading": "Custom-built Office Spaces",
@@ -74,7 +79,8 @@ export default function PricingPlans({ plans }) {
       "Prime IT hub location in Doctors Colony, Madhapur",
       "Private floor with no co-working or shared zones",
       "Managed workspace with daily housekeeping"
-    ]
+    ],
+    AOSDelay:0
   },
   
 ] 
@@ -127,7 +133,8 @@ export default function PricingPlans({ plans }) {
               heading={pricingPlan.heading}
               points={pricingPlan.points}
               navLink={pricingPlan.navLink}
-               onEnquire={handleEnquire}
+              onEnquire={handleEnquire}
+              AOSDelay={pricingPlan.AOSDelay}
             />
             
           </SwiperSlide>

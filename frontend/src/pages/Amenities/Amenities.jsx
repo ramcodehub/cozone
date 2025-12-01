@@ -1,6 +1,5 @@
 import React from 'react'
 import TreeFlow from '../../components/TreeFlow/TreeFlow'
-import ChairLoader from '../../components/ChairLoader/ChairLoader'
 import img from '../../assets/img/AmenitiesHero.png'
 import './Amenities.css'
 
@@ -28,7 +27,6 @@ const Amenities = () => {
      <div className='full-tree'>
       <TreeFlow/>
     </div>
-    <ChairLoader/>
       </div>
     </div>
   )

@@ -9,7 +9,7 @@ const ImageTextSection = ({
   to
 }) => {
   return (
-    <div className="container my-4">
+    <div className="container my-4" data-aos="fade-left">
       <div
         className={`row align-items-center ${
           reverse ? "flex-md-row-reverse" : ""
@@ -25,7 +25,7 @@ const ImageTextSection = ({
         </div>
 
 
-        <div className="col-12 col-md-5">
+        <div className="col-12 col-md-5" data-aos="fade-right">
           <div className={`${reverse ? "pe-md-4" : "ps-md-4"}`}>
             <h1 className="fw-bold">{title}</h1>
             <p className="text-muted">{text}</p>

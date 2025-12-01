@@ -3,16 +3,16 @@ import './ServiceCard.css'
 
 export default function ServiceCard({ data }) {
   return (
-    <div className="sc-wrapper about pb-5">
+    <div className="sc-wrapper about pb-5" >
 
       <div className="sc-header">
-        <h1>{data.title}</h1>
-        <p>{data.description}</p>
+        <h1 data-aos="fade-up">{data.title}</h1>
+        <p data-aos="fade-up" data-aos-delay='200'>{data.description}</p>
       </div>
 
       <div className="sc-grid">
 
-          <div className="points">
+          <div className="points" data-aos="fade-up" data-aos-delay='400'>
             <h3 className="fw-semibold">Key Highlights</h3>
             <ul>
               {data.points.map((item, i) => (
@@ -24,15 +24,15 @@ export default function ServiceCard({ data }) {
             </ul>
           </div>
 
-          <div className="large img-wrapper">
+          <div className="large img-wrapper" data-aos="fade-up" data-aos-delay='600'>
             <img src={data.images[0]} alt="main" />
           </div>
 
-          <div className="small1 img-wrapper">
+          <div className="small1 img-wrapper" data-aos="fade-up">
             <img src={data.images[1]} alt="img1" />
           </div>
 
-          <div className="small2 img-wrapper">
+          <div className="small2 img-wrapper" data-aos="fade-up" data-aos-delay='200'>
             <img src={data.images[2]} alt="img2" />
           </div>
 

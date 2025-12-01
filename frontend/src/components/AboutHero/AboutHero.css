@@ -102,7 +102,7 @@
   
 }
 
-@media (max-width: 576px) {
+@media (max-width: 576px) {  
 
   .about-hero {
     padding: 2rem 0rem;
@@ -114,6 +114,7 @@
     display:none;
   }
   .img-1{
+    left: 20px;
     bottom: 20px;
   }
   .img-3{

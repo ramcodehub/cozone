@@ -32,11 +32,11 @@ const WhyChooseUs = () => {
 
   return (
     <div className='d-flex flex-column align-items-center py-4 my-4' style={{background:'#25B7A3'}}>
-      <h1 className='text-white underline cursive'>Why Choose Us</h1>
+      <h1 className='text-white underline cursive' data-aos="fade-up">Why Choose Us</h1>
       <div className="container">
         <div className="d-flex align-tems-center justify-content-center row g-4">
         {features.map((item, index) => (
-            <div className=" col-md-6 col-lg-6 col-xl-4" key={index}>
+            <div className=" col-md-6 col-lg-6 col-xl-4" key={index} data-aos="fade-up">
             <div className="feature-card">
                 <div className="circle">
                 <i className={item.icon}></i>

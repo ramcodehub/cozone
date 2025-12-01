@@ -73,11 +73,11 @@
 
 @media (max-width: 576px) {
   .custom-card {
-    max-width: 96%;
+    max-width: 80%;
     height: 400px;
   }
   .text-content {
-    bottom: 25%;
+    bottom: 2%;
   }
 }
 

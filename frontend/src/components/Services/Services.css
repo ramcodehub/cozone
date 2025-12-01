@@ -43,3 +43,10 @@
         width: 400px;       
     }
 }
+
+
+@media (max-width: 769px) {
+    .card-two {
+        width: 320px;       
+    }
+}

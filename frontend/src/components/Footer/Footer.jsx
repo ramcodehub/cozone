@@ -52,9 +52,9 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="col-md-12 col-lg-6 d-flex align-items-center justify-content-center fl" style={{gap:'6rem'}}>
-            <div>
-              <h3 className="fw-bold mb-2">Insights</h3>
+          <div className="col-md-12 col-lg-6 d-flex align-items-center justify-content-center fl links" style={{gap:'6rem'}}>
+            <div> 
+              <h3 className=" fw-bold mb-2">Insights</h3>
               <ul className="list-unstyled small mb-4">
                 <li><Link to="/" className="text-decoration-none text-light fw-medium fs-6">Home</Link></li>
                 <li><Link to="/about" className="text-decoration-none text-light fw-medium fs-6">About</Link></li>

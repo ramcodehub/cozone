@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import Button from '../Button/Button'
 import './PricingCard.css'
 
-const PricingCard = ({ heading, navLink, points, onEnquire }) => {
+const PricingCard = ({ heading, navLink, points, onEnquire, AOSDelay }) => {
   return (
     <>
-        <div className='pricing-card-outline '>
+        <div className='pricing-card-outline ' data-aos="fade-up" data-aos-delay={AOSDelay}>
             <div className='d-flex flex-column justify-content-between pricing-card  p-4'>
                 <div className='d-flex flex-column gap-2'>
                     <div className='d-flex justify-content-between mt-4 pricing-heading'>

@@ -1,5 +1,9 @@
 import './App.css'
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 import Header from './components/Header/Header';
 
 import Home from './pages/Home/Home';
@@ -21,6 +25,13 @@ import Amenities from './pages/Amenities/Amenities';
 import ErrorPage from './components/ErrorPage/ErrorPage';
 
 function App() {
+  useEffect(() => {
+    AOS.init({
+      duration: 650,
+      once: true,    
+      easing: "ease-in-out",
+    });
+  }, []);
   return (
     <>
       <ScrollToTop />

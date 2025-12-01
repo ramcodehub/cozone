@@ -22,12 +22,12 @@ const GalleryImages = () => {
         {/* Row 1 */}
         <div className="row gx-4 gy-4">
           <div className="col-md-4">
-            <div className="gallery-block">
+            <div className="gallery-block" data-aos="fade-right" data-aos-delay='400'>
                 <img src={img2} alt="" />
             </div>
           </div>
           <div className="col-md-8">
-            <div className="gallery-block">
+            <div className="gallery-block" data-aos="fade-left" data-aos-delay='600'>
                 <img src={img} alt="" />
             </div>
           </div>
@@ -38,24 +38,24 @@ const GalleryImages = () => {
           <div className="col-md-8">
             <div className="row gx-4 gy-4">
               <div className="col-12">
-                <div className="gallery-block">
+                <div className="gallery-block" data-aos="fade-right">
                     <img src={img10} alt="" />
                 </div>
               </div>
               <div className="col-6">
-                <div className="gallery-block small">
+                <div className="gallery-block small" data-aos="fade-up">
                     <img src={img5} alt="" />
                 </div>
               </div>
               <div className="col-6">
-                <div className="gallery-block small">
+                <div className="gallery-block small" data-aos="fade-up" data-aos-delay='200'>
                     <img src={img6} alt="" />
                 </div>
               </div>
             </div>
           </div>
           <div className="col-md-4">
-            <div className="gallery-block taller">
+            <div className="gallery-block taller" data-aos="fade-left">
                 <img src={img1} alt="" />
             </div>
           </div>
@@ -64,7 +64,7 @@ const GalleryImages = () => {
         {/* Row 3 */}
         <div className="row gx-4 gy-4 mt-3">
           <div className="col-12">
-            <div className="gallery-block wide">
+            <div className="gallery-block wide" data-aos="fade-up">
                 <img src={img4} alt="" />
             </div>
           </div>
@@ -75,19 +75,19 @@ const GalleryImages = () => {
           <div className="col-md-8">
             <div className="row gx-4 gy-4">
               <div className="col-6">
-                <div className="gallery-block tall">
+                <div className="gallery-block tall" data-aos="fade-up">
                     <img src={img9} alt="" />
                 </div>
               </div>
               <div className="col-6">
-                <div className="gallery-block tall">
+                <div className="gallery-block tall" data-aos="fade-up" data-aos-delay='200'>
                     <img src={img11} alt="" />
                 </div>
               </div>
             </div>
             <div className="row gx-4 gy-4 mt-2">
               <div className="col-12">
-                <div className="gallery-block">
+                <div className="gallery-block" data-aos="fade-up">
                     <img src={img12} alt="" />
                 </div>
               </div>
@@ -96,12 +96,12 @@ const GalleryImages = () => {
           <div className="col-md-4">
             <div className="row gx-4 gy-4">
               <div className="col-12">
-                <div className="gallery-block">
+                <div className="gallery-block" data-aos="fade-left">
                     <img src={img7} alt="" />
                 </div>
               </div>
               <div className="col-12 mt-4">
-                <div className="gallery-block tallest">
+                <div className="gallery-block tallest" data-aos="fade-left">
                     <img src={img8} alt="" />
                 </div>
               </div>
