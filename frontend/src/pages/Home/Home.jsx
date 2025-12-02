@@ -19,21 +19,21 @@ const Home = () => {
       <div>
         <ImageTextSection
         image="https://placehold.co/1500x800"
-        title="Image on Left"
-        text="This section displays the image on the left and text on the right."
+        title="Discover Who We Are"
+        text="Learn about our mission, values, and the story behind our creative workspace. See how we designed CoZone to help individuals and teams work better, collaborate smarter, and grow faster."
         to='/about'
       />
       <ImageTextSection
         image="https://placehold.co/1500x800"
-        title="Image on Right"
-        text="This section displays the image on the left and text on the right."
+        title="Everything You Need to Work Better"
+        text="Explore all the amenities that make your workday seamless—high-speed WiFi, meeting rooms, 24/7 power backup, ergonomic seating, refreshments, and much more. Designed for comfort, productivity, and creativity."
         reverse={true}
         to='/amenities'
       />
       <ImageTextSection
         image="https://placehold.co/1500x800"
-        title="Image on Left"
-        text="This section displays the image on the left and text on the right."
+        title="Take a Look Inside"
+        text="Browse our workspace gallery to see every corner of CoZone—private cabins, open desks, lounge areas, meeting spaces, and more. Get a visual feel of the environment before you visit."
         to='/gallery'
       />
       </div>

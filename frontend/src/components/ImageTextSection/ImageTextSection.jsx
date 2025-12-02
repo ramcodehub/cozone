@@ -27,7 +27,7 @@ const ImageTextSection = ({
 
         <div className="col-12 col-md-5" data-aos="fade-right">
           <div className={`${reverse ? "pe-md-4" : "ps-md-4"}`}>
-            <h1 className="fw-bold">{title}</h1>
+            <h2 className="fw-bold">{title}</h2>
             <p className="text-muted">{text}</p>
             <Button variant="primary" icon={<i className="bi bi-arrow-right"></i>} to={to}>
               Explore More

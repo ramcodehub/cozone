@@ -26,12 +26,25 @@ import ErrorPage from './components/ErrorPage/ErrorPage';
 
 function App() {
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+
+    if (isMobile) {
+      document.querySelectorAll("[data-aos]").forEach(el => {
+        el.removeAttribute("data-aos");
+        el.removeAttribute("data-aos-delay");
+        el.removeAttribute("data-aos-duration");
+      });
+    }
+
     AOS.init({
       duration: 650,
-      once: true,    
+      once: true,
       easing: "ease-in-out",
     });
+
+    AOS.refresh();
   }, []);
+
   return (
     <>
       <ScrollToTop />

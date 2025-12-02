@@ -28,11 +28,11 @@ export default function ServiceCard({ data }) {
             <img src={data.images[0]} alt="main" />
           </div>
 
-          <div className="small1 img-wrapper" data-aos="fade-up">
+          <div className="small1 img-wrapper" data-aos="fade-up" data-aos-delay='800'>
             <img src={data.images[1]} alt="img1" />
           </div>
 
-          <div className="small2 img-wrapper" data-aos="fade-up" data-aos-delay='200'>
+          <div className="small2 img-wrapper" data-aos="fade-up" data-aos-delay='1000'>
             <img src={data.images[2]} alt="img2" />
           </div>
 

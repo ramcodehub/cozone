@@ -45,7 +45,11 @@
 }
 
 
-@media (max-width: 769px) {
+@media (max-width: 1000px) {
+    .card-two-content h3{
+      font-size: 24px;   
+      height: 55px;   
+    }
     .card-two {
         width: 320px;       
     }
