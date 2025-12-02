@@ -50,8 +50,8 @@ const About = () => {
             We envision a future where people from diverse backgrounds come together to share knowledge, spark creativity, and grow their ventures. Our goal is to continuously adapt to changing work trends, cultivate a culture of openness and support, and establish a space that inspires long-term success, collaboration, and innovation for all.
           </p>
           </div>
-          <section class="py-4 values">
-          <div class="container p-0 m-0">
+          <section class="py-4 values w-100">
+          <div class="">
             <div class="row mb-2">
               <div class="col-lg-8" data-aos="fade-up">
                 <h2 className="fw-bold aft">Our <span className='cursive-heading fs-1'>Values</span></h2>
@@ -59,7 +59,7 @@ const About = () => {
               </div>
             </div>
 
-            <div class="row g-4 ps-3 justify-content-center">
+            <div class="container row g-4 d-flex  align-items-center justify-content-center" >
 
               <div class="col-lg-4 col-md-6" data-aos="fade-up">
                 <div class="p-4 h-100 border value-card rounded shadow-sm">

@@ -33,3 +33,9 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (min-width: 1900px) {
+  .facilities-grid {
+    gap: 0px !important;
+  }
+}

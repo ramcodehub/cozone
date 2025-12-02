@@ -6,6 +6,12 @@
   background: white;
 }
 
+.values .row {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
 .who-we-are {
   display: flex;
   flex-wrap: wrap; 

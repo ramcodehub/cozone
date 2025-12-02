@@ -50,21 +50,22 @@
 .img-1 {
   left: 0px;
   bottom: -30px;
-  background: #ffe700; 
+  background: grey; 
 }
 
 /* Image 2 — Center Right */
 .img-2 {
-  right: 10px;
-  top: 80px;
-  background: #ff3b3b; 
+  top: 20%;
+  right: 5%;
+  background: grey; 
 }
+
 
 /* Image 3 — Top Left */
 .img-3 {
   left: 120px;
   top: -20px;
-  background: #dcdcdc; 
+  background: grey; 
 }
 
 .img-box:hover img {
@@ -72,8 +73,9 @@
 }
 
 @media (min-width: 1400px) {
-  .img-2{
-    right:80px;
+  .img-2 {
+    right: 12%;
+    top: 18%;
   }
 }
 
@@ -126,4 +128,19 @@
     height: 200px;
   }
 
+}
+
+
+@media (min-width: 1900px) {
+  .about-hero{
+    padding-top: 4rem;
+  }
+  .hero-left {
+    padding-left: 5%;
+  }
+
+  .img-2 {
+    right: 32%;
+    top: 18%;
+  }
 }
