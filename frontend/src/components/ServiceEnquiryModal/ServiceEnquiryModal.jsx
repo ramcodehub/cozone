@@ -59,7 +59,7 @@ const ServiceEnquiryModal = ({ serviceName, show, onClose }) => {
 
             {/* Header */}
             <div className="modal-header">
-              <h3 className="modal-title fw-bold">Book {serviceName}</h3>
+              <h3 className="modal-title fw-bold">Enquire {serviceName}</h3>
               <button type="button" className="btn-close" onClick={onClose}></button>
             </div>
 

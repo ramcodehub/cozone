@@ -15,7 +15,7 @@ const PricingCard = ({ heading, navLink, points, onEnquire, AOSDelay }) => {
                     </div>
                     <ul className="list-unstyled">
                         {points.map((item, index) => (
-                            <li key={index} className="mb-2"><i class="bi bi-check2-circle "style={{color:'var(--muted-navy)'}}></i> {item}</li>
+                            <li key={index} className="mb-2 d-flex gap-1"><i class="bi bi-check2-circle " style={{color:'var(--teal)'}}></i> {item}</li>
                         ))}
                     </ul>
 
