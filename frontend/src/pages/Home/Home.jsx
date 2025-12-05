@@ -33,7 +33,7 @@ const Home = () => {
       <ImageTextSection
         image="https://placehold.co/1500x800"
         title="Take a Look Inside"
-        text="Browse our workspace gallery to see every corner of CoZone—private cabins, open desks, lounge areas, meeting spaces, and more. Get a visual feel of the environment before you visit."
+        text="Browse our workspace gallery to see every corner of CoZone-private cabins, open desks, lounge areas, meeting spaces, and more. Get a visual feel of the environment before you visit."
         to='/gallery'
       />
       </div>
