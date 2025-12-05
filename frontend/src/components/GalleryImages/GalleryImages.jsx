@@ -18,6 +18,19 @@ import img12 from '../../assets/img/taller2.jpg'
 import img1 from '../../assets/img/service-images/privatecabin4.jpg'
 import img11 from '../../assets/img/service-images/custombuiltofficespace4.jpg'
 
+
+import img11_2 from '../../assets/img/gallery/11(2).jpg';
+import img11n from '../../assets/img/gallery/11.jpg';
+import img169 from '../../assets/img/gallery/169.jpg';
+import img916 from '../../assets/img/gallery/916.jpg';
+import img1699 from '../../assets/img/gallery/1699.png';
+import cine from '../../assets/img/gallery/cinescope2.jpg';
+import img11o from '../../assets/img/gallery/111.jpg';
+import img11p from '../../assets/img/gallery/1111.jpg';
+import img16999 from '../../assets/img/gallery/16999.jpg';
+
+
+
 const GalleryImages = () => {
   return (
     <div className="gallery-section container-fluid my-5 p-5 d-flex justify-content-center">
@@ -27,12 +40,12 @@ const GalleryImages = () => {
         <div className="row gx-4 gy-4">
           <div className="col-md-4">
             <div className="gallery-block" data-aos="fade-right" data-aos-delay='400'>
-                <img src={img2} alt="" />
+                <img src={img11o} alt="" />
             </div>
           </div>
           <div className="col-md-8">
             <div className="gallery-block" data-aos="fade-left" data-aos-delay='600'>
-                <img src={img} alt="" />
+                <img src={img16999} alt="" />
             </div>
           </div>
         </div>
@@ -43,17 +56,17 @@ const GalleryImages = () => {
             <div className="row gx-4 gy-4">
               <div className="col-12">
                 <div className="gallery-block" data-aos="fade-right">
-                    <img src={img10} alt="" />
+                    <img src={img1699} alt="" />
                 </div>
               </div>
               <div className="col-6">
                 <div className="gallery-block small" data-aos="fade-up">
-                    <img src={img5} alt="" />
+                    <img src={img11n} alt="" />
                 </div>
               </div>
               <div className="col-6">
                 <div className="gallery-block small" data-aos="fade-up" data-aos-delay='200'>
-                    <img src={img6} alt="" />
+                    <img src={img11p} alt="" />
                 </div>
               </div>
             </div>
@@ -69,7 +82,7 @@ const GalleryImages = () => {
         <div className="row gx-4 gy-4 mt-3">
           <div className="col-12">
             <div className="gallery-block wide" data-aos="fade-up">
-                <img src={img4} alt="" />
+                <img src={cine} alt="" />
             </div>
           </div>
         </div>
@@ -92,7 +105,7 @@ const GalleryImages = () => {
             <div className="row gx-4 gy-4 mt-2">
               <div className="col-12">
                 <div className="gallery-block" data-aos="fade-up">
-                    <img src={img12} alt="" />
+                    <img src={img169} alt="" />
                 </div>
               </div>
             </div>
@@ -101,12 +114,12 @@ const GalleryImages = () => {
             <div className="row gx-4 gy-4">
               <div className="col-12">
                 <div className="gallery-block" data-aos="fade-left">
-                    <img src={img7} alt="" />
+                    <img src={img11_2} alt="" />
                 </div>
               </div>
               <div className="col-12 mt-4">
                 <div className="gallery-block tallest" data-aos="fade-left">
-                    <img src={img8} alt="" />
+                    <img src={img916} alt="" />
                 </div>
               </div>
             </div>

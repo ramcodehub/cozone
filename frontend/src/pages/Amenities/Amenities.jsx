@@ -1,6 +1,6 @@
 import React from 'react'
 import TreeFlow from '../../components/TreeFlow/TreeFlow'
-import img from '../../assets/img/AmenitiesHero.png'
+import img from '../../assets/img/AmenitiesHero2.jpg'
 import './Amenities.css'
 
 const Amenities = () => {
