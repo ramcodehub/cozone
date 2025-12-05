@@ -18,7 +18,6 @@ export default function PricingPlans({ plans }) {
       "Equipped with a 44-inch display screen",
       "High-Speed WiFi & Wired Internet",
       "Access to Conference & Training Rooms",
-      "Ergonomic Chairs & Desks",
       "Charging Ports & 24/7 Power Backup",
       "Air Conditioning & Security Personnel"
     ],
