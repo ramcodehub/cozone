@@ -44,7 +44,7 @@ const Footer = () => {
                 <i className="bi bi-envelope me-2"></i> support@cozone.com
               </li>
               <li className="mb-2 fs-6">
-                <i className="bi bi-telephone me-2"></i> +91 XXX XXX XXXX
+                <i className="bi bi-telephone me-2"></i> +91 9154567444
               </li>
               <li className="fs-6">
                 <i className="bi bi-geo-alt me-2"></i> Unit No: 7th Floor, Asian Sun City, B-Block, Kondapur, Hyderabad-500084
