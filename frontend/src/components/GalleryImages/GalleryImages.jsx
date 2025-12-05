@@ -1,7 +1,9 @@
 import React from "react";
 import "./GalleryImages.css";
 import img from '../../assets/img/img.jpg'
-import img1 from '../../assets/img/tall.jpg'
+// import img from '../../assets/img/imgn.jpg'
+
+import img19 from '../../assets/img/tall.jpg'
 import img2 from '../../assets/img/32.jpg'
 import img3 from '../../assets/img/169.jpg'
 import img4 from '../../assets/img/cricket.jpg'
@@ -9,10 +11,12 @@ import img5 from '../../assets/img/11.jpg'
 import img6 from '../../assets/img/111.jpg'
 import img7 from '../../assets/img/1111.jpg'
 import img8 from '../../assets/img/tallest.jpg'
-import img9 from '../../assets/img/taller.jpg'
+import img9 from '../../assets/img/tallern.jpg'
 import img10 from '../../assets/img/1699.jpg'
-import img11 from '../../assets/img/16999.jpg'
+import img111 from '../../assets/img/16999.jpg'
 import img12 from '../../assets/img/taller2.jpg'
+import img1 from '../../assets/img/service-images/privatecabin4.jpg'
+import img11 from '../../assets/img/service-images/custombuiltofficespace4.jpg'
 
 const GalleryImages = () => {
   return (

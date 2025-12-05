@@ -1,10 +1,10 @@
 import React from 'react'
 import Button from '../Button/Button'
-import PrivateCabin from '../../assets/img/service-images/privatecabin1.jpg'
+import PrivateCabin from '../../assets/img/service-images/privatecabin4.jpg'
 import DedicatedDesk from '../../assets/img/service-images/dedicateddesk1.jpeg'
-import ConferenceRoom from '../../assets/img/service-images/conferencerooms1.webp'
+import ConferenceRoom from '../../assets/img/service-images/conferencerooms4.jpg'
 import VirtualZone from '../../assets/img/service-images/virtualzone1.jpg'
-import CustomBuiltSpaces from '../../assets/img/service-images/custombuiltofficespace3.webp'
+import CustomBuiltSpaces from '../../assets/img/service-images/custombuiltofficespace4.jpg'
 import DayPass from '../../assets/img/service-images/daypass2.webp'
 import './Services.css'
 

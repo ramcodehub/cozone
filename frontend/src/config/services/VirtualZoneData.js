@@ -1,6 +1,6 @@
-import img1 from "../../assets/img/service-images/virtualzone1.jpg";
+import img1 from "../../assets/img/service-images/virtualzone2.jpg";
 import img2 from "../../assets/img/service-images/virtualzone2.jpg";
-import img3 from "../../assets/img/service-images/virtualzone3.jpg";
+import img3 from "../../assets/img/service-images/virtualzone2.jpg";
 
 const VirtualZoneData = {
   sections: [
