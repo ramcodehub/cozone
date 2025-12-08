@@ -16,7 +16,6 @@ const PrivateCabinData = {
 
             points: [
               "Lockable cabins ensuring maximum privacy",
-              "Equipped with a 44-inch display screen",
               "Wired & wireless WiFi for seamless work",
               "Premium chairs and desks for long work hours",
               "Utilize professional conference and training spaces",

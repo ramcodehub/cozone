@@ -15,7 +15,6 @@ export default function PricingPlans({ plans }) {
     "navLink": "/private-cabins",
     "points": [
       "Lockable, private workspace",
-      "Equipped with a 44-inch display screen",
       "High-Speed WiFi & Wired Internet",
       "Access to Conference & Training Rooms",
       "Charging Ports & 24/7 Power Backup",

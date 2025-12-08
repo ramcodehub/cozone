@@ -46,7 +46,7 @@ const nodes = [
     label: "Printing & Scanning",
     icon: "bi-printer-fill",
     details:
-      "High-quality printers and scanners available for all your documentation needs.",
+      "High-quality printers (chargable) and scanners available for all your documentation needs.",
     x: 75,
     y: 65,
   },

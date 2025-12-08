@@ -2,12 +2,11 @@ import React from 'react'
 import Hero from '../../components/Hero/Hero'
 import WhyChooseUs from '../../components/WhyChooseUs/WhyChooseUs'
 import img from '../../assets/img/hero.jpg'
-import Button from '../../components/Button/Button'
 import Services from '../../components/Services/Services'
 import ImageTextSection from '../../components/ImageTextSection/ImageTextSection'
 import ContactForm from '../../components/ContactForm/ContactForm'
+import Map from '../../components/Map/Map'
 import './Home.css'
-import GalleryImages from '../../components/GalleryImages/GalleryImages'
 
 const Home = () => {
   return (
@@ -39,7 +38,7 @@ const Home = () => {
       </div>
       <Services/>
       <ContactForm/>
-      {/* <GalleryImages/> */}
+      <Map/>
     </div>
   )
 }
