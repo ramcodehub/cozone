@@ -73,7 +73,10 @@
   .p1 {
      display: none;
   }
-   .p3 {
-  display: none;
-   }
+  .p3 {
+     display: none;
+  }
+  .p2{
+    border-radius: 20px;
+  }
 }
