@@ -19,35 +19,44 @@ const ContactForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setStatusMsg(null);
+  e.preventDefault();
+  setLoading(true);
+  setStatusMsg(null);
 
-    try {
-      const res = await fetch("http://127.0.0.1:8000/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+  // --- Validate 10-digit phone ---
+  if (!/^\d{10}$/.test(formData.phone)) {
+    setStatusMsg({ type: "error", text: "Phone number must be 10 digits." });
+    setLoading(false);
+    return;
+  }
 
-      if (!res.ok) throw new Error("Network error");
+  try {
+    const res = await fetch("http://localhost:5000/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
 
-      const data = await res.json();
-      setStatusMsg({ type: "success", text: data.message || "Submitted successfully!" });
-      setFormData({
-        fullName: "",
-        email: "",
-        companyName: "",
-        phone: "",
-        message: "",
-      });
-    } catch (err) {
-      setStatusMsg({ type: "error", text: "Error submitting form. Please try again." });
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    if (!res.ok) throw new Error("Network error");
+
+    const data = await res.json();
+    setStatusMsg({ type: "success", text: data.message || "Submitted successfully!" });
+
+    setFormData({
+      fullName: "",
+      email: "",
+      companyName: "",
+      phone: "",
+      message: "",
+    });
+  } catch (err) {
+    setStatusMsg({ type: "error", text: "Error submitting form. Please try again." });
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <section id="contact-form">
@@ -92,10 +101,9 @@ const ContactForm = () => {
             <input
               name="companyName"
               type="text"
-              placeholder="Company name *"
+              placeholder="Company name (Optional)"
               value={formData.companyName}
               onChange={handleChange}
-              required
             />
             <input
               name="phone"
@@ -113,7 +121,6 @@ const ContactForm = () => {
             rows="6"
             value={formData.message}
             onChange={handleChange}
-            required
           />
 
           <div className="actions">

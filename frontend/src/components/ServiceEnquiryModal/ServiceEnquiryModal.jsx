@@ -8,12 +8,24 @@ const ServiceEnquiryModal = ({ serviceName, show, onClose }) => {
     message: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [statusMsg, setStatusMsg] = useState(null);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setStatusMsg(null);
+
+    // --- Validate Mobile Number ---
+    if (!/^\d{10}$/.test(formData.mobile)) {
+      setStatusMsg({ type: "error", text: "Mobile number must be 10 digits." });
+      return;
+    }
+
+    setLoading(true);
 
     const payload = {
       ...formData,
@@ -21,19 +33,29 @@ const ServiceEnquiryModal = ({ serviceName, show, onClose }) => {
     };
 
     try {
-      const res = await fetch("http://localhost:8000/enquiry", {
+      const res = await fetch("http://localhost:5000/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
-      console.log("Success:", data);
-      alert("Your enquiry has been submitted!");
+      if (!res.ok) throw new Error("Network error");
 
-      onClose();
+      const data = await res.json();
+
+      setStatusMsg({ type: "success", text: data.message || "Enquiry submitted successfully!" });
+
+      setFormData({
+        fullName: "",
+        mobile: "",
+        email: "",
+        message: "",
+      });
     } catch (error) {
+      setStatusMsg({ type: "error", text: "Error submitting enquiry. Please try again." });
       console.error("Error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -41,14 +63,12 @@ const ServiceEnquiryModal = ({ serviceName, show, onClose }) => {
 
   return (
     <>
-      {/* BACKDROP */}
       <div
         className="modal-backdrop fade show"
         style={{ zIndex: 1050 }}
         onClick={onClose}
       ></div>
 
-      {/* MODAL */}
       <div
         className="modal fade show d-block"
         tabIndex="-1"
@@ -57,13 +77,11 @@ const ServiceEnquiryModal = ({ serviceName, show, onClose }) => {
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
 
-            {/* Header */}
             <div className="modal-header">
               <h3 className="modal-title fw-bold">Enquire {serviceName}</h3>
               <button type="button" className="btn-close" onClick={onClose}></button>
             </div>
 
-            {/* Body */}
             <div className="modal-body">
               <form onSubmit={handleSubmit}>
                 <input
@@ -102,12 +120,19 @@ const ServiceEnquiryModal = ({ serviceName, show, onClose }) => {
                   onChange={handleChange}
                 ></textarea>
 
-                <button className="text-white btn w-100" style={{background:'var(--muted-navy)'}}>
-                  Enquire Now
+                <button
+                  className="text-white btn w-100"
+                  style={{ background: "var(--muted-navy)" }}
+                  disabled={loading}
+                >
+                  {loading ? "Sending..." : "Enquire Now"}
                 </button>
+
+                {statusMsg && (
+                  <span className={`status ${statusMsg.type}`}>{statusMsg.text}</span>
+                )}
               </form>
             </div>
-
           </div>
         </div>
       </div>

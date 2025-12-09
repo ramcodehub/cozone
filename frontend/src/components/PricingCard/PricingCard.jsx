@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom'
 import Button from '../Button/Button'
 import './PricingCard.css'
 
-const PricingCard = ({ heading, navLink, points, onEnquire, AOSDelay }) => {
+const PricingCard = ({ heading, navLink, points, onEnquire, Image , AOSDelay }) => {
   return (
     <>
         <div className='pricing-card-outline ' data-aos="fade-up" data-aos-delay={AOSDelay}>
             <div className='d-flex flex-column justify-content-between pricing-card  p-4'>
                 <div className='d-flex flex-column gap-2'>
+                    <Link to={navLink}><img src={Image} className='w-100' alt=""  height='200px'/></Link>
                     <div className='d-flex justify-content-between mt-4 pricing-heading'>
-                        <h4 className='fw-semibold' >{heading}</h4>
+                        <h4 className='fw-semibold ' >{heading}</h4>
                         <Link to={navLink}><i class="bi bi-info-circle text-black"></i></Link>
                     </div>
                     <ul className="list-unstyled">
