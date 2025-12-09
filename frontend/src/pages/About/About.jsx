@@ -3,7 +3,7 @@ import AboutHero from '../../components/AboutHero/AboutHero'
 import Facilities from '../../components/Facilities/Facilities'
 import ContactCard from '../../components/ContactCard/ContactCard'
 import Img from '../../assets/img/contactcard.jpg'
-import Service from '../../assets/img/WhatWeDo.jpg'
+import Service from '../../assets/img/wwa.png'
 import './About.css'
 
 const About = () => {
