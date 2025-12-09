@@ -61,3 +61,10 @@
 .p3 {
   transform: rotateY(-28deg) translateZ(-100px);
 }
+
+
+@media (min-width:1440px){
+  .p2 {
+  transform: translateZ(-210px);
+}
+}
