@@ -66,5 +66,14 @@
 @media (min-width:1440px){
   .p2 {
   transform: translateZ(-210px);
+   }
 }
+
+@media (max-width:576px){
+  .p1 {
+  display: hidden;
+   }
+   .p3 {
+  display: hidden;
+   }
 }
