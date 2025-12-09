@@ -24,13 +24,16 @@ const ContactForm = () => {
     setStatusMsg(null);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      if (!res.ok) throw new Error("Network error");
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || `HTTP error! status: ${res.status}`);
+      }
 
       const data = await res.json();
       setStatusMsg({ type: "success", text: data.message || "Submitted successfully!" });
@@ -42,8 +45,12 @@ const ContactForm = () => {
         message: "",
       });
     } catch (err) {
-      setStatusMsg({ type: "error", text: "Error submitting form. Please try again." });
-      console.error(err);
+      // Check if it's a network error
+      if (err instanceof TypeError && err.message === 'Failed to fetch') {
+        setStatusMsg({ type: "error", text: "Network error. Please check your connection and try again." });
+      } else {
+        setStatusMsg({ type: "error", text: err.message || "Error submitting form. Please try again." });
+      }
     } finally {
       setLoading(false);
     }

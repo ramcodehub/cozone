@@ -24,6 +24,11 @@ import Amenities from './pages/Amenities/Amenities';
 
 import ErrorPage from './components/ErrorPage/ErrorPage';
 
+// Floating UI Components
+import FloatingWhatsApp from './components/FloatingWhatsApp/FloatingWhatsApp';
+import FloatingCall from './components/FloatingCall/FloatingCall';
+import ChatWidget from './components/Assistant/ChatWidget';
+
 function App() {
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
@@ -68,6 +73,11 @@ function App() {
         </Routes>
       </div>
       <Footer />
+      
+      {/* Floating UI Components */}
+      <FloatingCall />
+      <FloatingWhatsApp />
+      <ChatWidget />
     </>
   )
 }
