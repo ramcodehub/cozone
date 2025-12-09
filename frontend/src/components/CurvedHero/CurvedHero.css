@@ -71,9 +71,9 @@
 
 @media (max-width:576px){
   .p1 {
-  display: hidden;
-   }
+     display: none;
+  }
    .p3 {
-  display: hidden;
+  display: none;
    }
 }
