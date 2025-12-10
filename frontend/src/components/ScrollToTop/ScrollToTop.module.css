@@ -5,7 +5,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: var(--teal);
+  background-color: var(--muted-navy);
   color: var(--white);
   border: none;
   display: flex;
@@ -18,7 +18,7 @@
 }
 
 .scrollToTopButton:hover {
-  background-color: var(--earth-green);
+  background-color: var(--soft-blue);
   transform: translateY(-3px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }

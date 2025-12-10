@@ -6,7 +6,7 @@ export default function ServiceCard({ data }) {
     <div className="sc-wrapper about pb-5" >
 
       <div className="sc-header">
-        <h1 data-aos="fade-up">{data.title}</h1>
+        <h1 className="cursive-heading" data-aos="fade-up">{data.title}</h1>
         <p data-aos="fade-up" data-aos-delay='200'>{data.description}</p>
       </div>
 

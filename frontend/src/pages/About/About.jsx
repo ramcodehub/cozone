@@ -30,7 +30,7 @@ const About = () => {
           </div>
 
           <div className="mt-4" data-aos="fade-up">
-          <h2 className="fw-bold aft">Our <span className='cursive-heading fs-1'>Mission</span></h2>
+          <h2 className="fw-bold aft">Our Mission</h2>
           <div className='ps-3'>
             <p className="fs-5" style={{ color: '#555' }}>
             To empower professionals with a productive, affordable, and inspiring workspace that encourages innovation, collaboration, and growth.
@@ -41,7 +41,7 @@ const About = () => {
           </div>
         </div>
         <div className="mt-4" data-aos="fade-up">
-          <h2 className="fw-bold aft">Our <span className='cursive-heading fs-1'>Vision</span></h2>
+          <h2 className="fw-bold aft">Our Vision</h2>
           <div className='ps-3'>
             <p className="fs-5" style={{ color: '#555' }}>
             To build a vibrant community-led coworking environment that supports evolving workstyles and becomes the preferred hub for entrepreneurs, creators, and professionals.
@@ -54,7 +54,7 @@ const About = () => {
           <div class="">
             <div class="row mb-2">
               <div class="col-lg-8" data-aos="fade-up">
-                <h2 className="fw-bold aft">Our <span className='cursive-heading fs-1'>Values</span></h2>
+                <h2 className="fw-bold aft">Our Values  </h2>
                 <p class="text-muted fs-5 ps-3">The principles that guide our community and workspace culture.</p>
               </div>
             </div>
