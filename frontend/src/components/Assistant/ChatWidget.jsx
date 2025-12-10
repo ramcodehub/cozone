@@ -52,7 +52,7 @@ const ChatWidget = () => {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
-            whileHover={{ y: -5 }} // Move up slightly instead of scaling
+            whileHover={{ y: -5 }} // Move up slightly on hover
             whileTap={{ scale: 0.95 }} // Slight scale down on tap
             aria-label="Open chat assistant"
           >
@@ -79,7 +79,7 @@ const ChatWidget = () => {
               isOpen={isOpen} 
               isMinimized={isMinimized}
               onClose={closeChat}
-              onMinimize={toggleChat}
+              onMinimize={toggleChat} // This now toggles between minimized and open states
             />
           </Motion.div>
         )}

@@ -10,6 +10,7 @@ const ChatWindow = ({ onClose, onMinimize }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [error, setError] = useState(null);
+  const [isFullscreen, setIsFullscreen] = useState(false); // New state for fullscreen
   const messagesEndRef = useRef(null);
   const recognitionRef = useRef(null);
   const sessionIdRef = useRef(null);
@@ -189,8 +190,13 @@ const ChatWindow = ({ onClose, onMinimize }) => {
     setError(null);
   };
 
+  // Toggle fullscreen mode
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
+  };
+
   return (
-    <div className={styles.chatWindow}>
+    <div className={`${styles.chatWindow} ${isFullscreen ? styles.fullscreen : ''}`}>
       {/* Chat header */}
       <div className={styles.chatHeader}>
         <div className={styles.headerInfo}>
@@ -212,6 +218,26 @@ const ChatWindow = ({ onClose, onMinimize }) => {
               <line x1="5" y1="12" x2="19" y2="12"/>
             </svg>
           </button>
+          
+          {/* Fullscreen/Minimize button */}
+          <button 
+            className={styles.fullscreenButton} 
+            onClick={toggleFullscreen}
+            aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+          >
+            {isFullscreen ? (
+              // Minimize icon when in fullscreen
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>
+              </svg>
+            ) : (
+              // Expand icon when not in fullscreen
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+              </svg>
+            )}
+          </button>
+          
           <button 
             className={styles.closeButton} 
             onClick={onClose}
