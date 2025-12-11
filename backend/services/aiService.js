@@ -11,6 +11,12 @@ const MODEL_NAME = process.env.AI_MODEL || 'models/gemini-1.5-flash'; // Use AI_
 // Validate required environment variables
 if (!GEMINI_API_KEY) {
   console.error('GEMINI_API_KEY is not configured in environment variables');
+  throw new Error('GEMINI_API_KEY is not configured. Please check your environment variables.');
+}
+
+if (!MODEL_NAME) {
+  console.error('AI_MODEL is not configured in environment variables');
+  throw new Error('AI_MODEL is not configured. Please check your environment variables.');
 }
 
 /**
