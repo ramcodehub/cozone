@@ -46,7 +46,7 @@ const ContactForm = () => {
     if (!res.ok) throw new Error("Network error");
 
     const data = await res.json();
-    setStatusMsg({ type: "success", text: data.message || `Thank you ${formData.fullName}, we received your concern, our team will contact you very soon.` });
+    setStatusMsg({ type: "success", text: data.message || `Dear ${formData.fullName}, Thank you. Your concern message received. Our team will contact you very soon.` });
 
 
     setFormData({
