@@ -28,15 +28,9 @@ const aiLimiter = rateLimit({
 app.use("/api/ai", aiLimiter);
 
 // ---------------- CORS CONFIG ----------------
+// Allow all origins for development and testing purposes
 const corsOptions = {
-  origin: [
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "http://127.0.0.1:5173",
-    "https://cozone.in",
-    "https://cozone.com",
-    "https://cozone-backend.onrender.com",
-  ],
+  origin: true, // Reflects the request origin
   credentials: true,
   optionsSuccessStatus: 200,
 };
