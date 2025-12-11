@@ -56,6 +56,14 @@ export const handleAIRequest = async (req, res) => {
   } catch (error) {
     console.error('Error in handleAIRequest:', error);
     
+    // Handle rate limit error specifically
+    if (error.message.includes("too many requests") || error.code === 'ERR_TOO_MANY_REQUESTS') {
+      return res.status(429).json({
+        success: false,
+        message: "I'm receiving too many requests right now. Please try again in a moment."
+      });
+    }
+    
     // Return error response
     return res.status(500).json({
       success: false,

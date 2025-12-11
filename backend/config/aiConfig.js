@@ -37,7 +37,7 @@ Hours: Monday-Friday 8:00 AM - 8:00 PM, Saturday-Sunday 9:00 AM - 6:00 PM
 Amenities include: High-speed WiFi, Printing/Scanning, Coffee/Tea, Meeting Rooms, Event Space, 24/7 Access`,
   
   // Default AI model settings
-  defaultModel: 'gemini-pro', // or 'gpt-3.5-turbo', 'gpt-4', etc.
+  defaultModel: 'gemini-flash-latest', // Using the latest flash model
   defaultTemperature: 0.7,
   
   // Response settings

@@ -206,13 +206,13 @@ To update the AI model:
 1. Edit `backend/services/aiService.js`
 2. Change the `MODEL_NAME` constant:
    ```javascript
-   const MODEL_NAME = 'gemini-1.5-flash'; // Current model
+   const MODEL_NAME = 'models/gemini-1.5-flash'; // Current model with full path
    ```
 
 Supported models:
-- `gemini-1.5-flash` (default, fastest)
-- `gemini-1.5-pro` (more capable, slower)
-- `gemini-1.0-pro` (older model)
+- `models/gemini-1.5-flash` (default, fastest, highest free quota)
+- `models/gemini-1.5-pro` (more capable, slower)
+- `models/gemini-1.0-pro` (older model)
 
 ## Customizing the Assistant
 

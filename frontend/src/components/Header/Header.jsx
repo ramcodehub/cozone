@@ -44,8 +44,8 @@ const Header = () => {
           <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Home</NavLink></li>
           <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/about">About</NavLink></li>
           <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/amenities">Amenities</NavLink></li>
-          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/plans">Pricing</NavLink></li>
-          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/gallery">Gallery</NavLink></li>
+          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/plans">Services</NavLink></li>
+          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/gallery">GalleryZone</NavLink></li>
         </ul>
       </nav>
 

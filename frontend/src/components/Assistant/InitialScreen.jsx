@@ -2,34 +2,24 @@ import { useState } from 'react';
 import { CATEGORIES, MORE_CATEGORIES } from '../../data/promptCategories';
 import styles from './Assistant.module.css';
 
-const InitialScreen = ({ onExampleClick }) => {
+const InitialScreen = ({ onExampleClick, onCategoryClick }) => {
   const [showMore, setShowMore] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-  };
-
-  const handleBackClick = () => {
-    setSelectedCategory(null);
-  };
-
-  const handlePromptClick = (promptText) => {
-    onExampleClick(promptText);
-  };
 
   const toggleMore = () => {
     setShowMore(!showMore);
   };
 
+  // Show only first 3 categories initially
+  const initialCategories = CATEGORIES.slice(0, 3);
+
   // Render category grid for main view
-  const renderCategoryGrid = (categories) => (
+  const renderCategoryGrid = () => (
     <div className={styles.promptGrid}>
-      {categories.map((category) => (
+      {initialCategories.map((category) => (
         <button
           key={category.id}
           className={styles.promptButton}
-          onClick={() => handleCategoryClick(category)}
+          onClick={() => onCategoryClick ? onCategoryClick(category) : onExampleClick(`Show me ${category.title.toLowerCase()} options`)}
           aria-label={`Select category: ${category.title}`}
         >
           <span className={styles.categoryIcon}>{category.icon}</span>
@@ -43,48 +33,20 @@ const InitialScreen = ({ onExampleClick }) => {
       >
         {showMore ? 'Show Less' : '+ More'}
       </button>
-      {showMore && MORE_CATEGORIES.map((category) => (
+      {showMore && [
+        ...CATEGORIES.slice(3), // Remaining categories from CATEGORIES
+        ...MORE_CATEGORIES
+      ].map((category) => (
         <button
           key={category.id}
           className={styles.promptButton}
-          onClick={() => handleCategoryClick(category)}
+          onClick={() => onCategoryClick ? onCategoryClick(category) : onExampleClick(`Show me ${category.title.toLowerCase()} options`)}
           aria-label={`Select category: ${category.title}`}
         >
           <span className={styles.categoryIcon}>{category.icon}</span>
           <span className={styles.categoryTitle}>{category.title}</span>
         </button>
       ))}
-    </div>
-  );
-
-  // Render prompt list for category view
-  const renderPromptList = () => (
-    <div className={styles.promptListContainer}>
-      <div className={styles.promptListHeader}>
-        <button 
-          className={styles.backButton} 
-          onClick={handleBackClick}
-          aria-label="Back to categories"
-        >
-          ← Back
-        </button>
-        <h3 className={styles.selectedCategoryTitle} aria-label={`Selected category: ${selectedCategory?.title}`}>
-          <span className={styles.categoryIcon}>{selectedCategory?.icon}</span>
-          {selectedCategory?.title}
-        </h3>
-      </div>
-      <div className={styles.promptList}>
-        {selectedCategory?.prompts.map((prompt) => (
-          <button
-            key={prompt.id}
-            className={styles.promptListItem}
-            onClick={() => handlePromptClick(prompt.text)}
-            aria-label={`Select prompt: ${prompt.text}`}
-          >
-            {prompt.text}
-          </button>
-        ))}
-      </div>
     </div>
   );
 
@@ -97,10 +59,8 @@ const InitialScreen = ({ onExampleClick }) => {
       
       <div className={styles.categoriesSection}>
         {/* <h3 className={styles.sectionTitle}>Popular Categories</h3> */}
-        {renderCategoryGrid(CATEGORIES)}
+        {renderCategoryGrid()}
       </div>
-      
-      {selectedCategory && renderPromptList()}
     </div>
   );
 };

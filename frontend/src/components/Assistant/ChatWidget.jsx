@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import ChatWindow from './ChatWindow';
 import styles from './Assistant.module.css';
-import aiAssistantIcon from '../../assets/logos/aiassistant.webp';
+import aiAssistantIcon from '../../assets/logos/aiassistant.png'; // Changed from .webp to .png
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(true);
+  const chatWindowWrapperRef = useRef(null);
 
   // Toggle chat window open/close
   const toggleChat = () => {
@@ -27,7 +28,7 @@ const ChatWidget = () => {
   // Handle ESC key to close chat
   useEffect(() => {
     const handleEsc = (event) => {
-      if (event.keyCode === 27) {
+      if (event.key === 'Escape') {
         closeChat();
       }
     };
@@ -56,11 +57,13 @@ const ChatWidget = () => {
             whileTap={{ scale: 0.95 }} // Slight scale down on tap
             aria-label="Open chat assistant"
           >
-            <img 
-              src={aiAssistantIcon} 
-              alt="AI Assistant" 
-              className={styles.chatButtonIcon}
-            />
+            <div className={styles.chatButtonIconContainer}>
+              <img 
+                src={aiAssistantIcon} 
+                alt="AI Assistant" 
+                className={styles.chatButtonIcon}
+              />
+            </div>
           </Motion.button>
         )}
       </AnimatePresence>
@@ -69,6 +72,7 @@ const ChatWidget = () => {
       <AnimatePresence>
         {isOpen && (
           <Motion.div
+            ref={chatWindowWrapperRef}
             className={styles.chatWindowWrapper}
             initial={{ opacity: 0, y: 20, scale: 0.3 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -79,7 +83,7 @@ const ChatWidget = () => {
               isOpen={isOpen} 
               isMinimized={isMinimized}
               onClose={closeChat}
-              onMinimize={toggleChat} // This now toggles between minimized and open states
+              chatWindowWrapperRef={chatWindowWrapperRef}
             />
           </Motion.div>
         )}

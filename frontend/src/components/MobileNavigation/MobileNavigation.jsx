@@ -39,8 +39,8 @@ const MobileNavigation = () => {
           <li><Link to="/" onClick={() => setOpen(false)}>Home</Link></li>
           <li><Link to="/about" onClick={() => setOpen(false)}>About</Link></li>
           <li><Link to="/amenities" onClick={() => setOpen(false)}>Amenities</Link></li>
-          <li><Link to="/plans" onClick={() => setOpen(false)}>Pricing</Link></li>
-          <li><Link to="/gallery" onClick={() => setOpen(false)}>Gallery</Link></li>
+          <li><Link to="/plans" onClick={() => setOpen(false)}>Services</Link></li>
+          <li><Link to="/gallery" onClick={() => setOpen(false)}>GalleryZone</Link></li>
         </ul>
       </div>
     </>
