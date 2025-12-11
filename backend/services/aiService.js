@@ -150,6 +150,24 @@ Amenities include: High-speed WiFi, Printing/Scanning, Coffee/Tea, Meeting Rooms
     if (error.message.includes('429')) {
       throw new Error("I'm receiving too many requests right now. Please try again in a moment.");
     }
-    throw new Error('I\'m unable to reach the AI service right now. Please try again, or contact CoZone support.');
+    // Log the specific error for debugging
+    console.error('AI Service Error Details:', {
+      message: error.message,
+      stack: error.stack,
+      modelName: MODEL_NAME,
+      apiKeyPresent: !!GEMINI_API_KEY,
+      apiKeyLength: GEMINI_API_KEY ? GEMINI_API_KEY.length : 0
+    });
+    
+    // More specific error messages based on error type
+    if (error.message && error.message.includes('API_KEY_INVALID')) {
+      throw new Error('Invalid Google Gemini API key. Please check your API configuration.');
+    } else if (error.message && error.message.includes('MODEL_NOT_FOUND')) {
+      throw new Error(`AI model '${MODEL_NAME}' not found. Please check your model configuration.`);
+    } else if (error.message && error.message.includes('location is not supported')) {
+      throw new Error('Google Gemini service is not available in your region.');
+    } else {
+      throw new Error('I\'m unable to reach the AI service right now. Please try again, or contact CoZone support.');
+    }
   }
 };

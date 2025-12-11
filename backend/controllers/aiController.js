@@ -72,6 +72,29 @@ export const handleAIRequest = async (req, res) => {
       });
     }
     
+    // Handle specific AI service errors
+    if (error.message.includes("API_KEY_INVALID")) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid Google Gemini API key. Please contact support."
+      });
+    } else if (error.message.includes("MODEL_NOT_FOUND")) {
+      return res.status(400).json({
+        success: false,
+        message: `AI model not found. Please check model configuration.`
+      });
+    } else if (error.message.includes("location is not supported")) {
+      return res.status(400).json({
+        success: false,
+        message: "Google Gemini service is not available in your region."
+      });
+    } else if (error.message.includes("unable to reach the AI service")) {
+      return res.status(500).json({
+        success: false,
+        message: "I'm unable to reach the AI service right now. Please try again, or contact CoZone support."
+      });
+    }
+    
     // Handle general AI errors
     if (error.message.includes("AI service")) {
       return res.status(500).json({
