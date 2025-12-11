@@ -56,7 +56,7 @@ export const handleAIRequest = async (req, res) => {
   } catch (error) {
     console.error('Error in handleAIRequest:', error);
     
-    // Handle rate limit error specifically
+    // Handle specific error types
     if (error.message.includes("too many requests") || error.code === 'ERR_TOO_MANY_REQUESTS') {
       return res.status(429).json({
         success: false,
@@ -64,7 +64,23 @@ export const handleAIRequest = async (req, res) => {
       });
     }
     
-    // Return error response
+    // Handle AI service errors
+    if (error.message.includes("GEMINI_API_KEY is not configured")) {
+      return res.status(500).json({
+        success: false,
+        message: "AI service is not properly configured. Please contact support."
+      });
+    }
+    
+    // Handle general AI errors
+    if (error.message.includes("AI service")) {
+      return res.status(500).json({
+        success: false,
+        message: error.message
+      });
+    }
+    
+    // Return generic error response
     return res.status(500).json({
       success: false,
       message: "An error occurred while processing your request. Please try again later."

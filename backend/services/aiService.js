@@ -8,6 +8,11 @@ dotenv.config();
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const MODEL_NAME = process.env.AI_MODEL || 'models/gemini-1.5-flash'; // Use AI_MODEL from env or default
 
+// Validate required environment variables
+if (!GEMINI_API_KEY) {
+  console.error('GEMINI_API_KEY is not configured in environment variables');
+}
+
 /**
  * Process AI request using Google Gemini API with retry logic
  * @param {string} message - User message
