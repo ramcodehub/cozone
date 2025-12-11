@@ -33,7 +33,13 @@ const ServiceEnquiryModal = ({ serviceName, show, onClose }) => {
     };
 
     try {
-      const res = await fetch("https://cozone-backend.onrender.com/enquiry", {
+      // Use local backend URL during development, deployed URL in production
+      const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const backendUrl = isDevelopment 
+        ? 'http://localhost:5000/enquiry' 
+        : 'https://cozone.onrender.com/enquiry';
+        
+      const res = await fetch(backendUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

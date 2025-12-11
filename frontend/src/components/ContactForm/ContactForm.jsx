@@ -31,7 +31,13 @@ const ContactForm = () => {
   }
 
   try {
-    const res = await fetch("https://cozone-backend.onrender.com/contact", {
+    // Use local backend URL during development, deployed URL in production
+    const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const backendUrl = isDevelopment 
+      ? 'http://localhost:5000/contact' 
+      : 'https://cozone.onrender.com/contact';
+      
+    const res = await fetch(backendUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
