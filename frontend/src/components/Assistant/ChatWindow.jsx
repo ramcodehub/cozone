@@ -2,18 +2,21 @@ import { useState, useRef, useEffect } from 'react';
 import MessageBubble from './MessageBubble';
 import InitialScreen from './InitialScreen';
 import styles from './Assistant.module.css';
-import aiAssistantIcon from '../../assets/logos/aiassistant.webp';
+import aiAssistantIcon from '../../assets/logos/aiassistant.png';
 
-const ChatWindow = ({ onClose, onMinimize }) => {
+const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [error, setError] = useState(null);
-  const [isFullscreen, setIsFullscreen] = useState(false); // New state for fullscreen
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null); // For prompt modal
+  const [showPromptModal, setShowPromptModal] = useState(false); // For prompt modal
   const messagesEndRef = useRef(null);
   const recognitionRef = useRef(null);
   const sessionIdRef = useRef(null);
+  const chatWindowRef = useRef(null);
 
   // Initialize session ID
   useEffect(() => {
@@ -78,7 +81,7 @@ const ChatWindow = ({ onClose, onMinimize }) => {
   // Toggle voice input
   const toggleVoiceInput = () => {
     if (!recognitionRef.current) {
-      setError('Speech recognition is not supported in your browser. Please type your message.');
+      setError('Speech recognition is not supported in your browser. Please ask anything about Cozone.');
       return;
     }
     
@@ -107,6 +110,18 @@ const ChatWindow = ({ onClose, onMinimize }) => {
     }, 10);
   };
 
+  // Handle closing the prompt modal
+  const handleCloseModal = () => {
+    setShowPromptModal(false);
+    setSelectedCategory(null);
+  };
+
+  // Handle prompt click in modal
+  const handlePromptClick = (promptText) => {
+    handlePromptSelect(promptText);
+    handleCloseModal();
+  };
+
   // Handle sending a message
   const handleSend = async (customMessage = null) => {
     const messageToSend = customMessage || inputValue;
@@ -128,8 +143,14 @@ const ChatWindow = ({ onClose, onMinimize }) => {
     setIsLoading(true);
 
     try {
+      // Use local backend URL during development, deployed URL in production
+      const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const backendUrl = isDevelopment 
+        ? 'http://localhost:5000/api/ai' 
+        : 'https://cozone-backend.onrender.com/api/ai';
+
       // Call backend API
-      const response = await fetch('http://localhost:5000/api/ai', {
+      const response = await fetch(backendUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -153,23 +174,25 @@ const ChatWindow = ({ onClose, onMinimize }) => {
         };
         setMessages(prev => [...prev, botMessage]);
       } else {
-        // Add error message
+        // Add error message with typing animation
         const errorMessage = {
           id: messages.length + 2,
-          text: data.message || "I'm unable to reach the AI service right now. Please try again, or visit https://yvitech.com for details.",
+          text: data.message || "I'm receiving too many requests right now. Please try again in a moment.",
           sender: 'bot',
-          timestamp: new Date()
+          timestamp: new Date(),
+          isTyping: true // Enable typing animation for error messages
         };
         setMessages(prev => [...prev, errorMessage]);
       }
     } catch (error) {
       console.error('Error sending message:', error);
-      // Add error message
+      // Add error message with typing animation
       const errorMessage = {
         id: messages.length + 2,
-        text: "I'm unable to reach the AI service right now. Please try again, or visit https://yvitech.com for details.",
+        text: "I'm receiving too many requests right now. Please try again in a moment.",
         sender: 'bot',
-        timestamp: new Date()
+        timestamp: new Date(),
+        isTyping: true // Enable typing animation for error messages
       };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
@@ -192,11 +215,89 @@ const ChatWindow = ({ onClose, onMinimize }) => {
 
   // Toggle fullscreen mode
   const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
+    const newFullscreenState = !isFullscreen;
+    setIsFullscreen(newFullscreenState);
+    
+    // Apply styles directly to DOM elements for reliable fullscreen behavior
+    if (chatWindowRef.current && chatWindowWrapperRef && chatWindowWrapperRef.current) {
+      if (newFullscreenState) {
+        // Enter fullscreen
+        chatWindowWrapperRef.current.style.position = 'fixed';
+        chatWindowWrapperRef.current.style.top = '0';
+        chatWindowWrapperRef.current.style.left = '0';
+        chatWindowWrapperRef.current.style.width = '100vw';
+        chatWindowWrapperRef.current.style.height = '100vh';
+        chatWindowWrapperRef.current.style.maxHeight = '100vh';
+        chatWindowWrapperRef.current.style.bottom = 'auto';
+        chatWindowWrapperRef.current.style.right = 'auto';
+        chatWindowWrapperRef.current.style.zIndex = '10000';
+        
+        chatWindowRef.current.style.position = 'fixed';
+        chatWindowRef.current.style.top = '0';
+        chatWindowRef.current.style.left = '0';
+        chatWindowRef.current.style.width = '100vw';
+        chatWindowRef.current.style.height = '100vh';
+        chatWindowRef.current.style.maxHeight = '100vh';
+        chatWindowRef.current.style.borderRadius = '0';
+        chatWindowRef.current.style.zIndex = '10000';
+      } else {
+        // Exit fullscreen - reset to original styles
+        chatWindowWrapperRef.current.style.position = '';
+        chatWindowWrapperRef.current.style.top = '';
+        chatWindowWrapperRef.current.style.left = '';
+        chatWindowWrapperRef.current.style.width = '';
+        chatWindowWrapperRef.current.style.height = '';
+        chatWindowWrapperRef.current.style.maxHeight = '';
+        chatWindowWrapperRef.current.style.bottom = '';
+        chatWindowWrapperRef.current.style.right = '';
+        chatWindowWrapperRef.current.style.zIndex = '';
+        
+        chatWindowRef.current.style.position = '';
+        chatWindowRef.current.style.top = '';
+        chatWindowRef.current.style.left = '';
+        chatWindowRef.current.style.width = '';
+        chatWindowRef.current.style.height = '';
+        chatWindowRef.current.style.maxHeight = '';
+        chatWindowRef.current.style.borderRadius = '';
+        chatWindowRef.current.style.zIndex = '';
+      }
+    }
+  };
+
+  // Refresh chat - clear messages and show initial screen
+  const handleRefresh = () => {
+    setMessages([]);
+    setInputValue('');
+    setError(null);
+    setIsLoading(false);
+    
+    // Add a test message to demonstrate markdown formatting
+    // This will be removed in production
+    /*
+    const testMessage = {
+      id: 1,
+      text: "**Dedicated Desks** are perfect for individuals who need a consistent workspace. Here are the benefits:\n\n1. Personal storage space\n2. Ergonomic chair and desk\n3. 24/7 access to the facility\n4. High-speed internet and printing services",
+      sender: 'bot',
+      timestamp: new Date(),
+      isTyping: false
+    };
+    setTimeout(() => {
+      setMessages([testMessage]);
+    }, 500);
+    */
+  };
+
+  // Handle category click in InitialScreen
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+    setShowPromptModal(true);
   };
 
   return (
-    <div className={`${styles.chatWindow} ${isFullscreen ? styles.fullscreen : ''}`}>
+    <div 
+      ref={chatWindowRef}
+      className={`${styles.chatWindow} ${isFullscreen ? styles.fullscreen : ''}`}
+    >
       {/* Chat header */}
       <div className={styles.chatHeader}>
         <div className={styles.headerInfo}>
@@ -209,13 +310,17 @@ const ChatWindow = ({ onClose, onMinimize }) => {
           </div>
         </div>
         <div className={styles.headerActions}>
+          {/* Refresh button */}
           <button 
-            className={styles.minimizeButton} 
-            onClick={onMinimize}
-            aria-label="Minimize chat"
+            className={styles.refreshButton} 
+            onClick={handleRefresh}
+            aria-label="Refresh chat"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"/>
+              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+              <path d="M3 3v5h5"/>
+              <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
+              <path d="M16 16h5v5"/>
             </svg>
           </button>
           
@@ -228,7 +333,7 @@ const ChatWindow = ({ onClose, onMinimize }) => {
             {isFullscreen ? (
               // Minimize icon when in fullscreen
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>
+                <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
               </svg>
             ) : (
               // Expand icon when not in fullscreen
@@ -267,7 +372,7 @@ const ChatWindow = ({ onClose, onMinimize }) => {
       {/* Chat messages or InitialScreen */}
       <div className={styles.messagesContainer}>
         {messages.length === 0 && !isLoading ? (
-          <InitialScreen onExampleClick={handlePromptSelect} />
+          <InitialScreen onExampleClick={handlePromptSelect} onCategoryClick={handleCategoryClick} />
         ) : (
           <>
             {messages.map((message) => (
@@ -279,9 +384,6 @@ const ChatWindow = ({ onClose, onMinimize }) => {
           
             {isLoading && (
               <div className={`${styles.messageBubble} ${styles.botMessage}`}>
-                <div className={styles.botAvatarSmall}>
-                  <img src={aiAssistantIcon} alt="AI Assistant" />
-                </div>
                 <div className={styles.messageContent}>
                   <div className={styles.typingIndicator}>
                     <div className={styles.typingDot}></div>
@@ -291,11 +393,43 @@ const ChatWindow = ({ onClose, onMinimize }) => {
                 </div>
               </div>
             )}
+
+            <div ref={messagesEndRef} />
           </>
         )}
-        
-        <div ref={messagesEndRef} />
       </div>
+
+      {/* Prompt Modal */}
+      {showPromptModal && (
+        <>
+          <div className={styles.promptModalActions}>
+            <button 
+              className={styles.backButton} 
+              onClick={handleCloseModal}
+              aria-label="Back to categories"
+            >
+              ← Back
+            </button>
+          </div>
+          <div className={styles.promptModalList}>
+            <div className={styles.minimalPromptList}>
+              {selectedCategory?.prompts.map((prompt, index) => (
+                <div key={prompt.id} className={styles.promptItemWrapper}>
+                  <button 
+                    className={styles.minimalPromptButton}
+                    onClick={() => handlePromptClick(prompt.text)}
+                  >
+                    {prompt.text}
+                  </button>
+                  {index !== selectedCategory.prompts.length - 1 && (
+                    <div className={styles.promptDivider}></div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Chat input */}
       <div className={styles.inputContainer}>
@@ -305,7 +439,7 @@ const ChatWindow = ({ onClose, onMinimize }) => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Type your message..."
+            placeholder="Ask anything about Cozone..."
             rows="1"
             disabled={isLoading}
           />

@@ -6,7 +6,7 @@
 
   box-sizing: border-box;
   padding: 1rem 3rem;
-  z-index: 999;      /* increase above mobile menu */
+  z-index: 999;      /* Lower than chat widget */
   
   transition: transform 0.5s ease-in-out, background-color 0.3s ease;
 }

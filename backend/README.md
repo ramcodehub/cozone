@@ -165,7 +165,7 @@ Submit AI chatbot requests.
 }
 ```
 
-For the AI chatbot, it's already configured to use `http://localhost:5000/api/ai`.
+For the AI chatbot, it's already configured to use `https://cozone-backend.onrender.com/api/ai`.
 
 ## Database Schema
 

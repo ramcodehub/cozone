@@ -22,7 +22,7 @@ Add the following to your `.env` file:
 AI_PROVIDER=gemini # or 'openai'
 GEMINI_API_KEY=your_gemini_api_key
 OPENAI_API_KEY=your_openai_api_key
-AI_MODEL=gemini-pro # or 'gpt-3.5-turbo', 'gpt-4', etc.
+AI_MODEL=models/gemini-1.5-flash # Using the stable 1.5 flash model with higher quota
 ```
 
 ### 3. API Keys
@@ -71,7 +71,7 @@ backend/
 │   └── aiService.js
 ├── utils/
 │   └── sanitizeInput.js
-├── .env.example
+├── .env.example               # Environment template
 └── server.js (updated)
 
 frontend/
@@ -88,42 +88,3 @@ frontend/
 ## API Endpoints
 
 - `POST /api/ai` - Handle AI assistant requests
-
-## Features Implemented
-
-1. Floating chat widget positioned above WhatsApp button
-2. Full chat panel with:
-   - Chat history
-   - Typing indicator
-   - Bot avatar and CoZone branding
-   - Smooth animations (Framer Motion)
-   - Responsive mobile UI
-3. Backend with:
-   - AI service supporting both Gemini and OpenAI
-   - Input/output sanitization
-   - Conversation memory per session
-   - Error handling and fallback messages
-4. Configurable settings for:
-   - Assistant name
-   - API key
-   - System prompt
-   - Temperature & model
-
-## Optional Improvements
-
-1. **Voice Input**: Add speech-to-text functionality using the Web Speech API
-2. **Dark Mode**: Implement theme switching based on user preference
-3. **Memory Persistence**: Store conversation history in localStorage or a database
-4. **Analytics**: Track user interactions for improvement insights
-5. **Multilingual Support**: Add language selection for international users
-
-## Troubleshooting
-
-### CORS Issues
-Ensure the backend CORS configuration allows requests from the frontend origin (http://localhost:5173).
-
-### API Key Errors
-Verify that your API keys are correctly set in the `.env` file and have the necessary permissions.
-
-### Connection Issues
-Check that both frontend and backend servers are running on their respective ports (5173 for frontend, 5000 for backend).

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import styles from './Assistant.module.css';
 
 const MessageBubble = ({ message }) => {
@@ -38,32 +39,29 @@ const MessageBubble = ({ message }) => {
 
   return (
     <div className={`${styles.messageBubble} ${message.sender === 'user' ? styles.userMessage : styles.botMessage}`}>
-      {message.sender === 'bot' && (
-        <div className={styles.botAvatarSmall}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/>
-          </svg>
-        </div>
-      )}
+      {/* Removed bot avatar/icon */}
       
       <div className={styles.messageContent}>
-        <p className={styles.messageText}>
-          {displayedText}
+        <div className={styles.messageText}>
+          {message.sender === 'bot' ? (
+            <ReactMarkdown components={{
+              strong: ({...props}) => <strong {...props} />,
+              ol: ({...props}) => <ol {...props} className={styles.markdownList} />,
+              li: ({...props}) => <li {...props} className={styles.markdownListItem} />
+            }}>
+              {displayedText}
+            </ReactMarkdown>
+          ) : (
+            displayedText
+          )}
           {message.sender === 'bot' && message.isTyping && (
             <span className={styles.cursor}>|</span>
           )}
-        </p>
+        </div>
         <span className={styles.messageTime}>{formatTime(message.timestamp)}</span>
       </div>
       
-      {message.sender === 'user' && (
-        <div className={styles.userAvatar}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-            <circle cx="12" cy="7" r="4"/>
-          </svg>
-        </div>
-      )}
+      {/* Removed user avatar/icon */}
     </div>
   );
 };
