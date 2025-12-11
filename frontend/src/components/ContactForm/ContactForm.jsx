@@ -19,42 +19,46 @@ const ContactForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setStatusMsg(null);
+  e.preventDefault();
+  setLoading(true);
+  setStatusMsg(null);
 
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+  // --- Validate 10-digit phone ---
+  if (!/^\d{10}$/.test(formData.phone)) {
+    setStatusMsg({ type: "error", text: "Phone number must be 10 digits." });
+    setLoading(false);
+    return;
+  }
 
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || `HTTP error! status: ${res.status}`);
-      }
+  try {
+    const res = await fetch("https://cozone-backend.onrender.com/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
 
-      const data = await res.json();
-      setStatusMsg({ type: "success", text: data.message || "Submitted successfully!" });
-      setFormData({
-        fullName: "",
-        email: "",
-        companyName: "",
-        phone: "",
-        message: "",
-      });
-    } catch (err) {
-      // Check if it's a network error
-      if (err instanceof TypeError && err.message === 'Failed to fetch') {
-        setStatusMsg({ type: "error", text: "Network error. Please check your connection and try again." });
-      } else {
-        setStatusMsg({ type: "error", text: err.message || "Error submitting form. Please try again." });
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+    if (!res.ok) throw new Error("Network error");
+
+    const data = await res.json();
+    setStatusMsg({ type: "success", text: data.message || `Thank you ${formData.fullName}, we received your concern, our team will contact you very soon.` });
+
+    setFormData({
+      fullName: "",
+      email: "",
+      companyName: "",
+      phone: "",
+      message: "",
+    });
+  } catch (err) {
+    setStatusMsg({ type: "error", text: "Error submitting form. Please try again." });
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+
 
   return (
     <section id="contact-form">
@@ -99,10 +103,9 @@ const ContactForm = () => {
             <input
               name="companyName"
               type="text"
-              placeholder="Company name *"
+              placeholder="Company name (Optional)"
               value={formData.companyName}
               onChange={handleChange}
-              required
             />
             <input
               name="phone"
@@ -120,7 +123,6 @@ const ContactForm = () => {
             rows="6"
             value={formData.message}
             onChange={handleChange}
-            required
           />
 
           <div className="actions">

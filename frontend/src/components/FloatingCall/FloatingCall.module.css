@@ -65,8 +65,8 @@
 
 @media (max-width: 768px) {
   .floatingContainer {
-    bottom: 150px; /* Adjusted for mobile */
-    right: 15px;
+    bottom: 170px; /* Adjusted to properly stack above WhatsApp */
+    right: 20px;
   }
   
   .floatingButton {
@@ -75,7 +75,7 @@
   }
   
   .tooltip {
-    right: 55px; /* Changed back to right */
+    right: 55px;
     font-size: 12px;
     padding: 4px 8px;
   }
@@ -83,8 +83,8 @@
 
 @media (max-width: 480px) {
   .floatingContainer {
-    bottom: 140px; /* Adjusted for small screens */
-    right: 10px;
+    bottom: 160px; /* Adjusted for smaller screens */
+    right: 20px;
   }
   
   .floatingButton {
@@ -93,7 +93,7 @@
   }
   
   .tooltip {
-    right: 50px; /* Changed back to right */
+    right: 50px;
     font-size: 11px;
     padding: 3px 6px;
   }

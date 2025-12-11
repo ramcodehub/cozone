@@ -60,7 +60,7 @@ frontend/src/components/Assistant/
 
 ### 1. Google Gemini Integration
 - Uses official `@google/generative-ai` SDK
-- Implements `gemini-1.5-flash` model for fast responses
+- Implements `models/gemini-1.5-flash` model for fast responses with highest free quota
 - Maintains conversation history through chat sessions
 - Applies system prompt for consistent behavior
 

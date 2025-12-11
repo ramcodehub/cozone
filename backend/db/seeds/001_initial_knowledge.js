@@ -1,11 +1,21 @@
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-dotenv.config();
+// Get the directory name in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load environment variables from the correct path
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 // Initialize Supabase client
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
+
+console.log('Supabase URL:', supabaseUrl);
+console.log('Supabase Service Key exists:', !!supabaseServiceKey);
 
 if (!supabaseUrl || !supabaseServiceKey) {
   throw new Error('Supabase URL and Service Key are required in environment variables');
