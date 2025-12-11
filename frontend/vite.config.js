@@ -8,17 +8,17 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'https://cozone-backend.onrender.com',
+        target: 'https://cozone.onrender.com',
         changeOrigin: true,
         secure: false,
       },
       '/contact': {
-        target: 'https://cozone-backend.onrender.com',
+        target: 'https://cozone.onrender.com',
         changeOrigin: true,
         secure: false,
       },
       '/enquiry': {
-        target: 'https://cozone-backend.onrender.com',
+        target: 'https://cozone.onrender.com',
         changeOrigin: true,
         secure: false,
       }

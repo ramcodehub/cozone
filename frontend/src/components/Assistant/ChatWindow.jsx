@@ -147,7 +147,7 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
       const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
       const backendUrl = isDevelopment 
         ? 'http://localhost:5000/api/ai' 
-        : 'https://cozone-backend.onrender.com/api/ai';
+        : 'https://cozone.onrender.com/api/ai';
 
       // Call backend API
       const response = await fetch(backendUrl, {
