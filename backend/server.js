@@ -1,6 +1,14 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+// Debug environment variables
+console.log('Environment Variables Debug:');
+console.log('- GEMINI_API_KEY present:', !!process.env.GEMINI_API_KEY);
+console.log('- GEMINI_API_KEY length:', process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.length : 0);
+console.log('- AI_MODEL:', process.env.AI_MODEL || 'Not set');
+console.log('- SUPABASE_URL present:', !!process.env.SUPABASE_URL);
+console.log('- PORT:', process.env.PORT || 'Not set');
+
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
