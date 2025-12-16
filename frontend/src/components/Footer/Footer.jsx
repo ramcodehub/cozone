@@ -21,17 +21,17 @@ const Footer = () => {
                 Have any query? contact us we are here for you.
               </p>
               <div className="d-flex justify-content-center gap-3 social-media-links">
-                <a href="#" className="text-white fs-5">
+                <a href="https://x.com/CozoneServices" className="text-white fs-5">
                   <img src={X} alt="" width='22px' className="mb-1" />
                 </a>
-                <a href="#" className="text-white fs-5">
+                <a href="https://www.instagram.com/cozoneservices/" className="text-white fs-5">
                   <i className="bi bi-instagram"></i>
                 </a>
                 <a href="#" className="text-white fs-5">
                   <i className="bi bi-linkedin"></i>
                 </a>
                 <a href="#" className="text-white fs-5">
-                  <i className="bi bi-youtube"></i>
+                  <i className="bi bi-facebook"></i>
                 </a>
               </div>
             </div>
