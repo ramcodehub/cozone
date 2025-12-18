@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+Disallow: 
+
+Sitemap: https://cozone.com/sitemap.xml
+
+User-agent: Googlebot
+Allow: /
+Disallow: 
+
+User-agent: Bingbot
+Allow: /
+Disallow: 
+
+User-agent: Slurp
+Allow: /
+Disallow: 
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: 
+
+Host: cozone.com

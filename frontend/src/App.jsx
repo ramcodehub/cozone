@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import './App.css';
@@ -28,8 +28,16 @@ import FloatingWhatsApp from './components/FloatingWhatsApp/FloatingWhatsApp';
 import FloatingCall from './components/FloatingCall/FloatingCall';
 import ChatWidget from './components/Assistant/ChatWidget';
 
+// SEO Utilities
+import { updateMetaTags, pageSEOMetadata } from './utils/seoUtils';
+
 function App() {
+  const location = useLocation();
+  
   useEffect(() => {
+    // Update SEO metadata based on current route
+    updateSEOMetadata(location.pathname);
+    
     const isMobile = window.innerWidth < 768;
 
     if (isMobile) {
@@ -47,7 +55,52 @@ function App() {
     });
 
     AOS.refresh();
-  }, []);
+  }, [location]);
+  
+  // Update SEO metadata based on pathname
+  const updateSEOMetadata = (pathname) => {
+    let seoData;
+    
+    switch (pathname) {
+      case '/':
+        seoData = pageSEOMetadata.home;
+        break;
+      case '/about':
+        seoData = pageSEOMetadata.about;
+        break;
+      case '/amenities':
+        seoData = pageSEOMetadata.amenities;
+        break;
+      case '/plans':
+        seoData = pageSEOMetadata.plans;
+        break;
+      case '/gallery':
+        seoData = pageSEOMetadata.gallery;
+        break;
+      case '/day-pass':
+        seoData = pageSEOMetadata.dayPass;
+        break;
+      case '/private-cabins':
+        seoData = pageSEOMetadata.privateCabins;
+        break;
+      case '/dedicated-desk':
+        seoData = pageSEOMetadata.dedicatedDesk;
+        break;
+      case '/conference-rooms':
+        seoData = pageSEOMetadata.conferenceRooms;
+        break;
+      case '/virtual-zone':
+        seoData = pageSEOMetadata.virtualZone;
+        break;
+      case '/custom-built-office':
+        seoData = pageSEOMetadata.customBuiltOffice;
+        break;
+      default:
+        seoData = pageSEOMetadata.home;
+    }
+    
+    updateMetaTags(seoData);
+  };
 
   return (
     <>

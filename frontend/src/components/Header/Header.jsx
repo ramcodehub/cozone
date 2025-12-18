@@ -37,15 +37,15 @@ const Header = () => {
       `}
     >
 
-      <NavLink to='/'><img src={logo} alt="Logo" /></NavLink>
+      <NavLink to='/' aria-label="CoZone Homepage"><img src={logo} alt="CoZone - Premium Coworking Spaces" loading="eager" width="80" height="80" /></NavLink>
 
       <nav className="d-flex justify-content-between header-nav d-none d-lg-flex">
         <ul className="list-unstyled m-0 p-0 d-flex gap position-relative">
-          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/">Home</NavLink></li>
-          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/about">About</NavLink></li>
-          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/amenities">Amenities</NavLink></li>
-          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/plans">Services</NavLink></li>
-          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/gallery">GalleryZone</NavLink></li>
+          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/" aria-label="Homepage">Home</NavLink></li>
+          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/about" aria-label="About CoZone">About</NavLink></li>
+          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/amenities" aria-label="Amenities at CoZone">Amenities</NavLink></li>
+          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/plans" aria-label="CoZone Services and Plans">Services</NavLink></li>
+          <li><NavLink className="d-flex align-items-baseline text-decoration-none fw-medium header-link" to="/gallery" aria-label="CoZone Gallery">GalleryZone</NavLink></li>
         </ul>
       </nav>
 
