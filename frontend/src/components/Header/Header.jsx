@@ -37,7 +37,7 @@ const Header = () => {
       `}
     >
 
-      <NavLink to='/' aria-label="CoZone Homepage"><img src={logo} alt="CoZone - Premium Coworking Spaces" loading="eager" width="80" height="80" /></NavLink>
+      <NavLink to='/' aria-label="CoZone Homepage"><img src={logo} alt="CoZone - Premium Coworking Spaces" loading="eager"/></NavLink>
 
       <nav className="d-flex justify-content-between header-nav d-none d-lg-flex">
         <ul className="list-unstyled m-0 p-0 d-flex gap position-relative">
