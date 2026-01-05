@@ -157,7 +157,7 @@ const Header = () => {
                 onMouseLeave={() => setActiveService(null)}
               >
                 {/* LEFT */}
-                <div className="mega-left " style={{borderRight:'1px solid #grey'}}>
+                <div className="mega-left " style={{borderRight:'1px solid grey'}}>
                   <h3>Our Services</h3>
                   <ul className="list-unstyled">
                     {servicesData.map((service) => (
@@ -184,7 +184,7 @@ const Header = () => {
                     />
                   )}  
                 </div>
- )}  
+                )}  
                 {/* RIGHT */}
                 <div className="mega-right d-flex flex-column justify-content-center">
                   {!activeService ? (
