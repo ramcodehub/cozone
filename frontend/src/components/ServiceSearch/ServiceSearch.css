@@ -1,6 +1,5 @@
 .service-search {
   position: relative;
-  max-width: 700px;
   display: flex;
   gap: 10px;
 }
@@ -77,6 +76,6 @@ mark {
   }
 
   .search-btn {
-    width: 100%;
+    display: none;
   }
 }

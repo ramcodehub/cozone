@@ -1,0 +1,13 @@
+@media (min-width: 1400px){
+.search-positioning{
+    bottom: -20% !important;
+
+}
+}
+
+@media (max-width: 576px){
+    .search-positioning{
+        padding: 0.6rem !important;
+        bottom: -10% !important;
+    }
+}

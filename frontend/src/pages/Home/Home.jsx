@@ -14,9 +14,9 @@ const Home = () => {
   return (
     <div className='home d-flex flex-column gap-2'>
      <div className='pb-5'>
-       <div className='position-relative'>
+       <div className='position-relative '>
          <HomeHero/>
-         <div className='position-absolute p-5 rounded-4  margin-auto' style={{bottom:'-25%', left: '50%', width:'63%', backgroundColor:'white', transform: 'translate(-50%, -50%)'}}>
+         <div className='search-positioning position-absolute p-5 rounded-4  margin-auto' style={{bottom:'-25%', left: '50%', width:'63%', backgroundColor:'white', transform: 'translate(-50%, -50%)'}}>
           <ServiceSearch className="w-100" />
         </div>
        </div>
