@@ -2,8 +2,10 @@ import React from 'react'
 import Hero from '../../components/Hero/Hero'
 import WhyChooseUs from '../../components/WhyChooseUs/WhyChooseUs'
 import img from '../../assets/img/hero.jpg'
+import HomeHero from '../../components/HomeHero/HomeHero'
 import Services from '../../components/Services/Services'
 import ImageTextSection from '../../components/ImageTextSection/ImageTextSection'
+import ServiceSearch from '../../components/ServiceSearch/ServiceSearch'
 import ContactForm from '../../components/ContactForm/ContactForm'
 import Map from '../../components/Map/Map'
 import './Home.css'
@@ -11,9 +13,16 @@ import './Home.css'
 const Home = () => {
   return (
     <div className='home d-flex flex-column gap-2'>
-      <Hero  heading='Collaborate in Your Perfect Zone'
-            content='Transform the way you work together. Cozone brings teams closer with seamless collaboration tools and modern workspace solutions.'
-            image={img}/>
+     <div className='pb-5'>
+       <div className='position-relative'>
+         <HomeHero/>
+         <div className='position-absolute p-5 rounded-4  margin-auto' style={{bottom:'-25%', left: '50%', width:'63%', backgroundColor:'white', transform: 'translate(-50%, -50%)'}}>
+          <ServiceSearch className="w-100" />
+        </div>
+       </div>
+       
+        
+     </div>
       <WhyChooseUs/>
       <div>
         <ImageTextSection
