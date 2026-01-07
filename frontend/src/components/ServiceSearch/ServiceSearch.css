@@ -2,6 +2,7 @@
   position: relative;
   display: flex;
   gap: 10px;
+  z-index: 99999 !important; 
 }
 
 .service-search input {
@@ -29,18 +30,21 @@
   right: 4px;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 1;
 }
 
 /* Dropdown */
 .suggestions {
   position: absolute;
-  top: 110%;
+  top: 100%;
+  left: 0;
   width: 100%;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   padding: 8px 0;
-  z-index: 100;
+  z-index: 99999 !important;
+  margin-top: 5px;
 }
 
 .group-title {
