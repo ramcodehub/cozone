@@ -9,7 +9,7 @@
 /* Video Wrapper */
 .video-wrapper {
   position: absolute;
-  inset: 10px;
+  inset: 5px 10px 10px;
   border-radius: 16px;
   overflow: hidden;
   z-index: -2;

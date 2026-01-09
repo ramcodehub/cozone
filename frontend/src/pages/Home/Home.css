@@ -1,5 +1,5 @@
 .search-positioning {
-  z-index: 100000 !important;
+  z-index: 100 !important;
 }
 
 @media (min-width: 1400px){
