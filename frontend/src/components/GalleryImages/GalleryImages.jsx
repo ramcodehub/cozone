@@ -12,6 +12,12 @@ import img6 from '../../assets/img/111.jpg'
 import img7 from '../../assets/img/1111.jpg'
 import img8 from '../../assets/img/tallest.jpg'
 import img9 from '../../assets/img/tallern.jpg'
+import image1 from '../../assets/img/CoZone_Workspace/WaitingChairs.jpg';
+import image2 from '../../assets/img/CoZone_Workspace/DedicatedDesks.jpg';
+import image3 from '../../assets/img/CoZone_Workspace/LogoDesk.jpg';
+import image4 from '../../assets/img/CoZone_Workspace/Reception.jpg';
+import image5 from '../../assets/img/ConferenceRoom.jpeg';
+import image6 from '../../assets/img/OfficeRoom.jpeg';
 import img10 from '../../assets/img/1699.jpg'
 import img111 from '../../assets/img/16999.jpg'
 import img12 from '../../assets/img/taller2.jpg'
@@ -40,7 +46,7 @@ const GalleryImages = () => {
         <div className="row gx-4 gy-4">
           <div className="col-md-4">
             <div className="gallery-block" data-aos="fade-right" data-aos-delay='400'>
-                <img src={img11o} alt="" />
+                <img src={image3} alt="" />
             </div>
           </div>
           <div className="col-md-8">
@@ -56,17 +62,17 @@ const GalleryImages = () => {
             <div className="row gx-4 gy-4">
               <div className="col-12">
                 <div className="gallery-block" data-aos="fade-right">
-                    <img src={img1699} alt="" />
+                    <img src={image5} alt="" />
                 </div>
               </div>
               <div className="col-6">
                 <div className="gallery-block small" data-aos="fade-up">
-                    <img src={img11n} alt="" />
+                    <img src={image6} alt="" />
                 </div>
               </div>
               <div className="col-6">
                 <div className="gallery-block small" data-aos="fade-up" data-aos-delay='200'>
-                    <img src={img11p} alt="" />
+                    <img src={image4} alt="" />
                 </div>
               </div>
             </div>
@@ -114,12 +120,12 @@ const GalleryImages = () => {
             <div className="row gx-4 gy-4">
               <div className="col-12">
                 <div className="gallery-block" data-aos="fade-left">
-                    <img src={img11_2} alt="" />
+                    <img src={image1} alt="" />
                 </div>
               </div>
               <div className="col-12 mt-4">
                 <div className="gallery-block tallest" data-aos="fade-left">
-                    <img src={img916} alt="" />
+                    <img src={image2} alt="" />
                 </div>
               </div>
             </div>
