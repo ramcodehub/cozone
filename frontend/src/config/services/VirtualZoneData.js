@@ -1,6 +1,6 @@
-import img1 from "../../assets/img/service-images/virtualzone2.jpg";
-import img2 from "../../assets/img/service-images/virtualzone2.jpg";
-import img3 from "../../assets/img/service-images/virtualzone2.jpg";
+import img1 from "../../assets/img/CoZone_Workspace/Reception.jpg";
+import img2 from "../../assets/img/Asiansuncity.jpeg";
+import img3 from "../../assets/img/service-images/virtualzone2.jpeg";
 
 const VirtualZoneData = {
   sections: [
@@ -20,7 +20,7 @@ const VirtualZoneData = {
               "Professional business address"
             ],
 
-            images: [img1, img2, img3],
+            images: [img1 , img2 , img3],
           },
         
       },

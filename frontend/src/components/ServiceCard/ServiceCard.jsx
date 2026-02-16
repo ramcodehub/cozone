@@ -24,7 +24,7 @@ export default function ServiceCard({ data }) {
             </ul>
           </div>
 
-          <div className="large img-wrapper" data-aos="fade-up" data-aos-delay='600'>
+         <div className="large img-wrapper" data-aos="fade-up" data-aos-delay='600'>
             <img src={data.images[0]} alt="main" />
           </div>
 

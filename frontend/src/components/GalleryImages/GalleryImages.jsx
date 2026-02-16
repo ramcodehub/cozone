@@ -10,7 +10,7 @@ import image3 from '../../assets/img/CoZone_Workspace/LogoDesk.jpg';
 import image4 from '../../assets/img/CoZone_Workspace/Reception.jpg';
 import image5 from '../../assets/img/ConferenceRoom.jpeg';
 import image6 from '../../assets/img/OfficeRoom.jpeg';
-import img1 from '../../assets/img/service-images/privatecabin4.jpg'
+import img1 from '../../assets/img/916.jpeg'
 import img11 from '../../assets/img/service-images/custombuiltofficespace4.jpg'
 
 

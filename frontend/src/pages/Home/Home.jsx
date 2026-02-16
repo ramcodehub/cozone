@@ -1,6 +1,7 @@
 import React from 'react'
 import Hero from '../../components/Hero/Hero'
 import WhyChooseUs from '../../components/WhyChooseUs/WhyChooseUs'
+import Amenities from '../../assets/img/AmenitiesHero3.png'
 import img from '../../assets/img/hero.jpg'
 import HomeHero from '../../components/HomeHero/HomeHero'
 import Services from '../../components/Services/Services'
@@ -32,7 +33,7 @@ const Home = () => {
         to='/about'
       />
       <ImageTextSection
-        image="https://placehold.co/1500x800"
+        image={Amenities}
         title="Everything You Need to Work Better"
         text="Explore all the amenities that make your workday seamless—high-speed WiFi, meeting rooms, 24/7 power backup, ergonomic seating, refreshments, and much more. Designed for comfort, productivity, and creativity."
         reverse={true}

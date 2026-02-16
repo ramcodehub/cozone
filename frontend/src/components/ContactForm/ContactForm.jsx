@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Img from "../../assets/img/custombuiltofficespace4.jpg";
+import Img from "../../assets/img/ContactImg.jpeg";
 import "./ContactForm.css";
 
 const ContactForm = () => {
