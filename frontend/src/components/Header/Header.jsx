@@ -7,7 +7,7 @@ import "./Header.css";
 import VirtualZone from '../../assets/img/service-images/virtualzone2.jpg';
 import ConferenceRooms from '../../assets/img/service-images/conferencerooms2.jpg';
 import DayPass from '../../assets/img/service-images/daypass1.jpg';
-import DedicatedDesk from '../../assets/img/service-images/dedicateddesk4.jpg';
+import DedicatedDesk from '../../assets/img/service-images/dedicateddesk3.jpeg';
 import PrivateCabin from '../../assets/img/service-images/privatecabin1.jpg';
 import CustomBuiltOfficeSpace from '../../assets/img/service-images/custombuiltofficespace1.jpg';
  
