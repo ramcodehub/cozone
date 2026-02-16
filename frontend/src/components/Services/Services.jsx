@@ -1,11 +1,11 @@
 import React from 'react'
 import Button from '../Button/Button'
-import PrivateCabin from '../../assets/img/service-images/privatecabin4.jpg'
-import DedicatedDesk from '../../assets/img/service-images/dedicateddesk1.jpeg'
-import ConferenceRoom from '../../assets/img/service-images/conferencerooms4.jpg'
-import VirtualZone from '../../assets/img/service-images/virtualzone1.jpg'
-import CustomBuiltSpaces from '../../assets/img/service-images/custombuiltofficespace4.jpg'
-import DayPass from '../../assets/img/service-images/daypass2.jpg'
+import PrivateCabin from '../../assets/img/service-images/privatecabin5.jpeg'
+import DedicatedDesk from '../../assets/img/service-images/dedicateddesk5.jpeg'
+import ConferenceRoom from '../../assets/img/service-images/conferencerooms1.jpg'
+import VirtualZone from '../../assets/img/CoZone_Workspace/Reception.jpg'
+import CustomBuiltSpaces from '../../assets/img/service-images/custombuiltofficespace5.jpeg'
+import DayPass from '../../assets/img/service-images/daypass3.jpg'
 import './Services.css'
 
 const Services = () => {

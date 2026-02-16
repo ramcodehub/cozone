@@ -1,5 +1,5 @@
-import img1 from "../../assets/img/service-images/dedicateddesk4.jpg";
-import img2 from "../../assets/img/service-images/dedicateddesk4.jpg";
+import img1 from "../../assets/img/service-images/dedicateddesk3.jpeg";
+import img2 from "../../assets/img/service-images/dedicateddesk5.jpeg";
 import img3 from "../../assets/img/service-images/dedicateddesk4.jpg";
 
 const DedicatedDeskData = {

@@ -16,7 +16,7 @@ import img11 from '../../assets/img/service-images/custombuiltofficespace4.jpg'
 
 import img169 from '../../assets/img/gallery/169.jpg';
 import cine from '../../assets/img/gallery/cinescope2.jpg';
-import img16999 from '../../assets/img/gallery/16999.jpg';
+import img16999 from '../../assets/img/gallery/16999.jpeg';
 
 
 

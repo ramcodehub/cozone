@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../Button/Button";
-import Img1 from '../../assets/img/img1.jpg'
-import Img2 from '../../assets/img/img22.webp'
+import Img1 from '../../assets/img/CoZone_Workspace/LogoDesk.jpg'
+import Img2 from '../../assets/img/service-images/custombuiltofficespace5.jpeg'
 import Img3 from '../../assets/img/img3.jpg'
 
 
