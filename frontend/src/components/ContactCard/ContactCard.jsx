@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Button from "../Button/Button";
 import ServiceEnquiryModal from "../ServiceEnquiryModal/ServiceEnquiryModal";
 import Img from '../../assets/img/contactcard.jpg'
-import Img1 from '../../assets/img/contactcardbg.jpg'
 import "./ContactCard.css";
 import { useNavigate } from "react-router-dom";
 

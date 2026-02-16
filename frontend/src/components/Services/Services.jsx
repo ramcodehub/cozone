@@ -5,7 +5,7 @@ import DedicatedDesk from '../../assets/img/service-images/dedicateddesk1.jpeg'
 import ConferenceRoom from '../../assets/img/service-images/conferencerooms4.jpg'
 import VirtualZone from '../../assets/img/service-images/virtualzone1.jpg'
 import CustomBuiltSpaces from '../../assets/img/service-images/custombuiltofficespace4.jpg'
-import DayPass from '../../assets/img/service-images/daypass2.webp'
+import DayPass from '../../assets/img/service-images/daypass2.jpg'
 import './Services.css'
 
 const Services = () => {

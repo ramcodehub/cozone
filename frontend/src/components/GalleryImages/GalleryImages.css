@@ -26,23 +26,23 @@
 
 
 .gallery-block.small {
-  height: 280px;
+  height: 300px;
 }
 
 .gallery-block.tall {
-  height: 530px;
+  height: 550px;
 }
 
 .gallery-block.taller {
-  height: 584px;
+  height: 604px;
 }
 
 .gallery-block.tallest {
-  height: 538px;
+  height: 558px;
 }
 
 .gallery-block.wide {
-  height: 330px;
+  height: 350px;
 }
 
 .gallery-block img {

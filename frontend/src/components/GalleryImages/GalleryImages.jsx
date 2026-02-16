@@ -3,14 +3,6 @@ import "./GalleryImages.css";
 import img from '../../assets/img/img.jpg'
 // import img from '../../assets/img/imgn.jpg'
 
-import img19 from '../../assets/img/tall.jpg'
-import img2 from '../../assets/img/32.jpg'
-import img3 from '../../assets/img/169.jpg'
-import img4 from '../../assets/img/cricket.jpg'
-import img5 from '../../assets/img/11.jpg'
-import img6 from '../../assets/img/111.jpg'
-import img7 from '../../assets/img/1111.jpg'
-import img8 from '../../assets/img/tallest.jpg'
 import img9 from '../../assets/img/tallern.jpg'
 import image1 from '../../assets/img/CoZone_Workspace/WaitingChairs.jpg';
 import image2 from '../../assets/img/CoZone_Workspace/DedicatedDesks.jpg';
@@ -18,21 +10,12 @@ import image3 from '../../assets/img/CoZone_Workspace/LogoDesk.jpg';
 import image4 from '../../assets/img/CoZone_Workspace/Reception.jpg';
 import image5 from '../../assets/img/ConferenceRoom.jpeg';
 import image6 from '../../assets/img/OfficeRoom.jpeg';
-import img10 from '../../assets/img/1699.jpg'
-import img111 from '../../assets/img/16999.jpg'
-import img12 from '../../assets/img/taller2.jpg'
 import img1 from '../../assets/img/service-images/privatecabin4.jpg'
 import img11 from '../../assets/img/service-images/custombuiltofficespace4.jpg'
 
 
-import img11_2 from '../../assets/img/gallery/11(2).jpg';
-import img11n from '../../assets/img/gallery/11.jpg';
 import img169 from '../../assets/img/gallery/169.jpg';
-import img916 from '../../assets/img/gallery/916.jpg';
-import img1699 from '../../assets/img/gallery/1699.png';
 import cine from '../../assets/img/gallery/cinescope2.jpg';
-import img11o from '../../assets/img/gallery/111.jpg';
-import img11p from '../../assets/img/gallery/1111.jpg';
 import img16999 from '../../assets/img/gallery/16999.jpg';
 
 

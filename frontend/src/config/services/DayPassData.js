@@ -1,6 +1,6 @@
-import img1 from "../../assets/img/service-images/daypass1.webp";
-import img2 from "../../assets/img/service-images/daypass2.webp";
-import img3 from "../../assets/img/service-images/daypass3.jpeg";
+import img1 from "../../assets/img/service-images/daypass1.jpg";
+import img2 from "../../assets/img/service-images/daypass2.jpg";
+import img3 from "../../assets/img/service-images/daypass3.jpg";
 
 const DayPassData = {
   sections: [

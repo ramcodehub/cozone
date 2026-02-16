@@ -1,6 +1,6 @@
-import img1 from "../../assets/img/service-images/dedicateddesk4.jpeg";
-import img2 from "../../assets/img/service-images/dedicateddesk4.jpeg";
-import img3 from "../../assets/img/service-images/dedicateddesk4.jpeg";
+import img1 from "../../assets/img/service-images/dedicateddesk4.jpg";
+import img2 from "../../assets/img/service-images/dedicateddesk4.jpg";
+import img3 from "../../assets/img/service-images/dedicateddesk4.jpg";
 
 const DedicatedDeskData = {
   sections: [

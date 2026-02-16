@@ -1,6 +1,6 @@
-import img1 from "../../assets/img/service-images/conferencerooms1.webp";
-import img2 from "../../assets/img/service-images/conferencerooms2.jpeg";
-import img3 from "../../assets/img/service-images/conferencerooms3.jpg";
+import img1 from "../../assets/img/service-images/conferencerooms1.jpg";
+import img2 from "../../assets/img/service-images/conferencerooms2.jpg";
+import img3 from "../../assets/img/service-images/conferencerooms 3.jpg";
 
 const ConferenceRoomsData = {
   sections: [

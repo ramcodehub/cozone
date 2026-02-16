@@ -1,6 +1,6 @@
-import img1 from "../../assets/img/service-images/custombuiltofficespace1.jpeg";
-import img2 from "../../assets/img/service-images/custombuiltofficespace2.jpg";
-import img3 from "../../assets/img/service-images/custombuiltofficespace3.webp";
+import img1 from "../../assets/img/service-images/custombuiltofficespace1.jpg";
+import img2 from "../../assets/img/service-images/custombuiltofficespace1.jpg";
+import img3 from "../../assets/img/service-images/custombuiltofficespace3.jpeg";
 
 const CustomBuiltOfficeSpacesData = {
   sections: [
