@@ -74,7 +74,7 @@
 .sc-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto 300px;
+  grid-template-rows: auto 400px;
   grid-template-areas:
     "points large"
     "small1 small2";
@@ -145,3 +145,13 @@
     font-size: 3rem;
   }
 }
+
+/* @media (min-width: 1400px) {
+  .small1{
+    height: 350px;
+  }
+  .small2{
+    height: 350px;
+  }
+
+} */
