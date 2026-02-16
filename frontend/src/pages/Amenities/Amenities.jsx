@@ -1,6 +1,6 @@
 import React from 'react'
 import TreeFlow from '../../components/TreeFlow/TreeFlow'
-import img from '../../assets/img/AmenitiesHero2.jpg'
+import img from '../../assets/img/CoZone_Workspace/WaitingChairs.jpg'
 import './Amenities.css'
 
 const Amenities = () => {
@@ -13,7 +13,7 @@ const Amenities = () => {
         >
           <div className="amenities-overlay"></div>
           <div className="amenities-hero-text d-flex flex-column align-items-center">
-            <h1>Premium Amenities for a better workday</h1>
+            <h1 className='text-white'>Premium Amenities for a better workday</h1>
             <p>Discover the range of features designed to make your workday smooth, productive, and enjoyable.</p>
           </div>
         </section>
