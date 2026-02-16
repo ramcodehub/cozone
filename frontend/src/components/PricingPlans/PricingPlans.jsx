@@ -5,12 +5,14 @@ import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import PricingCard from "../PricingCard/PricingCard";
 import ServiceEnquiryModal from "../ServiceEnquiryModal/ServiceEnquiryModal";
-import PrivateCabinImg from '../../assets/img/pricing/private-cabin.jpg';
-import DedicatedDeskImg from '../../assets/img/pricing/dedicateddesk.jpg';
-import DayPassImg from '../../assets/img/pricing/daypass.webp';
-import ConferenceRoomImg from '../../assets/img/pricing/conferenceroom.webp';
-import VirtualZoneImg from '../../assets/img/pricing/virtual-zone.jpg';
-import CustomOfficeImg from '../../assets/img/pricing/customofficeimg.jpg';
+import ConferenceRooms from "../../assets/img/service-images/conferencerooms1.jpg"
+import DedicatedDesk from "../../assets/img/WhatsApp Image 2026-02-12 at 10.52.57.jpeg";
+import CustomOffice from "../../assets/img/service-images/custombuiltofficespace1.jpg"
+import DayPass from "../../assets/img/service-images/daypass1.jpg"
+import PrivateCabin from "../../assets/img/service-images/privatecabin1.jpg"
+import VirtualZone from "../../assets/img/service-images/daypass3.jpg"
+
+
 
 import "./PricingPlans.css";
 
@@ -28,7 +30,7 @@ export default function PricingPlans({ plans }) {
         "Air Conditioning & Security Personnel"
       ],
       AOSDelay: 0,
-      Image: PrivateCabinImg
+      Image: PrivateCabin
     },
     {
       heading: "Dedicated Desk / Hot Desk",
@@ -42,7 +44,7 @@ export default function PricingPlans({ plans }) {
         "Air Conditioning & Security Personnel"
       ],
       AOSDelay: 200,
-      Image: DedicatedDeskImg
+      Image: DedicatedDesk
     },
     {
       heading: "Day Pass",
@@ -56,7 +58,7 @@ export default function PricingPlans({ plans }) {
         "Air Conditioning & Security Personnel"
       ],
       AOSDelay: 400,
-      Image: DayPassImg
+      Image: DayPass
     },
     {
       heading: "Conference Rooms",
@@ -69,7 +71,7 @@ export default function PricingPlans({ plans }) {
         "Air Conditioning & 24/7 Power Backup"
       ],
       AOSDelay: 600,
-      Image: ConferenceRoomImg
+      Image: ConferenceRooms
     },
     {
       heading: "Communication / Virtual Zone",
@@ -79,7 +81,7 @@ export default function PricingPlans({ plans }) {
         "Professional business address"
       ],
       AOSDelay: 0,
-      Image: VirtualZoneImg
+      Image: VirtualZone
     },
     {
       heading: "Custom-built Office Spaces",
@@ -91,7 +93,7 @@ export default function PricingPlans({ plans }) {
         "Managed workspace with daily housekeeping"
       ],
       AOSDelay: 0,
-      Image: CustomOfficeImg
+      Image: CustomOffice
     },
   ];
 
