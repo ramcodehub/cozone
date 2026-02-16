@@ -1,7 +1,7 @@
 import "./CurvedHero.css";
-import Img1 from '../../assets/img/curved1.jpg'
+import Img1 from "../../assets/img/IMG_20260212_094439516_HDR.jpg.jpeg";
 import Img2 from '../../assets/img/curved2.jpg'
-import Img3 from '../../assets/img/curved3.jpg'
+import Img3 from "../../assets/img/CoZone_Workspace/HallWay.jpg";
 
 export default function CurvedHero() {
   return (
