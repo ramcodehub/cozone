@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../Button/Button";
 import Img1 from '../../assets/img/CoZone_Workspace/LogoDesk.jpg'
-import Img2 from '../../assets/img/service-images/custombuiltofficespace5.jpeg'
+import Img2 from '../../assets/img/service-images/custombuiltofficespace5.jpg'
 import Img3 from '../../assets/img/img3.jpg'
 
 
@@ -12,7 +12,7 @@ const AboutHero = () => {
     <section className="about-hero">
       <div className="hero-left">
         <h2 className="hero-title" data-aos="fade-up">
-          Crafting Inspiring <span className="cursive-heading" style={{fontSize:'5rem'}}>Environments</span>
+          Crafting Inspiring <span className="cursive-heading" style={{ fontSize: '5rem' }}>Environments</span>
         </h2>
 
         <p className="hero-desc" data-aos="fade-up" data-aos-delay='200'>
@@ -21,8 +21,8 @@ const AboutHero = () => {
           work feel effortless.
         </p>
 
-        <Button variant="primary" icon={<i className="bi bi-arrow-right"></i>} scrollToForm  data-aos="fade-up" data-aos-delay='400'>
-            Get Started
+        <Button variant="primary" icon={<i className="bi bi-arrow-right"></i>} scrollToForm data-aos="fade-up" data-aos-delay='400'>
+          Get Started
         </Button>
       </div>
 

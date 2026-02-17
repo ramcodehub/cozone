@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Img from "../../assets/img/ContactImg.jpeg";
+import Img from "../../assets/img/ContactImg.jpg";
 import "./ContactForm.css";
 
 const ContactForm = () => {
@@ -19,50 +19,50 @@ const ContactForm = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setStatusMsg(null);
+    e.preventDefault();
+    setLoading(true);
+    setStatusMsg(null);
 
-  // --- Validate 10-digit phone ---
-  if (!/^\d{10}$/.test(formData.phone)) {
-    setStatusMsg({ type: "error", text: "Phone number must be 10 digits." });
-    setLoading(false);
-    return;
-  }
+    // --- Validate 10-digit phone ---
+    if (!/^\d{10}$/.test(formData.phone)) {
+      setStatusMsg({ type: "error", text: "Phone number must be 10 digits." });
+      setLoading(false);
+      return;
+    }
 
-  try {
-    // Use local backend URL during development, deployed URL in production
-    const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const backendUrl = isDevelopment 
-      ? 'http://localhost:5000/contact' 
-      : 'https://cozone.onrender.com/contact';
-      
-    const res = await fetch(backendUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+    try {
+      // Use local backend URL during development, deployed URL in production
+      const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const backendUrl = isDevelopment
+        ? 'http://localhost:5000/contact'
+        : 'https://cozone.onrender.com/contact';
 
-    if (!res.ok) throw new Error("Network error");
+      const res = await fetch(backendUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    const data = await res.json();
-    setStatusMsg({ type: "success", text: data.message || `Dear ${formData.fullName}, Thank you. Your concern message received. Our team will contact you very soon.` });
+      if (!res.ok) throw new Error("Network error");
+
+      const data = await res.json();
+      setStatusMsg({ type: "success", text: data.message || `Dear ${formData.fullName}, Thank you. Your concern message received. Our team will contact you very soon.` });
 
 
-    setFormData({
-      fullName: "",
-      email: "",
-      companyName: "",
-      phone: "",
-      message: "",
-    });
-  } catch (err) {
-    setStatusMsg({ type: "error", text: "Error submitting form. Please try again." });
-    console.error(err);
-  } finally {
-    setLoading(false);
-  }
-};
+      setFormData({
+        fullName: "",
+        email: "",
+        companyName: "",
+        phone: "",
+        message: "",
+      });
+    } catch (err) {
+      setStatusMsg({ type: "error", text: "Error submitting form. Please try again." });
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
 
 
@@ -70,80 +70,80 @@ const ContactForm = () => {
   return (
     <section id="contact-form">
       <div className="contact-layout ">
-      {/* LEFT IMAGE */}
-      <div
-        className="left-image"
-        style={{ backgroundImage: `url(${Img})` }}
-        aria-hidden="true"
-      >
-        <div className="left-overlay"></div>
+        {/* LEFT IMAGE */}
+        <div
+          className="left-image"
+          style={{ backgroundImage: `url(${Img})` }}
+          aria-hidden="true"
+        >
+          <div className="left-overlay"></div>
+        </div>
+
+        {/* RIGHT FORM */}
+        <div className="right-form">
+          <h2 className="fw-bold">We’re here to help you get the <br /> <span className="cursive-heading">Right workspace</span></h2>
+          <p className="lead">
+            Fill in your details and we’ll get in touch to understand your requirements.
+          </p>
+
+          <form onSubmit={handleSubmit} className="contact-form">
+            <div className="row">
+              <input
+                name="fullName"
+                type="text"
+                placeholder="Full name *"
+                value={formData.fullName}
+                onChange={handleChange}
+                required
+              />
+              <input
+                name="email"
+                type="email"
+                placeholder="Email address *"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="row">
+              <input
+                name="companyName"
+                type="text"
+                placeholder="Company name (Optional)"
+                value={formData.companyName}
+                onChange={handleChange}
+              />
+              <input
+                name="phone"
+                type="tel"
+                placeholder="Phone number *"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <textarea
+              name="message"
+              placeholder="Message"
+              rows="6"
+              value={formData.message}
+              onChange={handleChange}
+            />
+
+            <div className="actions">
+              <button type="submit" className="submit-btn" disabled={loading}>
+                {loading ? "Sending..." : "Submit"}
+              </button>
+
+              {statusMsg && (
+                <span className={`status ${statusMsg.type}`}>{statusMsg.text}</span>
+              )}
+            </div>
+          </form>
+        </div>
       </div>
-
-      {/* RIGHT FORM */}
-      <div className="right-form">
-        <h2 className="fw-bold">We’re here to help you get the <br/> <span className="cursive-heading">Right workspace</span></h2>
-        <p className="lead">
-          Fill in your details and we’ll get in touch to understand your requirements.
-        </p>
-
-        <form onSubmit={handleSubmit} className="contact-form">
-          <div className="row">
-            <input
-              name="fullName"
-              type="text"
-              placeholder="Full name *"
-              value={formData.fullName}
-              onChange={handleChange}
-              required
-            />
-            <input
-              name="email"
-              type="email"
-              placeholder="Email address *"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="row">
-            <input
-              name="companyName"
-              type="text"
-              placeholder="Company name (Optional)"
-              value={formData.companyName}
-              onChange={handleChange}
-            />
-            <input
-              name="phone"
-              type="tel"
-              placeholder="Phone number *"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <textarea
-            name="message"
-            placeholder="Message"
-            rows="6"
-            value={formData.message}
-            onChange={handleChange}
-          />
-
-          <div className="actions">
-            <button type="submit" className="submit-btn" disabled={loading}>
-              {loading ? "Sending..." : "Submit"}
-            </button>
-
-            {statusMsg && (
-              <span className={`status ${statusMsg.type}`}>{statusMsg.text}</span>
-            )}
-          </div>
-        </form>
-      </div>
-    </div>
     </section>
   );
 };

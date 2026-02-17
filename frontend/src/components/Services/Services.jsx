@@ -1,11 +1,11 @@
 import React from 'react'
 import Button from '../Button/Button'
-import PrivateCabin from '../../assets/img/service-images/privatecabin5.jpeg'
-import DedicatedDesk from '../../assets/img/service-images/dedicateddesk5.jpeg'
+import PrivateCabin from '../../assets/img/service-images/privatecabin5.jpg'
+import DedicatedDesk from '../../assets/img/service-images/dedicateddesk5.jpg'
 import ConferenceRoom from '../../assets/img/service-images/conferencerooms1.jpg'
 import VirtualZone from '../../assets/img/CoZone_Workspace/Reception.jpg'
-import CustomBuiltSpaces from '../../assets/img/service-images/custombuiltofficespace5.jpeg'
-import DayPass from '../../assets/img/service-images/daypass3.jpg'
+import CustomBuiltSpaces from '../../assets/img/service-images/custombuiltofficespace5.jpg'
+import DayPass from '../../assets/img/service-images/daypass1.jpg'
 import './Services.css'
 
 const Services = () => {
@@ -14,44 +14,44 @@ const Services = () => {
     {
       title: "Private Cabins for Focused Work",
       desc: "Enjoy complete privacy and peace in fully furnished cabins designed for productivity and comfort. Ideal for individuals or small teams.",
-      to : '/private-cabins',
-      image : PrivateCabin ,
-      AOSDelay : 0
+      to: '/private-cabins',
+      image: PrivateCabin,
+      AOSDelay: 0
     },
     {
       title: "Dedicated Desk / Hot Desk",
       desc: "Choose your perfect spot — a fixed desk for consistency or a flexible hot desk for on-the-go professionals. Work your way, every day.",
       to: '/dedicated-desk',
-      image : DedicatedDesk ,
-      AOSDelay : 200
+      image: DedicatedDesk,
+      AOSDelay: 200
     },
     {
       title: "Day Pass",
       desc: "Access coworking space for day with all amenities included. Perfect for freelancers, travelers, or anyone for productive workspace.",
       to: '/day-pass',
-      image : DayPass ,
-      AOSDelay : 400
+      image: DayPass,
+      AOSDelay: 400
     },
     {
       title: "Conference Room",
       desc: "Host meetings, presentations, or interviews in a professional setting equipped with AV tools and high-speed internet. Book by the hour or day.",
       to: '/conference-rooms',
-      image : ConferenceRoom ,
-      AOSDelay : 0
+      image: ConferenceRoom,
+      AOSDelay: 0
     },
     {
       title: "Communication / Virtual Zone",
       desc: "Get a professional business address, mail handling, and call services. Stay connected and maintain your corporate presence remotely.",
       to: '/virtual-zone',
-      image : VirtualZone ,
-      AOSDelay : 200
+      image: VirtualZone,
+      AOSDelay: 200
     },
     {
       title: "Custom-Built Office Spaces (20–100 Seaters)",
       desc: "Design your ideal workspace tailored to your team’s size and needs. Scalable, private, and built to reflect your brand’s identity.",
       to: '/custom-built-office',
-      image : CustomBuiltSpaces ,
-      AOSDelay : 400
+      image: CustomBuiltSpaces,
+      AOSDelay: 400
     }
   ];
 
@@ -64,7 +64,7 @@ const Services = () => {
         {servicesData.map((service, index) => (
           <div className='col-md-4 col-lg-4 card-two m-2 p-0' key={index} data-aos="fade-up" data-aos-delay={service.AOSDelay}>
             <div className='image-wrapper'>
-            <img src={service.image} alt={service.title} />
+              <img src={service.image} alt={service.title} />
             </div>
             <div className='w-100 card-two-content p-2'>
               <h3>{service.title}</h3>
