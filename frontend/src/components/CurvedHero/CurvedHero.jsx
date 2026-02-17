@@ -1,6 +1,6 @@
 import "./CurvedHero.css";
 import Img1 from "../../assets/img/IMG_20260212_094439516_HDR.jpg.jpeg";
-import Img2 from '../../assets/img/curved2.jpg'
+import Img2 from '../../assets/img/cozone/IMG20260217145358.jpg'
 import Img3 from "../../assets/img/CoZone_Workspace/HallWay.jpg";
 
 export default function CurvedHero() {
@@ -21,7 +21,7 @@ export default function CurvedHero() {
       </div>
 
       <div className="heroo-text">
-        <h1>Gallery</h1>
+        <h1 className="text-white">Gallery</h1>
         {/* <p>Discover the space around you</p> */}
       </div>
     </section>

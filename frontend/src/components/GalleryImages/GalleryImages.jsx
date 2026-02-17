@@ -12,9 +12,12 @@ import image5 from '../../assets/img/ConferenceRoom.jpeg';
 import image6 from '../../assets/img/OfficeRoom.jpeg';
 import img1 from '../../assets/img/916.jpeg'
 import img11 from '../../assets/img/service-images/custombuiltofficespace4.jpg'
-
-
+import imagei from '../../assets/img/cozone/IMG20260217153053.jpg';
+import imageii from '../../assets/img/CoZone-Workspace_img/IMG_20260217_151335_154.jpg';
+import image_r3_v1 from '../../assets/img/cozone/IMG20260217153315.jpg';
 import img169 from '../../assets/img/gallery/169.jpg';
+import image_r4_h1 from '../../assets/img/CoZone-Workspace_img/custom_built.jpg';
+import image_r4_h2 from '../../assets/img/CoZone-Workspace_img/IMG_20260217_153435_428.jpg';
 import cine from '../../assets/img/gallery/cinescope2.jpg';
 import img16999 from '../../assets/img/gallery/16999.jpeg';
 
@@ -34,7 +37,7 @@ const GalleryImages = () => {
           </div>
           <div className="col-md-8">
             <div className="gallery-block" data-aos="fade-left" data-aos-delay='600'>
-                <img src={img16999} alt="" />
+                <img src={imageii} alt="" />
             </div>
           </div>
         </div>
@@ -62,7 +65,7 @@ const GalleryImages = () => {
           </div>
           <div className="col-md-4">
             <div className="gallery-block taller" data-aos="fade-left">
-                <img src={img1} alt="" />
+                <img src={imagei} alt="" />
             </div>
           </div>
         </div>
@@ -82,19 +85,19 @@ const GalleryImages = () => {
             <div className="row gx-4 gy-4">
               <div className="col-6">
                 <div className="gallery-block tall" data-aos="fade-up">
-                    <img src={img9} alt="" />
+                    <img src={image_r3_v1} alt="" />
                 </div>
               </div>
               <div className="col-6">
                 <div className="gallery-block tall" data-aos="fade-up" data-aos-delay='200'>
-                    <img src={img11} alt="" />
+                    <img src={image_r4_h2} alt="" />
                 </div>
               </div>
             </div>
             <div className="row gx-4 gy-4 mt-2">
               <div className="col-12">
                 <div className="gallery-block" data-aos="fade-up">
-                    <img src={img169} alt="" />
+                    <img src={image_r4_h1} alt="" />
                 </div>
               </div>
             </div>
