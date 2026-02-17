@@ -1,7 +1,7 @@
 import "./CurvedHero.css";
-import Img1 from "../../assets/img/IMG_20260212_094439516_HDR.jpg.jpeg";
-import Img2 from '../../assets/img/cozone/IMG20260217145358.jpg'
-import Img3 from "../../assets/img/CoZone_Workspace/HallWay.jpg";
+import Img1 from "../../assets/img/gallery/waiting-chairs.jpg";
+import Img2 from '../../assets/img/gallery/conference-room1.jpg'
+import Img3 from "../../assets/img/gallery/hallway.jpg";
 
 export default function CurvedHero() {
   return (
