@@ -5,12 +5,12 @@ import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import PricingCard from "../PricingCard/PricingCard";
 import ServiceEnquiryModal from "../ServiceEnquiryModal/ServiceEnquiryModal";
-import ConferenceRooms from "../../assets/img/CoZone-Workspace_img/conference_room1.jpg"
-import DedicatedDesk from "../../assets/img/CoZone-Workspace_img/dedicated_desk.jpg";
-import CustomOffice from "../../assets/img/CoZone-Workspace_img/custom_built.jpg"
-import DayPass from "../../assets/img/cozone/IMG20260217150056.jpg"
-import PrivateCabin from "../../assets/img/CoZone-Workspace_img/private_cabin.jpg"
-import VirtualZone from "../../assets/img/CoZone-Workspace_img/reception.jpg"
+import ConferenceRooms from "../../assets/img/gallery/conference-room.jpg"
+import DedicatedDesk from "../../assets/img/pricing/dedicated-desk.jpg";
+import CustomOffice from "../../assets/img/gallery/custom-built.jpg"
+import DayPass from "../../assets/img/pricing/day-pass.jpg"
+import PrivateCabin from "../../assets/img/pricing/private-cabin.jpg"
+import VirtualZone from "../../assets/img/gallery/reception.jpg"
 
 
 
