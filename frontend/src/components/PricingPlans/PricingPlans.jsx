@@ -1,23 +1,20 @@
-import {useState, useRef } from "react";
+import { useState, useRef } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import PricingCard from "../PricingCard/PricingCard";
 import ServiceEnquiryModal from "../ServiceEnquiryModal/ServiceEnquiryModal";
-import ConferenceRooms from "../../assets/img/gallery/conference-room.jpg"
+import ConferenceRooms from "../../assets/img/gallery/conference-room.jpg";
 import DedicatedDesk from "../../assets/img/pricing/dedicated-desk.jpg";
-import CustomOffice from "../../assets/img/gallery/custom-built.jpg"
-import DayPass from "../../assets/img/pricing/day-pass.jpg"
-import PrivateCabin from "../../assets/img/pricing/private-cabin.jpg"
-import VirtualZone from "../../assets/img/gallery/reception.jpg"
-
-
+import CustomOffice from "../../assets/img/gallery/custom-built.jpg";
+import DayPass from "../../assets/img/pricing/day-pass.jpg";
+import PrivateCabin from "../../assets/img/pricing/private-cabin.jpg";
+import VirtualZone from "../../assets/img/gallery/reception.jpg";
 
 import "./PricingPlans.css";
 
 export default function PricingPlans({ plans }) {
-
   const pricingPlans = [
     {
       heading: "Private Cabins",
@@ -27,10 +24,10 @@ export default function PricingPlans({ plans }) {
         "High-Speed WiFi & Wired Internet",
         "Access to Conference & Training Rooms",
         "Charging Ports & 24/7 Power Backup",
-        "Air Conditioning & Security Personnel"
+        "Air Conditioning & Security Personnel",
       ],
       AOSDelay: 0,
-      Image: PrivateCabin
+      Image: PrivateCabin,
     },
     {
       heading: "Dedicated Desk / Hot Desk",
@@ -41,10 +38,23 @@ export default function PricingPlans({ plans }) {
         "Access to Conference & Training Rooms",
         "Ergonomic Chairs & Desks",
         "Charging Ports & 24/7 Power Backup",
-        "Air Conditioning & Security Personnel"
+        "Air Conditioning & Security Personnel",
       ],
       AOSDelay: 200,
-      Image: DedicatedDesk
+      Image: DedicatedDesk,
+    },
+    {
+      heading: "Conference Rooms",
+      navLink: "/conference-rooms",
+      points: [
+        "Bookable professional meeting rooms",
+        "Equipped with a 32-inch display screen",
+        "High-Speed WiFi & Wired Internet",
+        "Access to Pantry & Drinking Water",
+        "Air Conditioning & 24/7 Power Backup",
+      ],
+      AOSDelay: 600,
+      Image: ConferenceRooms,
     },
     {
       heading: "Day Pass",
@@ -55,33 +65,20 @@ export default function PricingPlans({ plans }) {
         "Access to Conference, Training & Meeting Rooms",
         "Ergonomic Chairs & Desks",
         "Charging Ports & 24/7 Power Backup",
-        "Air Conditioning & Security Personnel"
+        "Air Conditioning & Security Personnel",
       ],
       AOSDelay: 400,
-      Image: DayPass
-    },
-    {
-      heading: "Conference Rooms",
-      navLink: "/conference-rooms",
-      points: [
-        "Bookable professional meeting rooms",
-        "Equipped with a 32-inch display screen",
-        "High-Speed WiFi & Wired Internet",
-        "Access to Pantry & Drinking Water",
-        "Air Conditioning & 24/7 Power Backup"
-      ],
-      AOSDelay: 600,
-      Image: ConferenceRooms
+      Image: DayPass,
     },
     {
       heading: "Communication / Virtual Zone",
       navLink: "/virtual-zone",
       points: [
         "Not for Company Registration or GST Filing",
-        "Professional business address"
+        "Professional business address",
       ],
       AOSDelay: 0,
-      Image: VirtualZone
+      Image: VirtualZone,
     },
     {
       heading: "Custom-built Office Spaces",
@@ -90,16 +87,14 @@ export default function PricingPlans({ plans }) {
         "Exclusively reserved floor with 100 seats",
         "Prime IT hub location in Doctors Colony, Madhapur",
         "Private floor with no co-working or shared zones",
-        "Managed workspace with daily housekeeping"
+        "Managed workspace with daily housekeeping",
       ],
       AOSDelay: 0,
-      Image: CustomOffice
+      Image: CustomOffice,
     },
   ];
 
-
-
-   const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [selectedService, setSelectedService] = useState("");
 
   const handleEnquire = (serviceName) => {
@@ -113,14 +108,23 @@ export default function PricingPlans({ plans }) {
     <div className="pb-5 pt-3">
       <div className="d-flex align-items-center justify-content-between swipe-btn mb-4">
         <h1 className="fw-bold">
-          Our Pricing Plans <br /> <span className="cursive-heading">Choose What Fits You</span>
+          Our Pricing Plans <br />{" "}
+          <span className="cursive-heading">Choose What Fits You</span>
         </h1>
 
         <div className="d-flex gap-2 me-4">
-          <button ref={prevRef} className="  bg-white rounded-circle" style={{padding:"1rem 1.25rem" }}>
+          <button
+            ref={prevRef}
+            className="  bg-white rounded-circle"
+            style={{ padding: "1rem 1.25rem" }}
+          >
             <i className="bi bi-arrow-left text-dark fs-4"></i>
           </button>
-          <button ref={nextRef} className=" bg-white rounded-circle"  style={{ padding:"1rem 1.25rem"}}>
+          <button
+            ref={nextRef}
+            className=" bg-white rounded-circle"
+            style={{ padding: "1rem 1.25rem" }}
+          >
             <i className="bi bi-arrow-right text-dark fs-4"></i>
           </button>
         </div>
@@ -151,13 +155,11 @@ export default function PricingPlans({ plans }) {
               onEnquire={handleEnquire}
               Image={pricingPlan.Image}
               AOSDelay={pricingPlan.AOSDelay}
-
             />
-            
           </SwiperSlide>
         ))}
       </Swiper>
-       <ServiceEnquiryModal
+      <ServiceEnquiryModal
         show={showModal}
         onClose={() => setShowModal(false)}
         serviceName={selectedService}
