@@ -1,8 +1,9 @@
 import React from 'react'
 import Hero from '../../components/Hero/Hero'
 import WhyChooseUs from '../../components/WhyChooseUs/WhyChooseUs'
-import Amenities from '../../assets/img/AmenitiesHero3.png'
+import Amenities from '../../assets/img/amenitiesHero1.jpg'
 import img from '../../assets/img/hero.jpg'
+import AboutSection from '../../assets/img/aboutsection.jpeg'
 import GallerySection from '../../assets/img/gallerysection.jpg'
 import HomeHero from '../../components/HomeHero/HomeHero'
 import Services from '../../components/Services/Services'
@@ -28,7 +29,7 @@ const Home = () => {
       <WhyChooseUs />
       <div>
         <ImageTextSection
-          image="https://placehold.co/1500x800"
+          image={AboutSection}
           title="Discover Who We Are"
           text="Learn about our mission, values, and the story behind our creative workspace. See how we designed CoZone to help individuals and teams work better, collaborate smarter, and grow faster."
           to='/about'
