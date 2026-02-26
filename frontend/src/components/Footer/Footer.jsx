@@ -24,13 +24,13 @@ const Footer = () => {
                 <a href="https://x.com/CozoneServices" className="text-white fs-5">
                   <img src={X} alt="" width='22px' className="mb-1" />
                 </a>
-                <a href="https://www.instagram.com/cozoneservices/" className="text-white fs-5">
+                <a href="https://www.instagram.com/cozone_workspace?igsh=MXd0Znl6MHEzb2RpMQ==" className="text-white fs-5">
                   <i className="bi bi-instagram"></i>
                 </a>
                 <a href="#" className="text-white fs-5">
                   <i className="bi bi-linkedin"></i>
                 </a>
-                <a href="#" className="text-white fs-5">
+                <a href="https://www.facebook.com/share/1GhkWzNBNg/" className="text-white fs-5">
                   <i className="bi bi-facebook"></i>
                 </a>
               </div>

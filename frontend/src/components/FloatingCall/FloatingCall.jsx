@@ -6,7 +6,7 @@ const FloatingCall = () => {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
   
   // Phone number for direct calling
-  const phoneNumber = "tel:+919577577888";
+  const phoneNumber = "tel:+919458222234";
 
   const handleCallClick = () => {
     window.location.href = phoneNumber;
