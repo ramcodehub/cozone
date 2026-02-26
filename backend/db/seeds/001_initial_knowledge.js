@@ -31,48 +31,42 @@ const knowledgeBase = [
     title: "Dedicated Desks",
     keywords: ["dedicated", "desk", "workspace", "individual", "personal"],
     description: "Dedicated Desks: Individual workspaces with personal storage. Includes high-speed WiFi, printing/scanning, coffee/tea, and 24/7 access.",
-    url: "/services/dedicated-desk",
-    updated_at: new Date().toISOString()
+    url: "/services/dedicated-desk"
   },
   {
     category: "services",
     title: "Private Cabins",
     keywords: ["private", "cabin", "office", "team", "enclosed"],
     description: "Private Cabins: Fully enclosed offices for teams. Includes all amenities and 24/7 secure access.",
-    url: "/services/private-cabin",
-    updated_at: new Date().toISOString()
+    url: "/services/private-cabin"
   },
   {
     category: "services",
     title: "Conference Rooms",
     keywords: ["conference", "meeting", "room", "av", "equipment"],
     description: "Conference Rooms: Bookable meeting spaces with advanced AV equipment and high-speed internet.",
-    url: "/services/conference-rooms",
-    updated_at: new Date().toISOString()
+    url: "/services/conference-rooms"
   },
   {
     category: "pricing",
     title: "Private Cabin Pricing",
     keywords: ["pricing", "cost", "private", "cabin", "monthly"],
     description: "For pricing details and customized plans, please contact us at +91 9458222234 or email cozonehyd@gmail.com",
-    url: "/plans#private-cabin",
-    updated_at: new Date().toISOString()
+    url: "/plans#private-cabin"
   },
   {
     category: "hours",
     title: "Operating Hours",
     keywords: ["hours", "timing", "open", "24/7"],
     description: "We are open 24/7 with round-the-clock secure access for members.",
-    url: "/hours",
-    updated_at: new Date().toISOString()
+    url: "/hours"
   },
   {
     category: "contact",
     title: "Contact Information",
     keywords: ["contact", "phone", "email", "support"],
     description: "Reach us at +91 9458222234 or cozonehyd@gmail.com. Our team is available 24/7.",
-    url: "/contact",
-    updated_at: new Date().toISOString()
+    url: "/contact"
   }
 ];
 
