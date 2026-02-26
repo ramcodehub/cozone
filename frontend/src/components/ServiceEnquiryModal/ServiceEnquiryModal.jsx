@@ -35,10 +35,10 @@ const ServiceEnquiryModal = ({ serviceName, show, onClose }) => {
     try {
       // Use local backend URL during development, deployed URL in production
       const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      const backendUrl = isDevelopment 
-        ? 'http://localhost:5000/enquiry' 
+      const backendUrl = isDevelopment
+        ? 'http://localhost:5005/enquiry'
         : 'https://cozone.onrender.com/enquiry';
-        
+
       const res = await fetch(backendUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -77,7 +77,7 @@ const ServiceEnquiryModal = ({ serviceName, show, onClose }) => {
 
       <div
         className="modal fade show d-block"
-        tabIndex="-1"
+        tabIndex={-1}
         style={{ zIndex: 1055 }}
       >
         <div className="modal-dialog modal-dialog-centered">
@@ -120,7 +120,7 @@ const ServiceEnquiryModal = ({ serviceName, show, onClose }) => {
                 <textarea
                   name="message"
                   className=" mb-3"
-                  rows="4"
+                  rows={4}
                   placeholder="Write your message here..."
                   value={formData.message}
                   onChange={handleChange}

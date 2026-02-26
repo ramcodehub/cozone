@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+// @ts-ignore
 import Img from "../../assets/img/ContactImg.jpg";
 import "./ContactForm.css";
 
@@ -34,7 +35,7 @@ const ContactForm = () => {
       // Use local backend URL during development, deployed URL in production
       const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
       const backendUrl = isDevelopment
-        ? 'http://localhost:5000/contact'
+        ? 'http://localhost:5005/contact'
         : 'https://cozone.onrender.com/contact';
 
       const res = await fetch(backendUrl, {
@@ -127,7 +128,7 @@ const ContactForm = () => {
             <textarea
               name="message"
               placeholder="Message"
-              rows="6"
+              rows={6}
               value={formData.message}
               onChange={handleChange}
             />

@@ -29,24 +29,24 @@ export const handleAIRequest = async (req, res) => {
 
     // Sanitize input
     const sanitizedMessage = sanitizeInput(message);
-    
+
     // Get conversation history from session
     const conversationHistory = sessionManager.getConversationHistory(sessionId);
-    
+
     // Process AI request
     const aiResponse = await processAIRequest(sanitizedMessage, conversationHistory);
-    
+
     // Save conversation to session
     sessionManager.addMessageToSession(sessionId, {
       role: 'user',
       content: sanitizedMessage
     });
-    
+
     sessionManager.addMessageToSession(sessionId, {
-      role: 'assistant',
+      role: 'model',
       content: aiResponse
     });
-    
+
     // Return success response
     return res.status(200).json({
       success: true,
@@ -55,7 +55,7 @@ export const handleAIRequest = async (req, res) => {
     });
   } catch (error) {
     console.error('Error in handleAIRequest:', error);
-    
+
     // Handle specific error types
     if (error.message.includes("too many requests") || error.code === 'ERR_TOO_MANY_REQUESTS') {
       return res.status(429).json({
@@ -63,7 +63,7 @@ export const handleAIRequest = async (req, res) => {
         message: "I'm receiving too many requests right now. Please try again in a moment."
       });
     }
-    
+
     // Handle AI service errors
     if (error.message.includes("GEMINI_API_KEY is not configured")) {
       return res.status(500).json({
@@ -71,7 +71,7 @@ export const handleAIRequest = async (req, res) => {
         message: "AI service is not properly configured. Please contact support."
       });
     }
-    
+
     // Handle specific AI service errors
     if (error.message.includes("API_KEY_INVALID")) {
       return res.status(401).json({
@@ -94,7 +94,7 @@ export const handleAIRequest = async (req, res) => {
         message: "I'm unable to reach the AI service right now. Please try again, or contact CoZone support."
       });
     }
-    
+
     // Handle general AI errors
     if (error.message.includes("AI service")) {
       return res.status(500).json({
@@ -102,7 +102,7 @@ export const handleAIRequest = async (req, res) => {
         message: error.message
       });
     }
-    
+
     // Return generic error response
     return res.status(500).json({
       success: false,

@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import MessageBubble from './MessageBubble';
 import InitialScreen from './InitialScreen';
+// @ts-ignore
 import styles from './Assistant.module.css';
+// @ts-ignore
 import aiAssistantIcon from '../../assets/logos/aiassistant.png';
 
 const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
@@ -38,39 +40,39 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
   // Initialize speech recognition
   useEffect(() => {
     const initSpeechRecognition = () => {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      
+      const SpeechRecognition = window.SpeechRecognition || window['webkitSpeechRecognition'];
+
       if (!SpeechRecognition) {
         console.warn('Speech recognition not supported in this browser');
         return;
       }
-      
+
       const recognition = new SpeechRecognition();
       recognition.continuous = false;
       recognition.interimResults = false;
       recognition.lang = 'en-US';
-      
+
       recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
         setInputValue(transcript);
         setIsListening(false);
       };
-      
+
       recognition.onerror = (event) => {
         console.error('Speech recognition error', event.error);
         setError('Speech recognition failed. Please try typing your message.');
         setIsListening(false);
       };
-      
+
       recognition.onend = () => {
         setIsListening(false);
       };
-      
+
       recognitionRef.current = recognition;
     };
-    
+
     initSpeechRecognition();
-    
+
     return () => {
       if (recognitionRef.current) {
         recognitionRef.current.stop();
@@ -84,9 +86,9 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
       setError('Speech recognition is not supported in your browser. Please ask anything about Cozone.');
       return;
     }
-    
+
     setError(null);
-    
+
     if (isListening) {
       recognitionRef.current.stop();
       setIsListening(false);
@@ -145,8 +147,8 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
     try {
       // Use local backend URL during development, deployed URL in production
       const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      const backendUrl = isDevelopment 
-        ? 'http://localhost:5000/api/ai' 
+      const backendUrl = isDevelopment
+        ? 'http://localhost:5005/api/ai'
         : 'https://cozone.onrender.com/api/ai';
 
       // Call backend API
@@ -217,7 +219,7 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
   const toggleFullscreen = () => {
     const newFullscreenState = !isFullscreen;
     setIsFullscreen(newFullscreenState);
-    
+
     // Apply styles directly to DOM elements for reliable fullscreen behavior
     if (chatWindowRef.current && chatWindowWrapperRef && chatWindowWrapperRef.current) {
       if (newFullscreenState) {
@@ -231,7 +233,7 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
         chatWindowWrapperRef.current.style.bottom = 'auto';
         chatWindowWrapperRef.current.style.right = 'auto';
         chatWindowWrapperRef.current.style.zIndex = '10000';
-        
+
         chatWindowRef.current.style.position = 'fixed';
         chatWindowRef.current.style.top = '0';
         chatWindowRef.current.style.left = '0';
@@ -251,7 +253,7 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
         chatWindowWrapperRef.current.style.bottom = '';
         chatWindowWrapperRef.current.style.right = '';
         chatWindowWrapperRef.current.style.zIndex = '';
-        
+
         chatWindowRef.current.style.position = '';
         chatWindowRef.current.style.top = '';
         chatWindowRef.current.style.left = '';
@@ -270,7 +272,7 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
     setInputValue('');
     setError(null);
     setIsLoading(false);
-    
+
     // Add a test message to demonstrate markdown formatting
     // This will be removed in production
     /*
@@ -294,7 +296,7 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
   };
 
   return (
-    <div 
+    <div
       ref={chatWindowRef}
       className={`${styles.chatWindow} ${isFullscreen ? styles.fullscreen : ''}`}
     >
@@ -311,46 +313,46 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
         </div>
         <div className={styles.headerActions}>
           {/* Refresh button */}
-          <button 
-            className={styles.refreshButton} 
+          <button
+            className={styles.refreshButton}
             onClick={handleRefresh}
             aria-label="Refresh chat"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-              <path d="M3 3v5h5"/>
-              <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
-              <path d="M16 16h5v5"/>
+              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+              <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+              <path d="M16 16h5v5" />
             </svg>
           </button>
-          
+
           {/* Fullscreen/Minimize button */}
-          <button 
-            className={styles.fullscreenButton} 
+          <button
+            className={styles.fullscreenButton}
             onClick={toggleFullscreen}
             aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
           >
             {isFullscreen ? (
               // Minimize icon when in fullscreen
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
               </svg>
             ) : (
               // Expand icon when not in fullscreen
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
               </svg>
             )}
           </button>
-          
-          <button 
-            className={styles.closeButton} 
+
+          <button
+            className={styles.closeButton}
             onClick={onClose}
             aria-label="Close chat"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"/>
-              <line x1="6" y1="6" x2="18" y2="18"/>
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
         </div>
@@ -362,8 +364,8 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
           <span>{error}</span>
           <button onClick={clearError} className={styles.clearErrorButton}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"/>
-              <line x1="6" y1="6" x2="18" y2="18"/>
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
         </div>
@@ -376,12 +378,12 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
         ) : (
           <>
             {messages.map((message) => (
-              <MessageBubble 
-                key={message.id} 
-                message={message} 
+              <MessageBubble
+                key={message.id}
+                message={message}
               />
             ))}
-          
+
             {isLoading && (
               <div className={`${styles.messageBubble} ${styles.botMessage}`}>
                 <div className={styles.messageContent}>
@@ -403,8 +405,8 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
       {showPromptModal && (
         <>
           <div className={styles.promptModalActions}>
-            <button 
-              className={styles.backButton} 
+            <button
+              className={styles.backButton}
               onClick={handleCloseModal}
               aria-label="Back to categories"
             >
@@ -415,7 +417,7 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
             <div className={styles.minimalPromptList}>
               {selectedCategory?.prompts.map((prompt, index) => (
                 <div key={prompt.id} className={styles.promptItemWrapper}>
-                  <button 
+                  <button
                     className={styles.minimalPromptButton}
                     onClick={() => handlePromptClick(prompt.text)}
                   >
@@ -440,10 +442,10 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Ask anything about Cozone..."
-            rows="1"
+            rows={1}
             disabled={isLoading}
           />
-          <button 
+          <button
             className={`${styles.voiceButton} ${isListening ? styles.listening : ''}`}
             onClick={toggleVoiceInput}
             disabled={isLoading}
@@ -451,26 +453,26 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
           >
             {isListening ? (
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="6" y="6" width="12" height="12" rx="2" ry="2"/>
+                <rect x="6" y="6" width="12" height="12" rx="2" ry="2" />
               </svg>
             ) : (
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                <line x1="12" y1="19" x2="12" y2="23"/>
-                <line x1="8" y1="23" x2="16" y2="23"/>
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                <line x1="12" y1="19" x2="12" y2="23" />
+                <line x1="8" y1="23" x2="16" y2="23" />
               </svg>
             )}
           </button>
-          <button 
+          <button
             className={styles.sendButton}
             onClick={() => handleSend()}
             disabled={isLoading || inputValue.trim() === ''}
             aria-label="Send message"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13"/>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              <line x1="22" y1="2" x2="11" y2="13" />
+              <polygon points="22 2 15 22 11 13 2 9 22 2" />
             </svg>
           </button>
         </div>

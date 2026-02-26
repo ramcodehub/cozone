@@ -331,14 +331,14 @@
   /* More specific selector to ensure mobile styles take precedence */
   div.chatWindowWrapper {
     position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    width: calc(100vw - 20px); /* Increased width - reduced gap from 40px to 20px */
-    max-width: 420px; /* Slightly increased max-width */
-    max-height: 75vh; /* Slightly increased max-height */
-    bottom: auto !important;
-    right: auto !important;
+    bottom: 75px !important;
+    right: 20px !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    width: calc(100vw - 40px);
+    max-width: 420px;
+    max-height: 75vh;
   }
   
   .chatWindow {
@@ -472,13 +472,13 @@
   /* More specific selector to ensure mobile styles take precedence */
   div.chatWindowWrapper {
     position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    width: calc(100vw - 20px);
-    max-height: 75vh;
-    bottom: auto !important;
-    right: auto !important;
+    bottom: 70px !important;
+    right: 15px !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    width: calc(100vw - 30px);
+    max-height: 70vh;
   }
   
   /* Small screen fullscreen mode */

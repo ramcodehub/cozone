@@ -3,137 +3,102 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Get the directory name in ES modules
+// ES module dirname fix
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load environment variables from the correct path
+// Load env
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
-// Initialize Supabase client
+// Validate environment
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
 
-console.log('Supabase URL:', supabaseUrl);
-console.log('Supabase Service Key exists:', !!supabaseServiceKey);
-
 if (!supabaseUrl || !supabaseServiceKey) {
-  throw new Error('Supabase URL and Service Key are required in environment variables');
+  console.error('❌ Missing Supabase credentials in .env');
+  process.exit(1);
 }
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+// Create Supabase client (service role for admin writes)
+const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+  auth: { persistSession: false }
+});
 
-// Initial knowledge base data
-const initialKnowledge = [
+// Enterprise-ready knowledge base
+const knowledgeBase = [
   {
     category: "services",
     title: "Dedicated Desks",
-    keywords: ["desk", "workspace", "individual", "personal"],
-    description: "Dedicated Desks: Individual workspaces with personal storage. Perfect for freelancers and remote workers who need a consistent, professional environment. Comes with high-speed WiFi, printing/scanning access, and coffee/tea."
+    keywords: ["dedicated", "desk", "workspace", "individual", "personal"],
+    description: "Dedicated Desks: Individual workspaces with personal storage. Includes high-speed WiFi, printing/scanning, coffee/tea, and 24/7 access.",
+    url: "/services/dedicated-desk",
+    updated_at: new Date().toISOString()
   },
   {
     category: "services",
     title: "Private Cabins",
-    keywords: ["private", "office", "team", "enclosed"],
-    description: "Private Cabins: Fully enclosed offices for teams of 2-20 people. Ideal for startups and growing businesses that need privacy and dedicated space. Includes all amenities plus 24/7 access."
+    keywords: ["private", "cabin", "office", "team", "enclosed"],
+    description: "Private Cabins: Fully enclosed offices for teams. Includes all amenities and 24/7 secure access.",
+    url: "/services/private-cabin",
+    updated_at: new Date().toISOString()
   },
   {
     category: "services",
     title: "Conference Rooms",
-    keywords: ["meeting", "conference", "room", "av", "equipment"],
-    description: "Conference Rooms: Bookable meeting spaces with advanced AV equipment. Perfect for client meetings, team collaborations, and presentations. Available hourly or daily."
-  },
-  {
-    category: "services",
-    title: "Day Passes",
-    keywords: ["day", "pass", "visitor", "occasional"],
-    description: "Day Passes: Flexible access for occasional visitors. Great for those who need a professional workspace for a day. Includes desk access, WiFi, and basic amenities."
-  },
-  {
-    category: "services",
-    title: "Virtual Offices",
-    keywords: ["virtual", "address", "mail", "handling"],
-    description: "Virtual Offices: Business address and mail handling services. Perfect for businesses that want a prestigious address without a physical office. Includes call handling and mail forwarding."
-  },
-  {
-    category: "services",
-    title: "Custom Built Office Spaces",
-    keywords: ["custom", "built", "enterprise", "tailored"],
-    description: "Custom Built Office Spaces: Tailored solutions for larger enterprises. Work with our design team to create a workspace that perfectly fits your company's needs and culture."
-  },
-  {
-    category: "pricing",
-    title: "Dedicated Desk Pricing",
-    keywords: ["price", "cost", "desk", "monthly"],
-    description: "Dedicated Desk: ₹4,999/month. Includes 24/7 access, high-speed WiFi, printing/scanning, coffee/tea, and access to meeting rooms."
+    keywords: ["conference", "meeting", "room", "av", "equipment"],
+    description: "Conference Rooms: Bookable meeting spaces with advanced AV equipment and high-speed internet.",
+    url: "/services/conference-rooms",
+    updated_at: new Date().toISOString()
   },
   {
     category: "pricing",
     title: "Private Cabin Pricing",
-    keywords: ["price", "cost", "private", "cabin", "monthly"],
-    description: "Private Cabin (4-person): ₹19,999/month. Includes everything in Dedicated Desk plus a fully enclosed office space for your team."
-  },
-  {
-    category: "pricing",
-    title: "Conference Room Pricing",
-    keywords: ["price", "cost", "conference", "room", "hourly"],
-    description: "Conference Room: ₹1,500 per hour. Book by the hour for meetings and presentations. Daily rates also available."
-  },
-  {
-    category: "pricing",
-    title: "Day Pass Pricing",
-    keywords: ["price", "cost", "day", "pass", "daily"],
-    description: "Day Pass: ₹1,299 per day. Perfect for occasional visits. Includes desk access and basic amenities."
-  },
-  {
-    category: "pricing",
-    title: "Virtual Office Pricing",
-    keywords: ["price", "cost", "virtual", "office", "monthly"],
-    description: "Virtual Office: ₹2,999 per month. Includes business address, mail handling, and call forwarding services."
-  },
-  {
-    category: "location",
-    title: "CoZone Location",
-    keywords: ["location", "address", "where", "bangalore"],
-    description: "Location: 123 Business Avenue, Tech Park, Bangalore - 560103. Easily accessible with excellent connectivity and parking."
+    keywords: ["pricing", "cost", "private", "cabin", "monthly"],
+    description: "For pricing details and customized plans, please contact us at +91 9458222234 or email cozonehyd@gmail.com",
+    url: "/plans#private-cabin",
+    updated_at: new Date().toISOString()
   },
   {
     category: "hours",
     title: "Operating Hours",
-    keywords: ["hours", "timing", "open", "close", "schedule"],
-    description: "Hours: Monday-Friday 8:00 AM - 8:00 PM, Saturday-Sunday 9:00 AM - 6:00 PM. 24/7 access available for dedicated members."
+    keywords: ["hours", "timing", "open", "24/7"],
+    description: "We are open 24/7 with round-the-clock secure access for members.",
+    url: "/hours",
+    updated_at: new Date().toISOString()
   },
   {
-    category: "amenities",
-    title: "Amenities",
-    keywords: ["amenities", "facilities", "wifi", "coffee", "printer"],
-    description: "Amenities include: High-speed WiFi, Printing/Scanning, Coffee/Tea, Meeting Rooms, Event Space, 24/7 Access, Ergonomic furniture, Pantry area, and Cleaning services."
-  },
-  {
-    category: "booking",
-    title: "How to Book",
-    keywords: ["book", "reserve", "visit", "schedule", "appointment"],
-    description: "To book a visit or reserve a workspace, you can: 1) Visit our website and use the online booking system, 2) Call us at +91 9154567444, or 3) Visit us in person during operating hours. Virtual tours are also available by appointment."
+    category: "contact",
+    title: "Contact Information",
+    keywords: ["contact", "phone", "email", "support"],
+    description: "Reach us at +91 9458222234 or cozonehyd@gmail.com. Our team is available 24/7.",
+    url: "/contact",
+    updated_at: new Date().toISOString()
   }
 ];
 
 async function seedKnowledgeBase() {
   try {
-    console.log('Seeding knowledge base with initial data...');
-    
+    console.log('🚀 Starting enterprise knowledge sync...');
+
     const { data, error } = await supabase
       .from('cozone_chatbot_knowledge')
-      .insert(initialKnowledge);
+      .upsert(knowledgeBase, {
+        onConflict: 'title',  // must have unique index on title
+        ignoreDuplicates: false
+      })
+      .select();
 
     if (error) {
-      throw new Error(`Error seeding knowledge base: ${error.message}`);
+      throw error;
     }
 
-    console.log('Successfully seeded knowledge base with', initialKnowledge.length, 'entries');
+    console.log(`✅ Knowledge base synced successfully.`);
+    console.log(`📊 Rows affected: ${data.length}`);
+
   } catch (error) {
-    console.error('Error seeding knowledge base:', error);
+    console.error('❌ Seeding failed:', error.message);
+    process.exit(1);
   }
 }
 
-// Run the seed function
 seedKnowledgeBase();

@@ -23,7 +23,7 @@ const PORT = process.env.PORT || 5000;
 
 // ---------------- RATE LIMITING ----------------
 const aiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, 
+  windowMs: 15 * 60 * 1000,
   max: 50,
   message: {
     success: false,
@@ -85,6 +85,28 @@ app.post("/contact", async (req, res) => {
       message,
     });
 
+    // Send notification email to Admin
+    if (transporter) {
+      const mailOptions = {
+        from: process.env.EMAIL_FROM || process.env.EMAIL_USERNAME,
+        to: process.env.EMAIL_USERNAME, // Send to site owner
+        subject: `New Contact Form Submission from ${fullName}`,
+        html: `
+          <h3>New Contact Inquiry</h3>
+          <ul>
+            <li><strong>Name:</strong> ${fullName}</li>
+            <li><strong>Email:</strong> ${email}</li>
+            <li><strong>Phone:</strong> ${phone}</li>
+            <li><strong>Company:</strong> ${companyName || 'N/A'}</li>
+          </ul>
+          <p><strong>Message:</strong></p>
+          <p>${message}</p>
+        `,
+      };
+      // Send mail asynchronously
+      transporter.sendMail(mailOptions).catch((err) => console.error("Error sending contact email:", err));
+    }
+
     res.json({
       message: `Thank you ${fullName}, we received your concern. Our team will contact you very soon.`,
     });
@@ -106,6 +128,28 @@ app.post("/enquiry", async (req, res) => {
       service,
       message,
     });
+
+    // Send notification email to Admin
+    if (transporter) {
+      const mailOptions = {
+        from: process.env.EMAIL_FROM || process.env.EMAIL_USERNAME,
+        to: process.env.EMAIL_USERNAME, // Send to site owner
+        subject: `New Service Enquiry: ${service} from ${fullName}`,
+        html: `
+          <h3>New Service Enquiry</h3>
+          <ul>
+            <li><strong>Service:</strong> ${service}</li>
+            <li><strong>Name:</strong> ${fullName}</li>
+            <li><strong>Email:</strong> ${email}</li>
+            <li><strong>Mobile:</strong> ${mobile}</li>
+          </ul>
+          <p><strong>Message:</strong></p>
+          <p>${message}</p>
+        `,
+      };
+      // Send mail asynchronously
+      transporter.sendMail(mailOptions).catch((err) => console.error("Error sending enquiry email:", err));
+    }
 
     res.json({
       message: `Thank you ${fullName}, we received your concern. Our team will contact you very soon.`,
@@ -135,4 +179,9 @@ app.use((err, req, res, next) => {
 // ---------------- START SERVER ----------------
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  if (transporter) {
+    console.log(`✅ Mail service is active (configured for ${process.env.EMAIL_USERNAME})`);
+  } else {
+    console.log(`⚠️ Mail service is INACTIVE (Missing EMAIL_USERNAME or EMAIL_PASSWORD)`);
+  }
 });
