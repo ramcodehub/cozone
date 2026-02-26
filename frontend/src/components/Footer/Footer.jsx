@@ -18,7 +18,7 @@ const Footer = () => {
               <h4 className="fw-bold mb-3">CoZone</h4>
               <p className="small mb-4">
                 From concept to creation <br/> It all starts at CoZone.<br />
-                Have any query? contact us we are here for you.
+                Have any query? Contact us we are here for you.
               </p>
               <div className="d-flex justify-content-center gap-3 social-media-links">
                 <a href="https://x.com/CozoneServices" className="text-white fs-5">
