@@ -41,10 +41,10 @@ const Footer = () => {
             <h5 className="fw-semibold fs-3 mb-2">Get In Touch</h5>
             <ul className="list-unstyled small">
               <li className="mb-2 fs-6">
-                <i className="bi bi-envelope me-2"></i> support@cozone.com
+                <i className="bi bi-envelope me-2"></i> cozonehyd@gmail.com
               </li>
               <li className="mb-2 fs-6">
-                <i className="bi bi-telephone me-2"></i> +91 9154567444
+                <i className="bi bi-telephone me-2"></i> +91 9458222234
               </li>
               <li className="fs-6 d-flex gap-1">
                 <i className="bi bi-geo-alt me-2"></i> Unit No: 7th Floor, Asian Sun City, B Block Forest Dept.Colony, Kondapur, Near AMB Mall Hyderabad, Telangana, 500084, India

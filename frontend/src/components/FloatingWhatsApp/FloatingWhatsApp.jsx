@@ -6,8 +6,8 @@ const FloatingWhatsApp = () => {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
   
   // WhatsApp number with pre-filled message for quotations
-  const phoneNumber = "919577577888";
-  const defaultMessage = "Hello, I'm interested in your construction services. Could you please provide more information?";
+  const phoneNumber = "919458222234";
+  const defaultMessage = "Hello, I'm interested in your Co Working Space. Could you please provide more information?";
   const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(defaultMessage)}`;
 
   const handleWhatsAppClick = () => {
