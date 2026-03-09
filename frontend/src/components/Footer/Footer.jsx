@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";   
+import { Link } from "react-router-dom";
 import X from '../../assets/img/x.png'
 import "./Footer.css";
 
@@ -17,7 +17,7 @@ const Footer = () => {
             >
               <h4 className="fw-bold mb-3">CoZone</h4>
               <p className="small mb-4">
-                From concept to creation <br/> It all starts at CoZone.<br />
+                From concept to creation <br /> It all starts at CoZone.<br />
                 Have any query? Contact us we are here for you.
               </p>
               <div className="d-flex justify-content-center gap-3 social-media-links">
@@ -47,13 +47,13 @@ const Footer = () => {
                 <i className="bi bi-telephone me-2"></i> +91 9458222234
               </li>
               <li className="fs-6 d-flex gap-1">
-                <i className="bi bi-geo-alt me-2"></i> Unit No: 7th Floor, Asian Sun City, B Block Forest Dept.Colony, Kondapur, Near AMB Mall Hyderabad, Telangana, 500084, India
+                <i className="bi bi-geo-alt me-2"></i> Unit No:709 7th Floor, Asian Sun City, B Block Forest Dept.Colony, Kondapur, Near AMB Mall Hyderabad, Telangana, 500084, India
               </li>
             </ul>
           </div>
 
-          <div className="col-md-12 col-lg-6 d-flex align-items-center justify-content-center fl links" style={{gap:'6rem'}}>
-            <div> 
+          <div className="col-md-12 col-lg-6 d-flex align-items-center justify-content-center fl links" style={{ gap: '6rem' }}>
+            <div>
               <h3 className=" fw-bold mb-2">Insights</h3>
               <ul className="list-unstyled small mb-4">
                 <li><Link to="/" className="text-decoration-none text-light fw-medium fs-6">Home</Link></li>
@@ -78,7 +78,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <hr className="mt-5"/>
+        <hr className="mt-5" />
         <div className="text-center fs-6 text-white pb-3">
           ©2025 All Rights Reserved. CoZone.
         </div>
