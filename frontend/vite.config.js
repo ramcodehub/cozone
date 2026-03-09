@@ -4,22 +4,15 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   base: '/',
+  build: {
+    outDir: 'dist'
+  },
   plugins: [react()],
   server: {
     port: 5173,
     proxy: {
       '/api': {
-        target: 'https://cozone.onrender.com',
-        changeOrigin: true,
-        secure: false,
-      },
-      '/contact': {
-        target: 'https://cozone.onrender.com',
-        changeOrigin: true,
-        secure: false,
-      },
-      '/enquiry': {
-        target: 'https://cozone.onrender.com',
+        target: 'http://localhost:5000',
         changeOrigin: true,
         secure: false,
       }

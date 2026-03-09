@@ -34,10 +34,8 @@ const ServiceEnquiryModal = ({ serviceName, show, onClose }) => {
 
     try {
       // Use local backend URL during development, deployed URL in production
-      const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      const backendUrl = isDevelopment
-        ? 'http://localhost:5005/enquiry'
-        : 'https://cozone.onrender.com/enquiry';
+      // Ensure requests go through the Vite proxy in development or relative path in production
+      const backendUrl = '/api/enquiry';
 
       const res = await fetch(backendUrl, {
         method: "POST",

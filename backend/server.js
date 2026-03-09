@@ -73,7 +73,7 @@ if (process.env.EMAIL_USERNAME && process.env.EMAIL_PASSWORD) {
 app.use("/api/ai", aiRoutes);
 
 // ---------------- CONTACT FORM ROUTE ----------------
-app.post("/contact", async (req, res) => {
+app.post("/api/contact", async (req, res) => {
   const { fullName, email, companyName, phone, message } = req.body;
 
   try {
@@ -117,7 +117,7 @@ app.post("/contact", async (req, res) => {
 });
 
 // ---------------- SERVICE ENQUIRY ROUTE ----------------
-app.post("/enquiry", async (req, res) => {
+app.post("/api/enquiry", async (req, res) => {
   const { fullName, mobile, email, service, message } = req.body;
 
   try {
@@ -161,7 +161,7 @@ app.post("/enquiry", async (req, res) => {
 });
 
 // ---------------- HEALTH CHECK ----------------
-app.get("/health", (req, res) => {
+app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "OK", message: "Server is running" });
 });
 
