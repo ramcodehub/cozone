@@ -47,7 +47,7 @@ const Footer = () => {
                 <i className="bi bi-telephone me-2"></i> +91 9458222234
               </li>
               <li className="fs-6 d-flex gap-1">
-                <i className="bi bi-geo-alt me-2"></i> Unit No:709 7th Floor, Asian Sun City, B Block Forest Dept.Colony, Kondapur, Near AMB Mall Hyderabad, Telangana, 500084, India
+                <i className="bi bi-geo-alt me-2"></i> Unit No:709, 7th Floor, Asian Sun City, B Block Forest Dept.Colony, Kondapur, Near AMB Mall Hyderabad, Telangana, 500084, India
               </li>
             </ul>
           </div>
