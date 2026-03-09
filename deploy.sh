@@ -13,8 +13,7 @@ npm run build
 
 # 3. Copy build output to root
 echo "Copying built frontend to root..."
-# The build output is in frontend/dist
-# We copy context of dist directly into root
-cp -r dist/* ../
+# We copy everything inside dist (including hidden files like .htaccess) to root
+cp -r dist/. ../
 
 echo "Deployment completed successfully!"
