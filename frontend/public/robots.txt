@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 Disallow: 
 
-Sitemap: https://cozone.com/sitemap.xml
+Sitemap: https://cozone.in/sitemap.xml
 
 User-agent: Googlebot
 Allow: /
@@ -20,4 +20,4 @@ User-agent: DuckDuckBot
 Allow: /
 Disallow: 
 
-Host: cozone.com
+Host: cozone.in
