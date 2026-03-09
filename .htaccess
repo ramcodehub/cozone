@@ -5,11 +5,16 @@ RewriteBase /
 # Exception for Let's Encrypt / well-known files
 RewriteRule ^\.well-known/ - [L]
 
+# Prevent common vulnerability scans and block wp-admin/xmlrpc scans
+RewriteRule ^xmlrpc\.php$ - [F,L]
+RewriteRule ^wp-admin - [F,L]
+RewriteRule ^wp-login - [F,L]
+
 # Redirect HTTP to HTTPS (optional but recommended)
 # RewriteCond %{HTTPS} off
 # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# Exclude backend and api routes from frontend React Router handling
+# Exclude backend from frontend React Router handling
 RewriteCond %{REQUEST_URI} !^/backend/
 RewriteCond %{REQUEST_URI} !^/api/
 
@@ -17,7 +22,7 @@ RewriteCond %{REQUEST_URI} !^/api/
 RewriteRule ^index\.html$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . index.html [L]
+RewriteRule . /index.html [L]
 </IfModule>
 
 # --- Production Build Optimizations ---
@@ -42,9 +47,9 @@ RewriteRule . index.html [L]
     ExpiresDefault "access plus 1 month"
     
     # CSS and JS
-    ExpiresByType text/css "access plus 1 year"
-    ExpiresByType application/javascript "access plus 1 year"
-    ExpiresByType application/x-javascript "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType application/x-javascript "access plus 1 month"
     
     # Images
     ExpiresByType image/jpeg "access plus 1 year"
