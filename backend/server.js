@@ -1,14 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-// Debug environment variables
-console.log('Environment Variables Debug:');
-console.log('- GEMINI_API_KEY present:', !!process.env.GEMINI_API_KEY);
-console.log('- GEMINI_API_KEY length:', process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.length : 0);
-console.log('- AI_MODEL:', process.env.AI_MODEL || 'Not set');
-console.log('- SUPABASE_URL present:', !!process.env.SUPABASE_URL);
-console.log('- PORT:', process.env.PORT || 'Not set');
-
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
@@ -111,8 +103,13 @@ app.post("/api/contact", async (req, res) => {
       message: `Thank you ${fullName}, we received your concern. Our team will contact you very soon.`,
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error submitting contact form." });
+    console.error("--- CONTACT FORM SUBMISSION ERROR ---");
+    console.error("Error details:", err.message || err);
+    if (err.stack) console.error("Stack trace:", err.stack);
+    res.status(500).json({
+      message: "Error submitting contact form.",
+      error: err.message || "Unknown error"
+    });
   }
 });
 
@@ -155,8 +152,13 @@ app.post("/api/enquiry", async (req, res) => {
       message: `Thank you ${fullName}, we received your concern. Our team will contact you very soon.`,
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error submitting service enquiry." });
+    console.error("--- SERVICE ENQUIRY SUBMISSION ERROR ---");
+    console.error("Error details:", err.message || err);
+    if (err.stack) console.error("Stack trace:", err.stack);
+    res.status(500).json({
+      message: "Error submitting service enquiry.",
+      error: err.message || "Unknown error"
+    });
   }
 });
 

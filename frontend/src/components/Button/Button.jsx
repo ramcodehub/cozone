@@ -6,12 +6,12 @@ const Button = ({
   variant = 'primary',
   children,
   className = '',
-  onClick,
+  onClick = undefined,
   type = 'button',
-  icon,
-  ariaLabel,
-  to,               // optional → navigate to any route
-  scrollToForm,     // optional → scroll to #contact-form
+  icon = undefined,
+  ariaLabel = undefined,
+  to = undefined,               // optional → navigate to any route
+  scrollToForm = false,     // optional → scroll to #contact-form
   ...rest
 }) => {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const Button = ({
 
   return (
     <button
-      type={type}
+      type={type === 'submit' || type === 'reset' ? type : 'button'}
       className={`d-flex align-items-center border-0 justify-content-center ${btnClass} ${className}`.trim()}
       onClick={handleClick}
       aria-label={ariaLabel}
