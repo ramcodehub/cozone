@@ -11,6 +11,7 @@ import aiAssistantIcon from '../../assets/logos/aiassistant.png';
  * Instrumented ChatWindow for Deep Debugging
  */
 const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
+  console.log("%c [AI ASSISTANT VERSION]: 2026-05-06-DEBUG-V1 ", "background: #222; color: #bada55");
   // Trace Initial State
   const initialMsg = createMessage({
     role: "assistant",
