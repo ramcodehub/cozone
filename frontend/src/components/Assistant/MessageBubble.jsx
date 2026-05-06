@@ -3,82 +3,113 @@ import ReactMarkdown from 'react-markdown';
 import styles from './Assistant.module.css';
 
 /**
- * MessageBubble Component - Renders individual chat messages with ultra-defensive logic
+ * MessageBubble Component - Crash-Proof Version
  */
 const MessageBubble = ({ message }) => {
   const [displayedText, setDisplayedText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
-  
-  // 1. Defensively calculate the text to display
-  // Ensuring it is ALWAYS a string to prevent .length or indexing crashes
-  const rawText = message?.text;
-  const safeText = typeof rawText === 'string' ? rawText : (rawText ? String(rawText) : "");
 
-  const formatTime = (date) => {
+  // 1. Double-Layer Safe Text Extraction
+  const getSafeText = (msg) => {
     try {
-      const d = date instanceof Date ? date : new Date(date);
-      return isNaN(d.getTime()) ? '' : d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const raw = msg?.text;
+      if (typeof raw === 'string') return raw;
+      if (raw === null || raw === undefined) return "";
+      return String(raw);
     } catch (e) {
-      return '';
+      return "";
     }
   };
 
-  // Reset animation when message changes
-  useEffect(() => {
-    if (message?.sender === 'bot' && message?.isTyping) {
-      setDisplayedText('');
-      setCurrentIndex(0);
-    } else {
-      setDisplayedText(safeText);
+  const safeTextValue = getSafeText(message);
+
+  // 2. Safe Time Formatting
+  const getSafeTime = (timestamp) => {
+    try {
+      const date = timestamp instanceof Date ? timestamp : new Date(timestamp);
+      if (isNaN(date.getTime())) return "";
+      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    } catch (e) {
+      return "";
     }
-  }, [message, safeText]);
+  };
 
-  // Typing animation with boundary checks
+  const safeTime = getSafeTime(message?.timestamp || new Date());
+
+  // 3. Animation Logic with Error Catching
   useEffect(() => {
-    if (message?.sender === 'bot' && message?.isTyping) {
-      // Only proceed if we haven't finished typing the current string
-      if (currentIndex < safeText.length) {
-        const timeout = setTimeout(() => {
-          // Append next character safely
-          setDisplayedText(prev => (typeof prev === 'string' ? prev : "") + (safeText[currentIndex] || ""));
-          setCurrentIndex(prev => prev + 1);
-        }, 15);
-
-        return () => clearTimeout(timeout);
+    try {
+      if (message?.sender === 'bot' && message?.isTyping) {
+        setDisplayedText('');
+        setCurrentIndex(0);
+      } else {
+        setDisplayedText(safeTextValue);
       }
+    } catch (err) {
+      console.error("[MessageBubble Logic Error]:", err);
     }
-  }, [currentIndex, message, safeText]);
+  }, [message, safeTextValue]);
 
-  // If message object is completely missing, render nothing
-  if (!message || typeof message !== 'object') return null;
+  useEffect(() => {
+    try {
+      if (message?.sender === 'bot' && message?.isTyping) {
+        const textLen = (safeTextValue || "").length;
+        if (currentIndex < textLen) {
+          const timeout = setTimeout(() => {
+            setDisplayedText(prev => {
+              const safePrev = typeof prev === 'string' ? prev : "";
+              const nextChar = safeTextValue[currentIndex] || "";
+              return safePrev + nextChar;
+            });
+            setCurrentIndex(prev => prev + 1);
+          }, 15);
+          return () => clearTimeout(timeout);
+        }
+      }
+    } catch (err) {
+      console.error("[MessageBubble Animation Error]:", err);
+    }
+  }, [currentIndex, message, safeTextValue]);
 
-  return (
-    <div className={`${styles.messageBubble} ${message.sender === 'user' ? styles.userMessage : styles.botMessage}`}>
-      <div className={styles.messageContent}>
-        <div className={styles.messageText}>
-          {message.sender === 'bot' ? (
-            <ReactMarkdown 
-              components={{
-                strong: ({...props}) => <strong {...props} />,
-                ol: ({...props}) => <ol {...props} className={styles.markdownList} />,
-                li: ({...props}) => <li {...props} className={styles.markdownListItem} />
-              }}
-            >
-              {displayedText || ""}
-            </ReactMarkdown>
-          ) : (
-            displayedText || ""
-          )}
-          {message.sender === 'bot' && message.isTyping && currentIndex < safeText.length && (
-            <span className={styles.cursor}>|</span>
-          )}
+  // 4. Ultimate Safety Return
+  try {
+    if (!message) return null;
+
+    return (
+      <div className={`${styles.messageBubble} ${message.sender === 'user' ? styles.userMessage : styles.botMessage}`}>
+        <div className={styles.messageContent}>
+          <div className={styles.messageText}>
+            {message.sender === 'bot' ? (
+              <ReactMarkdown 
+                components={{
+                  strong: ({...props}) => <strong {...props} />,
+                  ol: ({...props}) => <ol {...props} className={styles.markdownList} />,
+                  li: ({...props}) => <li {...props} className={styles.markdownListItem} />
+                }}
+              >
+                {String(displayedText || "")}
+              </ReactMarkdown>
+            ) : (
+              String(displayedText || "")
+            )}
+            {message.sender === 'bot' && message.isTyping && currentIndex < (safeTextValue || "").length && (
+              <span className={styles.cursor}>|</span>
+            )}
+          </div>
+          <span className={styles.messageTime}>{safeTime}</span>
         </div>
-        <span className={styles.messageTime}>
-          {formatTime(message.timestamp || new Date())}
-        </span>
       </div>
-    </div>
-  );
+    );
+  } catch (renderError) {
+    console.error("[MessageBubble Render Crash]:", renderError);
+    return (
+      <div className={styles.botMessage}>
+        <div className={styles.messageContent}>
+          <p>Message rendering failed.</p>
+        </div>
+      </div>
+    );
+  }
 };
 
 export default MessageBubble;

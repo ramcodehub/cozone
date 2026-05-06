@@ -7,7 +7,7 @@ import styles from './Assistant.module.css';
 import aiAssistantIcon from '../../assets/logos/aiassistant.png';
 
 /**
- * Enhanced ChatWindow with Maximum Fault Tolerance
+ * ChatWindow Component - Highly Resilient AI Frontend
  */
 const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
   const [messages, setMessages] = useState([]);
@@ -22,77 +22,27 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
   const messagesEndRef = useRef(null);
   const recognitionRef = useRef(null);
   const sessionIdRef = useRef(null);
-  const chatWindowRef = useRef(null);
-
-  // Initialize session
+  
   useEffect(() => {
     if (!sessionIdRef.current) {
-      sessionIdRef.current = `sess_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
+      sessionIdRef.current = `sess_${Date.now()}`;
     }
   }, []);
 
-  const scrollToBottom = () => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   useEffect(() => {
-    scrollToBottom();
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);
 
-  // Voice Input Logic
-  useEffect(() => {
-    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (SpeechRec) {
-      const rec = new SpeechRec();
-      rec.continuous = false;
-      rec.onresult = (e) => {
-        setInputValue(e.results[0][0].transcript);
-        setIsListening(false);
-      };
-      rec.onerror = () => setIsListening(false);
-      rec.onend = () => setIsListening(false);
-      recognitionRef.current = rec;
-    }
-  }, []);
-
-  const toggleVoice = () => {
-    if (!recognitionRef.current) {
-      setError("Voice search is not supported in this browser.");
-      return;
-    }
-    if (isListening) recognitionRef.current.stop();
-    else {
-      try {
-        recognitionRef.current.start();
-        setIsListening(true);
-      } catch (e) {
-        setError("Microphone access failed.");
-      }
-    }
-  };
-
-  const handlePromptSelect = (prompt) => {
-    const text = typeof prompt === 'string' ? prompt : prompt?.text || "";
-    if (!text) return;
-    setInputValue(text);
-    setTimeout(() => handleSend(text), 50);
-  };
-
-  const handleSend = async (manualMessage = null) => {
-    const rawText = manualMessage || inputValue;
-    const cleanText = (typeof rawText === 'string' ? rawText : "").trim();
+  const handleSend = async (manualText = null) => {
+    const rawInput = manualText || inputValue;
+    const cleanInput = (typeof rawInput === 'string' ? rawInput : "").trim();
     
-    if (!cleanText || isLoading) return;
+    if (!cleanInput || isLoading) return;
 
-    setError(null);
-    const uId = Date.now();
-    
-    // Add User Message
+    // 1. Add User Message Safely
     const userMsg = {
-      id: uId,
-      text: cleanText,
+      id: `u_${Date.now()}`,
+      text: cleanInput,
       sender: 'user',
       timestamp: new Date()
     };
@@ -100,43 +50,35 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
     setMessages(prev => [...(Array.isArray(prev) ? prev : []), userMsg]);
     setInputValue('');
     setIsLoading(true);
+    setError(null);
 
     try {
-      const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      
-      // FIXED PRODUCTION URL - Ensuring it points to the correct backend endpoint
-      const apiEndpoint = isDev 
-        ? 'http://localhost:5005/api/ai' 
-        : 'https://cozone.onrender.com/api/ai';
+      const isDev = window.location.hostname === 'localhost';
+      const api = isDev ? 'http://localhost:5005/api/ai' : 'https://cozone.onrender.com/api/ai';
 
-      const response = await fetch(apiEndpoint, {
+      const response = await fetch(api, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: cleanText,
-          sessionId: sessionIdRef.current
-        })
+        body: JSON.stringify({ message: cleanInput, sessionId: sessionIdRef.current })
       });
 
-      // Handle non-JSON responses (like Render 404/500 HTML pages)
       const contentType = response.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("Server returned non-JSON response. Please check backend status.");
+        throw new Error("Invalid server response format");
       }
 
       const data = await response.json();
-      console.log("[AI Assistant Log]:", data);
+      console.log("[AI Response]:", data);
 
-      // Extract text safely from any potential response structure
-      let responseText = "";
-      if (data?.reply && typeof data.reply === 'string') responseText = data.reply;
-      else if (data?.message && typeof data.message === 'string') responseText = data.message;
-      else if (data?.text && typeof data.text === 'string') responseText = data.text;
-      else responseText = "I received a response, but I couldn't understand it. Please try again.";
+      // 2. ABSOLUTE SAFE NORMALIZATION
+      let aiText = "";
+      if (typeof data?.reply === 'string') aiText = data.reply;
+      else if (typeof data?.message === 'string') aiText = data.message;
+      else aiText = "I received a response, but it was in an unexpected format.";
 
       const botMsg = {
-        id: Date.now() + 1,
-        text: responseText,
+        id: `b_${Date.now()}`,
+        text: String(aiText), // Force string conversion
         sender: 'bot',
         timestamp: new Date(),
         isTyping: true
@@ -145,10 +87,10 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
       setMessages(prev => [...(Array.isArray(prev) ? prev : []), botMsg]);
 
     } catch (err) {
-      console.error("[AI Assistant Error]:", err);
+      console.error("[Chat Error]:", err);
       const errBotMsg = {
-        id: Date.now() + 2,
-        text: "Our AI assistant is temporarily busy. Please contact CoZone support directly.",
+        id: `e_${Date.now()}`,
+        text: "I'm having trouble connecting right now. Please try again.",
         sender: 'bot',
         timestamp: new Date(),
         isTyping: true
@@ -159,18 +101,12 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
     }
   };
 
-  const handleKey = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
+  const handlePromptSelect = (p) => {
+    const txt = typeof p === 'string' ? p : (p?.text || "");
+    if (txt) {
+      setInputValue(txt);
+      setTimeout(() => handleSend(txt), 50);
     }
-  };
-
-  const handleRefresh = () => {
-    setMessages([]);
-    setInputValue('');
-    setError(null);
-    setIsLoading(false);
   };
 
   return (
@@ -180,11 +116,11 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
           <div className={styles.botAvatar}><img src={aiAssistantIcon} alt="AI" /></div>
           <div>
             <h3 className={styles.headerTitle}>CoZone AI Assistant</h3>
-            <p className={styles.headerSubtitle}>Ready to help you</p>
+            <p className={styles.headerSubtitle}>Ready to help</p>
           </div>
         </div>
         <div className={styles.headerActions}>
-          <button onClick={handleRefresh} className={styles.refreshButton}>
+          <button onClick={() => setMessages([])} className={styles.refreshButton}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" /><path d="M16 16h5v5" /></svg>
           </button>
           <button onClick={() => setIsFullscreen(!isFullscreen)} className={styles.fullscreenButton}>
@@ -206,11 +142,7 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
             ))}
             {isLoading && (
               <div className={`${styles.messageBubble} ${styles.botMessage}`}>
-                <div className={styles.typingIndicator}>
-                  <div className={styles.typingDot}></div>
-                  <div className={styles.typingDot}></div>
-                  <div className={styles.typingDot}></div>
-                </div>
+                <div className={styles.typingIndicator}><div className={styles.typingDot}></div><div className={styles.typingDot}></div><div className={styles.typingDot}></div></div>
               </div>
             )}
             <div ref={messagesEndRef} />
@@ -223,8 +155,8 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
           <button onClick={() => setShowPromptModal(false)} className={styles.backButton}>← Back</button>
           <div className={styles.minimalPromptList}>
             {selectedCategory?.prompts?.map((p) => (
-              <button key={p.id} onClick={() => { handlePromptSelect(p.text); setShowPromptModal(false); }} className={styles.minimalPromptButton}>
-                {p.text}
+              <button key={p?.id || Math.random()} onClick={() => { handlePromptSelect(p?.text); setShowPromptModal(false); }} className={styles.minimalPromptButton}>
+                {p?.text || "Option"}
               </button>
             ))}
           </div>
@@ -237,14 +169,11 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
             className={styles.chatInput}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleKey}
+            onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); } }}
             placeholder="Ask CoZone..."
             rows={1}
             disabled={isLoading}
           />
-          <button onClick={toggleVoice} className={`${styles.voiceButton} ${isListening ? styles.listening : ''}`} disabled={isLoading}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" /><path d="M19 10v2a7 7 0 0 1-14 0v-2" /><line x1="12" y1="19" x2="12" y2="23" /><line x1="8" y1="23" x2="16" y2="23" /></svg>
-          </button>
           <button onClick={() => handleSend()} className={styles.sendButton} disabled={isLoading || !inputValue.trim()}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg>
           </button>
