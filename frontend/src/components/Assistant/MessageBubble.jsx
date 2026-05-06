@@ -2,66 +2,76 @@ import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import styles from './Assistant.module.css';
 
+/**
+ * MessageBubble Component - Renders individual chat messages with typing animation support
+ */
 const MessageBubble = ({ message }) => {
   const [displayedText, setDisplayedText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   
+  // Safe helper to format time
   const formatTime = (date) => {
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    try {
+      const d = date instanceof Date ? date : new Date(date);
+      return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    } catch (e) {
+      return '';
+    }
   };
 
-  // Typing animation effect for bot messages
+  // Safe helper to get message text
+  const messageText = message?.text || "";
+
+  // Reset/Initialize displayed text when message object changes
   useEffect(() => {
-    if (message.sender === 'bot' && message.isTyping) {
-      // Reset for new typing animation
+    if (message?.sender === 'bot' && message?.isTyping) {
       setDisplayedText('');
       setCurrentIndex(0);
-    } else if (message.sender === 'bot' && !message.isTyping) {
-      // Show full text immediately if not typing
-      setDisplayedText(message.text);
-    } else if (message.sender === 'user') {
-      // Show user messages immediately
-      setDisplayedText(message.text);
+    } else {
+      setDisplayedText(messageText);
     }
-  }, [message]);
+  }, [message, messageText]);
 
-  // Typing animation effect
+  // Typing animation effect logic
   useEffect(() => {
-    if (message.sender === 'bot' && message.isTyping && currentIndex < message.text.length) {
+    if (message?.sender === 'bot' && message?.isTyping && currentIndex < messageText.length) {
       const timeout = setTimeout(() => {
-        setDisplayedText(prev => prev + message.text[currentIndex]);
+        setDisplayedText(prev => prev + messageText[currentIndex]);
         setCurrentIndex(prev => prev + 1);
-      }, 20); // Adjust typing speed here (lower = faster)
+      }, 15); // Slightly faster typing for better UX
 
       return () => clearTimeout(timeout);
     }
-  }, [currentIndex, message]);
+  }, [currentIndex, message, messageText]);
+
+  // Safety: If message is missing, don't render anything that could crash
+  if (!message) return null;
 
   return (
     <div className={`${styles.messageBubble} ${message.sender === 'user' ? styles.userMessage : styles.botMessage}`}>
-      {/* Removed bot avatar/icon */}
-      
       <div className={styles.messageContent}>
         <div className={styles.messageText}>
           {message.sender === 'bot' ? (
-            <ReactMarkdown components={{
-              strong: ({...props}) => <strong {...props} />,
-              ol: ({...props}) => <ol {...props} className={styles.markdownList} />,
-              li: ({...props}) => <li {...props} className={styles.markdownListItem} />
-            }}>
-              {displayedText}
+            <ReactMarkdown 
+              components={{
+                strong: ({...props}) => <strong {...props} />,
+                ol: ({...props}) => <ol {...props} className={styles.markdownList} />,
+                li: ({...props}) => <li {...props} className={styles.markdownListItem} />
+              }}
+            >
+              {displayedText || ""}
             </ReactMarkdown>
           ) : (
-            displayedText
+            displayedText || ""
           )}
-          {message.sender === 'bot' && message.isTyping && (
+          {message.sender === 'bot' && message.isTyping && currentIndex < messageText.length && (
             <span className={styles.cursor}>|</span>
           )}
         </div>
-        <span className={styles.messageTime}>{formatTime(message.timestamp)}</span>
+        <span className={styles.messageTime}>
+          {formatTime(message.timestamp || new Date())}
+        </span>
       </div>
-      
-      {/* Removed user avatar/icon */}
     </div>
   );
 };
