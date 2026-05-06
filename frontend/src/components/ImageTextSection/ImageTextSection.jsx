@@ -1,0 +1,42 @@
+import React from "react";
+import Button from "../Button/Button";
+
+const ImageTextSection = ({
+  image,
+  title,
+  text,
+  reverse = false,
+  to
+}) => {
+  return (
+    <div className="container my-4" data-aos="fade-left">
+      <div
+        className={`row align-items-center ${
+          reverse ? "flex-md-row-reverse" : ""
+        }`}
+      >
+        <div className="col-12 col-md-7 mb-3 mb-md-0">
+          <img
+            src={image}
+            alt={title}
+            className="img-fluid w-100 rounded"
+            style={{ objectFit: "cover", height: "100%" }}
+          />
+        </div>
+
+
+        <div className="col-12 col-md-5" data-aos="fade-right">
+          <div className={`${reverse ? "pe-md-4" : "ps-md-4"}`}>
+            <h2 className="fw-bold">{title}</h2>
+            <p className="text-muted">{text}</p>
+            <Button variant="primary" icon={<i className="bi bi-arrow-right"></i>} to={to}>
+              Explore More
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ImageTextSection;

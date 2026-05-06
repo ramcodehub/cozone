@@ -3,3 +3,21 @@
   padding: 0;
   box-sizing: border-box;
 }
+body{
+  font-family: 'Satoshi', sans-serif;
+  background: var(--off-white);
+  overflow-x: hidden;
+}
+.cozone{
+  padding-top: 6rem;
+}
+.cursive {
+  font-family: 'Lobster', cursive;
+}
+
+.cursive-heading{
+  font-family: 'Dynalight', cursive;
+  font-size: 3.4rem;
+  font-weight: 600;
+  color: var(--muted-navy);
+}

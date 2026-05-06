@@ -1,0 +1,4 @@
+input:focus,
+textarea:focus {
+  border-color: #000;
+}

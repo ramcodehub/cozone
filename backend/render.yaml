@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: cozone-backend
+    runtime: node
+    buildCommand: npm run clean-install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.10.0
+      - key: PORT
+        value: 10000
