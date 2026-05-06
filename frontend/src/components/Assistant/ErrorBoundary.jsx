@@ -1,53 +1,60 @@
 import React from 'react';
 
 /**
- * ErrorBoundary Component - Prevents the entire app from crashing if the assistant fails
+ * Global Error Boundary - Hardened for Production
+ * Prevents full-site crashes and provides a graceful fallback.
  */
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { hasError: false, error: null };
   }
 
   static getDerivedStateFromError(error) {
     // Update state so the next render will show the fallback UI.
-    return { hasError: true };
+    return { hasError: true, error };
   }
 
   componentDidCatch(error, errorInfo) {
-    // You can also log the error to an error reporting service
-    console.error("[Assistant Error Boundary]:", error, errorInfo);
+    // Log the error for production troubleshooting
+    console.group("[CRITICAL ERROR CAUGHT]");
+    console.error("Error:", error);
+    console.error("Info:", errorInfo);
+    console.groupEnd();
   }
 
   render() {
     if (this.state.hasError) {
-      // Fallback UI for when the assistant crashes
+      // Return a clean, non-crashing fallback UI
       return (
         <div style={{ 
           padding: '20px', 
+          margin: '20px',
           textAlign: 'center', 
-          background: '#fff', 
+          background: '#fff3f3', 
           borderRadius: '12px',
-          boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-          border: '1px solid #eee',
-          fontFamily: 'Inter, sans-serif'
+          border: '1px solid #ffcccc',
+          color: '#d32f2f',
+          fontFamily: 'system-ui, sans-serif'
         }}>
-          <h3 style={{ color: '#ff4d4f', marginBottom: '10px' }}>Assistant Unavailable</h3>
-          <p style={{ color: '#666', fontSize: '14px', marginBottom: '15px' }}>
-            We encountered an issue with the AI assistant UI.
+          <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>Something went wrong</h2>
+          <p style={{ fontSize: '14px', color: '#666' }}>
+            We've isolated a component error to prevent a full site crash.
           </p>
           <button 
-            onClick={() => this.setState({ hasError: false })}
+            onClick={() => window.location.reload()}
             style={{
-              padding: '8px 16px',
-              background: '#000',
+              marginTop: '15px',
+              padding: '8px 20px',
+              background: '#d32f2f',
               color: '#fff',
               border: 'none',
               borderRadius: '6px',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              fontWeight: '600'
             }}
           >
-            Reset Assistant
+            Refresh Page
           </button>
         </div>
       );
