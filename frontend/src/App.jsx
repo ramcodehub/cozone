@@ -32,6 +32,7 @@ import ErrorBoundary from './components/Assistant/ErrorBoundary';
 import { updateMetaTags, pageSEOMetadata } from './utils/seoUtils';
 
 function App() {
+  console.log("%c [GLOBAL APP VERSION]: 2026-05-06-DEBUG-V2 ", "background: #222; color: #00ff00");
   const location = useLocation();
   
   useEffect(() => {
