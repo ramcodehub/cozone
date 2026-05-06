@@ -1,31 +1,31 @@
 import React from 'react';
 
 /**
- * Global Error Boundary - Hardened for Production
- * Prevents full-site crashes and provides a graceful fallback.
+ * Enhanced Error Boundary for Deep Debugging
  */
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, error: null };
+    this.state = { hasError: false, error: null, info: null };
   }
 
   static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI.
     return { hasError: true, error };
   }
 
   componentDidCatch(error, errorInfo) {
-    // Log the error for production troubleshooting
-    console.group("[CRITICAL ERROR CAUGHT]");
-    console.error("Error:", error);
-    console.error("Info:", errorInfo);
+    // [DEBUG] Capture deep crash details
+    console.group("[DEBUG] [CRITICAL COMPONENT CRASH]");
+    console.error("Error Message:", error.message);
+    console.error("Error Stack:", error.stack);
+    console.error("Component Stack:", errorInfo.componentStack);
     console.groupEnd();
+    
+    this.setState({ info: errorInfo });
   }
 
   render() {
     if (this.state.hasError) {
-      // Return a clean, non-crashing fallback UI
       return (
         <div style={{ 
           padding: '20px', 
@@ -37,10 +37,23 @@ class ErrorBoundary extends React.Component {
           color: '#d32f2f',
           fontFamily: 'system-ui, sans-serif'
         }}>
-          <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>Something went wrong</h2>
+          <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>AI Assistant Error</h2>
           <p style={{ fontSize: '14px', color: '#666' }}>
-            We've isolated a component error to prevent a full site crash.
+            A component crash was caught. Details have been logged to the console.
           </p>
+          <div style={{ 
+            fontSize: '11px', 
+            textAlign: 'left', 
+            background: '#000', 
+            color: '#0f0', 
+            padding: '10px', 
+            marginTop: '10px',
+            maxHeight: '100px',
+            overflow: 'auto',
+            borderRadius: '4px'
+          }}>
+            {this.state.error?.toString()}
+          </div>
           <button 
             onClick={() => window.location.reload()}
             style={{
@@ -50,11 +63,10 @@ class ErrorBoundary extends React.Component {
               color: '#fff',
               border: 'none',
               borderRadius: '6px',
-              cursor: 'pointer',
-              fontWeight: '600'
+              cursor: 'pointer'
             }}
           >
-            Refresh Page
+            Reset Assistant
           </button>
         </div>
       );

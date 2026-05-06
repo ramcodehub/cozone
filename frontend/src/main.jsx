@@ -6,6 +6,27 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import App from './App.jsx'
 import './styles/variables.css'
 
+// [DEBUG] Global Error Tracking for Production Stability
+window.addEventListener("error", (event) => {
+  console.error(
+    "[GLOBAL ERROR DETECTED]",
+    {
+      message: event.message,
+      source: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+      error: event.error
+    }
+  );
+});
+
+window.addEventListener("unhandledrejection", (event) => {
+  console.error(
+    "[PROMISE ERROR DETECTED]",
+    event.reason
+  );
+});
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Router>

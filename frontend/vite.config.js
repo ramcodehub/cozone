@@ -5,7 +5,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: '/',
   build: {
-    outDir: 'dist'
+    outDir: 'dist',
+    sourcemap: true,
+    minify: false, // Temporarily disable minification for production debugging
   },
   plugins: [react()],
   server: {

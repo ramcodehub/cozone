@@ -4,42 +4,52 @@ import { createMessage } from '../../utils/chatMessage';
 import styles from './Assistant.module.css';
 
 /**
- * Hardened MessageBubble Component
- * Uses centralized createMessage factory for absolute property safety.
+ * Instrumented MessageBubble for Deep Debugging
  */
 const MessageBubble = ({ message: rawMessage }) => {
-  // 1. Immediate Normalization
+  // Trace Component Mount
+  console.log("[DEBUG] [MessageBubble Mount] Raw input:", rawMessage);
+
+  // 1. Trace Normalization
   const message = createMessage(rawMessage || {});
+  console.log("[DEBUG] [MessageBubble Post-Normalization]:", message);
   
   const [displayedText, setDisplayedText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // 2. Safe Text Reference
+  // 2. Trace safe properties
   const safeText = message.text || "";
   const isBot = message.role === 'assistant';
 
-  // 3. Reset animation for new messages
+  // [DEBUG] Check Length
+  console.log("[DEBUG] [LENGTH CHECK] safeText length:", safeText.length);
+
   useEffect(() => {
-    // If it's a typing bot message, reset animation
-    if (isBot && !message.loading && displayedText === '' && currentIndex === 0) {
-      // Logic for starting animation if needed
-    } else if (!isBot || !message.loading) {
+    if (!isBot || message.loading) {
       setDisplayedText(safeText);
     }
   }, [message.id, isBot, message.loading, safeText]);
 
-  // 4. Typing animation with strict boundary checks
+  // 3. Trace Typing Animation
   useEffect(() => {
-    if (isBot && !message.loading && currentIndex < (safeText || "").length) {
-      const timeout = setTimeout(() => {
-        setDisplayedText(prev => (typeof prev === 'string' ? prev : "") + (safeText[currentIndex] || ""));
-        setCurrentIndex(prev => prev + 1);
-      }, 15);
-      return () => clearTimeout(timeout);
+    if (isBot && !message.loading) {
+      const textLen = (safeText || "").length;
+      if (currentIndex < textLen) {
+        const timeout = setTimeout(() => {
+          setDisplayedText(prev => {
+            const nextChar = safeText[currentIndex];
+            if (nextChar === undefined) {
+              console.warn("[DEBUG] [ANIMATION WARNING] Found undefined char at index", currentIndex);
+            }
+            return (prev || "") + (nextChar || "");
+          });
+          setCurrentIndex(prev => prev + 1);
+        }, 15);
+        return () => clearTimeout(timeout);
+      }
     }
   }, [currentIndex, isBot, message.loading, safeText]);
 
-  // 5. Safe Time Formatting
   const formatTime = (ts) => {
     try {
       const d = new Date(ts);
@@ -49,8 +59,8 @@ const MessageBubble = ({ message: rawMessage }) => {
     }
   };
 
-  // If loading, render typing indicator inside bubble
   if (message.loading) {
+    console.log("[DEBUG] Rendering loading indicator bubble");
     return (
       <div className={`${styles.messageBubble} ${styles.botMessage}`}>
         <div className={styles.messageContent}>
@@ -64,31 +74,36 @@ const MessageBubble = ({ message: rawMessage }) => {
     );
   }
 
-  return (
-    <div className={`${styles.messageBubble} ${isBot ? styles.botMessage : styles.userMessage}`}>
-      <div className={styles.messageContent}>
-        <div className={styles.messageText}>
-          {isBot ? (
-            <ReactMarkdown 
-              components={{
-                strong: ({...props}) => <strong {...props} />,
-                ol: ({...props}) => <ol {...props} className={styles.markdownList} />,
-                li: ({...props}) => <li {...props} className={styles.markdownListItem} />
-              }}
-            >
-              {displayedText || ""}
-            </ReactMarkdown>
-          ) : (
-            displayedText || ""
-          )}
-          {isBot && currentIndex < (safeText || "").length && (
-            <span className={styles.cursor}>|</span>
-          )}
+  try {
+    return (
+      <div className={`${styles.messageBubble} ${isBot ? styles.botMessage : styles.userMessage}`}>
+        <div className={styles.messageContent}>
+          <div className={styles.messageText}>
+            {isBot ? (
+              <ReactMarkdown 
+                components={{
+                  strong: ({...props}) => <strong {...props} />,
+                  ol: ({...props}) => <ol {...props} className={styles.markdownList} />,
+                  li: ({...props}) => <li {...props} className={styles.markdownListItem} />
+                }}
+              >
+                {String(displayedText || "")}
+              </ReactMarkdown>
+            ) : (
+              displayedText || ""
+            )}
+            {isBot && currentIndex < (safeText || "").length && (
+              <span className={styles.cursor}>|</span>
+            )}
+          </div>
+          <span className={styles.messageTime}>{formatTime(message.createdAt)}</span>
         </div>
-        <span className={styles.messageTime}>{formatTime(message.createdAt)}</span>
       </div>
-    </div>
-  );
+    );
+  } catch (renderErr) {
+    console.error("[DEBUG] [MessageBubble RENDER ERROR]", renderErr);
+    return <div>Render failed.</div>;
+  }
 };
 
 export default MessageBubble;

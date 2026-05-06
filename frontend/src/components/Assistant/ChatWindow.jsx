@@ -8,20 +8,18 @@ import styles from './Assistant.module.css';
 import aiAssistantIcon from '../../assets/logos/aiassistant.png';
 
 /**
- * ChatWindow Component - Fully Refactored for Absolute Stability
+ * Instrumented ChatWindow for Deep Debugging
  */
 const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
-  // Initialize with a safe welcome message
-  const [messages, setMessages] = useState([
-    createMessage({
-      role: "assistant",
-      text: "Hi! Welcome to CoZone. How can I help you today?"
-    })
-  ]);
+  // Trace Initial State
+  const initialMsg = createMessage({
+    role: "assistant",
+    text: "Hi! Welcome to CoZone. How can I help you today?"
+  });
   
+  const [messages, setMessages] = useState([initialMsg]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showPromptModal, setShowPromptModal] = useState(false);
@@ -33,6 +31,7 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
     if (!sessionIdRef.current) {
       sessionIdRef.current = `sess_${Date.now()}`;
     }
+    console.log("[DEBUG] Session Initialized:", sessionIdRef.current);
   }, []);
 
   useEffect(() => {
@@ -45,20 +44,28 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
     
     if (!cleanInput || isLoading) return;
 
-    // 1. Create and add user message
+    // 1. Trace User Message Creation
     const userMessage = createMessage({
       role: "user",
       text: cleanInput
     });
+    
+    console.log("[DEBUG] [SET MESSAGES] User Message:", userMessage);
 
-    setMessages(prev => normalizeMessages([...prev, userMessage]));
+    setMessages(prev => {
+      const next = normalizeMessages([...prev, userMessage]);
+      console.log("[DEBUG] [STATE UPDATE] New messages array:", next);
+      return next;
+    });
+
     setInputValue('');
     setIsLoading(true);
-    setError(null);
 
     try {
       const isDev = window.location.hostname === 'localhost';
       const api = isDev ? 'http://localhost:5005/api/ai' : 'https://cozone.onrender.com/api/ai';
+
+      console.log("[DEBUG] [FETCH START] Endpoint:", api);
 
       const response = await fetch(api, {
         method: 'POST',
@@ -66,20 +73,27 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
         body: JSON.stringify({ message: cleanInput, sessionId: sessionIdRef.current })
       });
 
-      if (!response.ok) throw new Error("Server communication failed");
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
       const data = await response.json();
+      console.log("[DEBUG] [AI RAW RESPONSE]", data);
 
-      // 2. Normalize AI response
+      // 2. Trace AI Response Creation
       const assistantMessage = createMessage({
         role: "assistant",
         text: typeof data?.reply === 'string' ? data.reply : (data?.message || "Sorry, I couldn't process that.")
       });
 
-      setMessages(prev => normalizeMessages([...prev, assistantMessage]));
+      console.log("[DEBUG] [AI NORMALIZED MESSAGE]", assistantMessage);
+
+      setMessages(prev => {
+        const next = normalizeMessages([...prev, assistantMessage]);
+        console.log("[DEBUG] [STATE UPDATE] Added AI response:", next);
+        return next;
+      });
 
     } catch (err) {
-      console.error("[AI Assistant Error]:", err);
+      console.error("[DEBUG] [AI FETCH ERROR]", err);
       const errorMessage = createMessage({
         role: "assistant",
         text: "I'm having trouble connecting right now. Please try again later."
@@ -92,6 +106,7 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
 
   const handlePromptSelect = (p) => {
     const txt = typeof p === 'string' ? p : (p?.text || "");
+    console.log("[DEBUG] Prompt Selected:", txt);
     if (txt) {
       setInputValue(txt);
       setTimeout(() => handleSend(txt), 50);
@@ -99,18 +114,15 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
   };
 
   const handleRefresh = () => {
-    setMessages([
-      createMessage({
-        role: "assistant",
-        text: "Hi! Welcome to CoZone. How can I help you today?"
-      })
-    ]);
+    console.log("[DEBUG] Chat Refreshed");
+    setMessages([initialMsg]);
     setInputValue('');
     setIsLoading(false);
   };
 
-  // Safe rendering pipeline
+  // Trace Rendering Pipeline
   const safeMessages = normalizeMessages(messages);
+  console.log("[DEBUG] [RENDER MESSAGES]", safeMessages);
 
   return (
     <div className={`${styles.chatWindow} ${isFullscreen ? styles.fullscreen : ''}`}>
@@ -140,13 +152,20 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
           <InitialScreen onExampleClick={handlePromptSelect} onCategoryClick={(c) => { setSelectedCategory(c); setShowPromptModal(true); }} />
         ) : (
           <>
-            {safeMessages.map((m) => (
-              <MessageBubble key={m.id} message={m} />
-            ))}
+            {safeMessages.map((m, idx) => {
+              console.log(`[DEBUG] [RENDER MESSAGE ${idx}]`, m);
+              return <MessageBubble key={m.id} message={m} />;
+            })}
             
-            {/* Loading Indicator as a specialized message */}
+            {/* Trace Loading Placeholder */}
             {isLoading && (
-              <MessageBubble message={createMessage({ role: 'assistant', text: '', loading: true })} />
+              <MessageBubble 
+                message={createMessage({ 
+                  role: 'assistant', 
+                  text: '', 
+                  loading: true 
+                })} 
+              />
             )}
             
             <div ref={messagesEndRef} />
