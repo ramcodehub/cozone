@@ -3,49 +3,54 @@ import ReactMarkdown from 'react-markdown';
 import styles from './Assistant.module.css';
 
 /**
- * MessageBubble Component - Renders individual chat messages with typing animation support
+ * MessageBubble Component - Renders individual chat messages with ultra-defensive logic
  */
 const MessageBubble = ({ message }) => {
   const [displayedText, setDisplayedText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   
-  // Safe helper to format time
+  // 1. Defensively calculate the text to display
+  // Ensuring it is ALWAYS a string to prevent .length or indexing crashes
+  const rawText = message?.text;
+  const safeText = typeof rawText === 'string' ? rawText : (rawText ? String(rawText) : "");
+
   const formatTime = (date) => {
     try {
       const d = date instanceof Date ? date : new Date(date);
-      return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      return isNaN(d.getTime()) ? '' : d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     } catch (e) {
       return '';
     }
   };
 
-  // Safe helper to get message text
-  const messageText = message?.text || "";
-
-  // Reset/Initialize displayed text when message object changes
+  // Reset animation when message changes
   useEffect(() => {
     if (message?.sender === 'bot' && message?.isTyping) {
       setDisplayedText('');
       setCurrentIndex(0);
     } else {
-      setDisplayedText(messageText);
+      setDisplayedText(safeText);
     }
-  }, [message, messageText]);
+  }, [message, safeText]);
 
-  // Typing animation effect logic
+  // Typing animation with boundary checks
   useEffect(() => {
-    if (message?.sender === 'bot' && message?.isTyping && currentIndex < messageText.length) {
-      const timeout = setTimeout(() => {
-        setDisplayedText(prev => prev + messageText[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
-      }, 15); // Slightly faster typing for better UX
+    if (message?.sender === 'bot' && message?.isTyping) {
+      // Only proceed if we haven't finished typing the current string
+      if (currentIndex < safeText.length) {
+        const timeout = setTimeout(() => {
+          // Append next character safely
+          setDisplayedText(prev => (typeof prev === 'string' ? prev : "") + (safeText[currentIndex] || ""));
+          setCurrentIndex(prev => prev + 1);
+        }, 15);
 
-      return () => clearTimeout(timeout);
+        return () => clearTimeout(timeout);
+      }
     }
-  }, [currentIndex, message, messageText]);
+  }, [currentIndex, message, safeText]);
 
-  // Safety: If message is missing, don't render anything that could crash
-  if (!message) return null;
+  // If message object is completely missing, render nothing
+  if (!message || typeof message !== 'object') return null;
 
   return (
     <div className={`${styles.messageBubble} ${message.sender === 'user' ? styles.userMessage : styles.botMessage}`}>
@@ -64,7 +69,7 @@ const MessageBubble = ({ message }) => {
           ) : (
             displayedText || ""
           )}
-          {message.sender === 'bot' && message.isTyping && currentIndex < messageText.length && (
+          {message.sender === 'bot' && message.isTyping && currentIndex < safeText.length && (
             <span className={styles.cursor}>|</span>
           )}
         </div>

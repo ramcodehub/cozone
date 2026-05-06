@@ -7,7 +7,7 @@ import styles from './Assistant.module.css';
 import aiAssistantIcon from '../../assets/logos/aiassistant.png';
 
 /**
- * ChatWindow Component - Handles the chat interface and API communication
+ * Enhanced ChatWindow with Maximum Fault Tolerance
  */
 const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
   const [messages, setMessages] = useState([]);
@@ -18,184 +18,177 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showPromptModal, setShowPromptModal] = useState(false);
+  
   const messagesEndRef = useRef(null);
   const recognitionRef = useRef(null);
   const sessionIdRef = useRef(null);
   const chatWindowRef = useRef(null);
 
-  // Initialize session ID
+  // Initialize session
   useEffect(() => {
     if (!sessionIdRef.current) {
-      sessionIdRef.current = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      sessionIdRef.current = `sess_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
     }
   }, []);
 
-  // Auto-scroll to bottom
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, isLoading]);
 
-  // Initialize speech recognition
+  // Voice Input Logic
   useEffect(() => {
-    const initSpeechRecognition = () => {
-      const SpeechRecognition = window.SpeechRecognition || window['webkitSpeechRecognition'];
-      if (!SpeechRecognition) return;
-
-      const recognition = new SpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.lang = 'en-US';
-
-      recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        setInputValue(transcript);
+    const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRec) {
+      const rec = new SpeechRec();
+      rec.continuous = false;
+      rec.onresult = (e) => {
+        setInputValue(e.results[0][0].transcript);
         setIsListening(false);
       };
-
-      recognition.onerror = () => setIsListening(false);
-      recognition.onend = () => setIsListening(false);
-      recognitionRef.current = recognition;
-    };
-
-    initSpeechRecognition();
-    return () => recognitionRef.current?.stop();
+      rec.onerror = () => setIsListening(false);
+      rec.onend = () => setIsListening(false);
+      recognitionRef.current = rec;
+    }
   }, []);
 
-  const toggleVoiceInput = () => {
+  const toggleVoice = () => {
     if (!recognitionRef.current) {
-      setError('Speech recognition is not supported. Please type your message.');
+      setError("Voice search is not supported in this browser.");
       return;
     }
-    if (isListening) {
-      recognitionRef.current.stop();
-    } else {
+    if (isListening) recognitionRef.current.stop();
+    else {
       try {
         recognitionRef.current.start();
         setIsListening(true);
-      } catch (err) {
-        setError('Voice input failed. Please type your message.');
+      } catch (e) {
+        setError("Microphone access failed.");
       }
     }
   };
 
   const handlePromptSelect = (prompt) => {
-    setInputValue(prompt);
-    setTimeout(() => handleSend(prompt), 10);
+    const text = typeof prompt === 'string' ? prompt : prompt?.text || "";
+    if (!text) return;
+    setInputValue(text);
+    setTimeout(() => handleSend(text), 50);
   };
 
-  const handleSend = async (customMessage = null) => {
-    const messageToSend = (customMessage || inputValue || "").trim();
-    if (!messageToSend || isLoading) return;
+  const handleSend = async (manualMessage = null) => {
+    const rawText = manualMessage || inputValue;
+    const cleanText = (typeof rawText === 'string' ? rawText : "").trim();
+    
+    if (!cleanText || isLoading) return;
 
     setError(null);
-
-    // 1. Add User Message
-    const userMessage = {
-      id: Date.now(),
-      text: messageToSend,
+    const uId = Date.now();
+    
+    // Add User Message
+    const userMsg = {
+      id: uId,
+      text: cleanText,
       sender: 'user',
       timestamp: new Date()
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages(prev => [...(Array.isArray(prev) ? prev : []), userMsg]);
     setInputValue('');
     setIsLoading(true);
 
     try {
-      const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      const backendUrl = isDevelopment
-        ? 'http://localhost:5005/api/ai'
+      const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      
+      // FIXED PRODUCTION URL - Ensuring it points to the correct backend endpoint
+      const apiEndpoint = isDev 
+        ? 'http://localhost:5005/api/ai' 
         : 'https://cozone.onrender.com/api/ai';
 
-      const response = await fetch(backendUrl, {
+      const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          message: messageToSend,
+          message: cleanText,
           sessionId: sessionIdRef.current
         })
       });
 
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      
+      // Handle non-JSON responses (like Render 404/500 HTML pages)
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Server returned non-JSON response. Please check backend status.");
+      }
+
       const data = await response.json();
-      console.log("[AI API Response Debug]:", data);
+      console.log("[AI Assistant Log]:", data);
 
-      // 2. Map Backend Response Safely
-      // Normalize 'reply' from OpenRouter or 'message' from errors
-      const aiText = data?.reply || data?.message || "I'm sorry, I couldn't process that. Please try again.";
+      // Extract text safely from any potential response structure
+      let responseText = "";
+      if (data?.reply && typeof data.reply === 'string') responseText = data.reply;
+      else if (data?.message && typeof data.message === 'string') responseText = data.message;
+      else if (data?.text && typeof data.text === 'string') responseText = data.text;
+      else responseText = "I received a response, but I couldn't understand it. Please try again.";
 
-      const botMessage = {
+      const botMsg = {
         id: Date.now() + 1,
-        text: aiText,
+        text: responseText,
         sender: 'bot',
         timestamp: new Date(),
         isTyping: true
       };
 
-      setMessages(prev => [...prev, botMessage]);
+      setMessages(prev => [...(Array.isArray(prev) ? prev : []), botMsg]);
 
     } catch (err) {
-      console.error('AI Request Error:', err);
-      const errorMessage = {
+      console.error("[AI Assistant Error]:", err);
+      const errBotMsg = {
         id: Date.now() + 2,
-        text: "I'm having trouble connecting to my brain right now. Please try again in a moment.",
+        text: "Our AI assistant is temporarily busy. Please contact CoZone support directly.",
         sender: 'bot',
         timestamp: new Date(),
         isTyping: true
       };
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages(prev => [...(Array.isArray(prev) ? prev : []), errBotMsg]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleKeyPress = (e) => {
+  const handleKey = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
   };
 
-  const toggleFullscreen = () => {
-    const newState = !isFullscreen;
-    setIsFullscreen(newState);
-    if (chatWindowWrapperRef?.current) {
-      chatWindowWrapperRef.current.style.zIndex = newState ? '10000' : '';
-    }
-  };
-
   const handleRefresh = () => {
     setMessages([]);
+    setInputValue('');
     setError(null);
+    setIsLoading(false);
   };
 
   return (
     <div className={`${styles.chatWindow} ${isFullscreen ? styles.fullscreen : ''}`}>
       <div className={styles.chatHeader}>
         <div className={styles.headerInfo}>
-          <div className={styles.botAvatar}>
-            <img src={aiAssistantIcon} alt="AI Assistant" />
-          </div>
+          <div className={styles.botAvatar}><img src={aiAssistantIcon} alt="AI" /></div>
           <div>
             <h3 className={styles.headerTitle}>CoZone AI Assistant</h3>
-            <p className={styles.headerSubtitle}>Ask anything about CoZone</p>
+            <p className={styles.headerSubtitle}>Ready to help you</p>
           </div>
         </div>
         <div className={styles.headerActions}>
           <button onClick={handleRefresh} className={styles.refreshButton}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" /><path d="M16 16h5v5" /></svg>
           </button>
-          <button onClick={toggleFullscreen} className={styles.fullscreenButton}>
-            {isFullscreen ? (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" /></svg>
-            ) : (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" /></svg>
-            )}
+          <button onClick={() => setIsFullscreen(!isFullscreen)} className={styles.fullscreenButton}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" /></svg>
           </button>
           <button onClick={onClose} className={styles.closeButton}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
@@ -204,12 +197,12 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
       </div>
 
       <div className={styles.messagesContainer}>
-        {messages.length === 0 && !isLoading ? (
+        {(!messages || messages.length === 0) && !isLoading ? (
           <InitialScreen onExampleClick={handlePromptSelect} onCategoryClick={(c) => { setSelectedCategory(c); setShowPromptModal(true); }} />
         ) : (
           <>
-            {messages.map((m) => (
-              <MessageBubble key={m.id} message={m} />
+            {Array.isArray(messages) && messages.map((m) => (
+              <MessageBubble key={m?.id || Math.random()} message={m} />
             ))}
             {isLoading && (
               <div className={`${styles.messageBubble} ${styles.botMessage}`}>
@@ -229,7 +222,7 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
         <div className={styles.promptModalList}>
           <button onClick={() => setShowPromptModal(false)} className={styles.backButton}>← Back</button>
           <div className={styles.minimalPromptList}>
-            {selectedCategory?.prompts.map((p) => (
+            {selectedCategory?.prompts?.map((p) => (
               <button key={p.id} onClick={() => { handlePromptSelect(p.text); setShowPromptModal(false); }} className={styles.minimalPromptButton}>
                 {p.text}
               </button>
@@ -244,12 +237,12 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
             className={styles.chatInput}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleKeyPress}
-            placeholder="Ask anything about Cozone..."
+            onKeyDown={handleKey}
+            placeholder="Ask CoZone..."
             rows={1}
             disabled={isLoading}
           />
-          <button onClick={toggleVoiceInput} className={`${styles.voiceButton} ${isListening ? styles.listening : ''}`} disabled={isLoading}>
+          <button onClick={toggleVoice} className={`${styles.voiceButton} ${isListening ? styles.listening : ''}`} disabled={isLoading}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" /><path d="M19 10v2a7 7 0 0 1-14 0v-2" /><line x1="12" y1="19" x2="12" y2="23" /><line x1="8" y1="23" x2="16" y2="23" /></svg>
           </button>
           <button onClick={() => handleSend()} className={styles.sendButton} disabled={isLoading || !inputValue.trim()}>
