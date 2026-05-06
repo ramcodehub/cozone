@@ -65,7 +65,7 @@ If a user asks unrelated questions, politely redirect to CoZone services.
 `,
 
   // AI Model Settings
-  defaultModel: 'gemini-flash-latest',
+  defaultModel: 'openai/gpt-3.5-turbo',
   defaultTemperature: 0.4,   // Lower for business accuracy
   maxTokens: 800,
 

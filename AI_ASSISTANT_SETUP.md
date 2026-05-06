@@ -1,6 +1,6 @@
 # CoZone AI Assistant Setup Guide
 
-This guide provides step-by-step instructions for setting up, configuring, and deploying the CoZone AI Assistant powered by Google Gemini 1.5 Flash.
+This guide provides step-by-step instructions for setting up, configuring, and deploying the CoZone AI Assistant powered by Google Gemini 2.0 Flash.
 
 ## Table of Contents
 1. [Prerequisites](#prerequisites)
@@ -52,19 +52,14 @@ npm install
 Create a `.env` file in the `backend` directory with the following content:
 
 ```env
-# Server Configuration
-PORT=5000
-
-# Gemini API Configuration
+# AI Assistant Configuration
+AI_PROVIDER=gemini
+AI_MODEL=gemini-2.0-flash
 GEMINI_API_KEY=your_gemini_api_key_here
 
-# Supabase Configuration (if using)
+# Supabase Configuration
 SUPABASE_URL=your_supabase_url
 SUPABASE_SERVICE_KEY=your_supabase_service_key
-
-# Email Configuration (if using)
-MAIL_USER=your_email@gmail.com
-MAIL_PASS=your_app_password
 ```
 
 You can copy the `.env.example` file as a template:
@@ -149,7 +144,7 @@ Handles AI assistant requests.
 ```json
 {
   "success": true,
-  "response": "AI assistant's response",
+  "reply": "AI assistant's response",
   "sessionId": "unique_session_identifier"
 }
 ```
@@ -206,11 +201,11 @@ To update the AI model:
 1. Edit `backend/services/aiService.js`
 2. Change the `MODEL_NAME` constant:
    ```javascript
-   const MODEL_NAME = 'models/gemini-1.5-flash'; // Current model with full path
+   const MODEL_NAME = 'models/gemini-2.0-flash'; // Current model with full path
    ```
 
 Supported models:
-- `models/gemini-1.5-flash` (default, fastest, highest free quota)
+- `models/gemini-2.0-flash` (default, fastest, highest free quota)
 - `models/gemini-1.5-pro` (more capable, slower)
 - `models/gemini-1.0-pro` (older model)
 

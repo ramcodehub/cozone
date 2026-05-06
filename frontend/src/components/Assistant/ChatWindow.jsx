@@ -169,7 +169,7 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
         // Add bot response with typing animation
         const botMessage = {
           id: messages.length + 2,
-          text: data.response,
+          text: data.reply,
           sender: 'bot',
           timestamp: new Date(),
           isTyping: true // Enable typing animation

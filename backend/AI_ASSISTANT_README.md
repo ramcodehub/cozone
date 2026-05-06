@@ -1,6 +1,6 @@
-# CoZone AI Assistant Implementation
+# CoZone AI Assistant Implementation (OpenRouter)
 
-This document provides instructions for setting up and running the AI Assistant for the CoZone website.
+This document provides instructions for setting up and running the AI Assistant for the CoZone website using OpenRouter.
 
 ## Backend Setup
 
@@ -10,7 +10,7 @@ Navigate to the backend directory and install dependencies:
 
 ```bash
 cd backend
-npm install axios
+npm install openai
 ```
 
 ### 2. Configure Environment Variables
@@ -19,23 +19,16 @@ Add the following to your `.env` file:
 
 ```env
 # AI Assistant Configuration
-AI_PROVIDER=gemini # or 'openai'
-GEMINI_API_KEY=your_gemini_api_key
-OPENAI_API_KEY=your_openai_api_key
-AI_MODEL=models/gemini-1.5-flash # Using the stable 1.5 flash model with higher quota
+AI_PROVIDER=openrouter
+AI_MODEL=meta-llama/llama-3.3-70b-instruct:free
+OPENROUTER_API_KEY=your_openrouter_api_key_here
 ```
 
 ### 3. API Keys
 
-#### For Gemini:
-1. Visit [Google AI Studio](https://aistudio.google.com/)
-2. Create an API key
-3. Add it to your `.env` file as `GEMINI_API_KEY`
-
-#### For OpenAI:
-1. Visit [OpenAI Platform](https://platform.openai.com/)
-2. Create an API key
-3. Add it to your `.env` file as `OPENAI_API_KEY`
+1. Visit [OpenRouter](https://openrouter.ai/)
+2. Create an account and generate an API key
+3. Add it to your `.env` file as `OPENROUTER_API_KEY`
 
 ## Running the Application
 
@@ -57,34 +50,22 @@ cd frontend
 npm run dev
 ```
 
-## File Structure
-
-```
-backend/
-├── config/
-│   └── aiConfig.js
-├── controllers/
-│   └── aiController.js
-├── routes/
-│   └── aiRoutes.js
-├── services/
-│   └── aiService.js
-├── utils/
-│   └── sanitizeInput.js
-├── .env.example               # Environment template
-└── server.js (updated)
-
-frontend/
-├── src/
-│   ├── components/
-│   │   └── Assistant/
-│   │       ├── Assistant.module.css
-│   │       ├── ChatWidget.jsx
-│   │       ├── ChatWindow.jsx
-│   │       └── MessageBubble.jsx
-│   └── App.jsx (updated)
-```
-
 ## API Endpoints
 
 - `POST /api/ai` - Handle AI assistant requests
+
+### Request Format
+```json
+{
+  "message": "Hello",
+  "sessionId": "session-123"
+}
+```
+
+### Success Response
+```json
+{
+  "success": true,
+  "reply": "Hi! How can I help you today?"
+}
+```

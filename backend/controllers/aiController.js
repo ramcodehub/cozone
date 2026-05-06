@@ -1,112 +1,75 @@
-import { processAIRequest } from '../services/aiService.js';
-import { sanitizeInput } from '../utils/sanitizeInput.js';
-import sessionManager from '../utils/sessionManager.js';
-import { searchKnowledgeByCategory, searchKnowledgeByKeywords } from '../services/chatbotService.js';
+import { processAIRequest } from "../services/aiService.js";
+import { sanitizeInput } from "../utils/sanitizeInput.js";
+import sessionManager from "../utils/sessionManager.js";
 
 /**
- * Handle AI assistant requests
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
+ * Production-ready AI Controller for OpenRouter
  */
 export const handleAIRequest = async (req, res) => {
+  const requestStartTime = Date.now();
+  
   try {
     const { message, sessionId } = req.body;
 
-    // Validate required fields
-    if (!message) {
+    // 1. Validation
+    if (!message || typeof message !== "string" || message.trim() === "") {
       return res.status(400).json({
         success: false,
-        message: 'Message is required'
+        message: "Valid message is required"
       });
     }
 
     if (!sessionId) {
       return res.status(400).json({
         success: false,
-        message: 'Session ID is required'
+        message: "Session ID is required"
       });
     }
 
-    // Sanitize input
-    const sanitizedMessage = sanitizeInput(message);
+    // 2. Sanitize and prepare
+    const sanitizedMessage = sanitizeInput(message.trim());
+    const conversationHistory = sessionManager.getConversationHistory(sessionId) || [];
 
-    // Get conversation history from session
-    const conversationHistory = sessionManager.getConversationHistory(sessionId);
+    console.log(`[AI Controller] New request from session: ${sessionId}`);
 
-    // Process AI request
-    const aiResponse = await processAIRequest(sanitizedMessage, conversationHistory);
+    // 3. Process with AI Service
+    const aiResponse = await processAIRequest(sanitizedMessage, conversationHistory, sessionId);
 
-    // Save conversation to session
+    // 4. Update session history
     sessionManager.addMessageToSession(sessionId, {
-      role: 'user',
+      role: "user",
       content: sanitizedMessage
     });
 
     sessionManager.addMessageToSession(sessionId, {
-      role: 'model',
+      role: "assistant",
       content: aiResponse
     });
 
-    // Return success response
+    const duration = Date.now() - requestStartTime;
+    console.log(`[AI Controller] Completed successfully in ${duration}ms`);
+
+    // 5. Success Response
     return res.status(200).json({
       success: true,
-      response: aiResponse,
-      sessionId: sessionId
+      reply: aiResponse
     });
+
   } catch (error) {
-    console.error('Error in handleAIRequest:', error);
+    const duration = Date.now() - requestStartTime;
+    console.error(`[AI Controller Error] Failed after ${duration}ms:`, error.message);
 
-    // Handle specific error types
-    if (error.message.includes("too many requests") || error.code === 'ERR_TOO_MANY_REQUESTS') {
-      return res.status(429).json({
-        success: false,
-        message: "I'm receiving too many requests right now. Please try again in a moment."
-      });
+    // 6. Error Response (Never leak stack traces)
+    let statusCode = 500;
+    if (error.message.includes("busy") || error.message.includes("timed out")) {
+      statusCode = 503; // Service Unavailable
+    } else if (error.message.includes("required")) {
+      statusCode = 400;
     }
 
-    // Handle AI service errors
-    if (error.message.includes("GEMINI_API_KEY is not configured")) {
-      return res.status(500).json({
-        success: false,
-        message: "AI service is not properly configured. Please contact support."
-      });
-    }
-
-    // Handle specific AI service errors
-    if (error.message.includes("API_KEY_INVALID")) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid Google Gemini API key. Please contact support."
-      });
-    } else if (error.message.includes("MODEL_NOT_FOUND")) {
-      return res.status(400).json({
-        success: false,
-        message: `AI model not found. Please check model configuration.`
-      });
-    } else if (error.message.includes("location is not supported")) {
-      return res.status(400).json({
-        success: false,
-        message: "Google Gemini service is not available in your region."
-      });
-    } else if (error.message.includes("unable to reach the AI service")) {
-      return res.status(500).json({
-        success: false,
-        message: "I'm unable to reach the AI service right now. Please try again, or contact CoZone support."
-      });
-    }
-
-    // Handle general AI errors
-    if (error.message.includes("AI service")) {
-      return res.status(500).json({
-        success: false,
-        message: error.message
-      });
-    }
-
-    // Return generic error response
-    return res.status(500).json({
+    return res.status(statusCode).json({
       success: false,
-      message: "An error occurred while processing your request. Please try again later."
+      message: error.message || "Unable to process request"
     });
   }
 };

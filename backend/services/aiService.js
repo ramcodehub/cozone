@@ -1,142 +1,148 @@
-import { aiConfig } from '../config/aiConfig.js';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import dotenv from 'dotenv';
-import { searchKnowledgeByKeywords, insertChatbotLog } from './chatbotService.js';
+import OpenAI from "openai";
+import dotenv from "dotenv";
+import { aiConfig } from "../config/aiConfig.js";
+import { insertChatbotLog } from "./chatbotService.js";
 
 dotenv.config();
 
+/**
+ * Production-ready OpenRouter AI Service with Enhanced Failover & Analytics
+ */
+
 // Configuration
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const MODEL_NAME = process.env.AI_MODEL || aiConfig.defaultModel;
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
-// Validate required environment variables
-if (!GEMINI_API_KEY) {
-  console.error('GEMINI_API_KEY is not configured in environment variables');
-  throw new Error('GEMINI_API_KEY is not configured. Please check your environment variables.');
-}
+// Active & Stable Model Priority List
+const AI_MODELS = [
+  process.env.AI_MODEL || "openai/gpt-3.5-turbo",
+  "meta-llama/llama-3.1-8b-instruct:free",
+  "nousresearch/hermes-2-pro-llama-3-8b:free",
+  "openchat/openchat-7b:free"
+];
 
-if (!MODEL_NAME) {
-  console.error('AI_MODEL is not configured in environment variables');
-  throw new Error('AI_MODEL is not configured. Please check your environment variables.');
-}
+// Initialize OpenAI client for OpenRouter
+const openai = OPENROUTER_API_KEY ? new OpenAI({
+  baseURL: "https://openrouter.ai/api/v1",
+  apiKey: OPENROUTER_API_KEY,
+  defaultHeaders: {
+    "HTTP-Referer": "https://cozone.in",
+    "X-Title": "CoZone AI Assistant",
+  },
+}) : null;
 
 /**
- * Process AI request using Google Gemini API with retry logic
+ * Process AI request using OpenRouter with Smart Failover and Rate Limit Handling
  * @param {string} message - User message
  * @param {Array} conversationHistory - Previous conversation history
- * @returns {string} - AI response
+ * @param {string} sessionId - Unique session ID for logging
+ * @returns {Promise<string>} - AI response
  */
-export const processAIRequest = async (message, conversationHistory = []) => {
-  // Retry configuration
-  const MAX_RETRIES = 3;
-  const RETRY_DELAYS = [1000, 2000, 4000]; // Increased exponential backoff delays in ms
+export const processAIRequest = async (message, conversationHistory = [], sessionId = null) => {
+  if (!message) throw new Error("Message is required");
+  if (!openai) throw new Error("OpenRouter API key is not configured");
 
-  // System prompt for the AI assistant pulled from aiConfig
-  const systemPrompt = aiConfig.systemPrompt;
+  const startTime = Date.now();
+  const systemPrompt = "You are CoZone AI Assistant helping users with coworking spaces, memberships, meeting rooms, office bookings, workspace support and business services. Be concise, professional and helpful.";
 
-  if (!GEMINI_API_KEY) {
-    throw new Error('GEMINI_API_KEY is not configured');
-  }
+  console.log(`[AI Request] Processing request for session: ${sessionId || 'anonymous'}`);
 
-  // Function to make the API call with retry logic
-  const makeAPICall = async (retryCount = 0) => {
+  // Failover Logic: Try models in the chain
+  for (let i = 0; i < AI_MODELS.length; i++) {
+    const currentModel = AI_MODELS[i];
+    const attemptStartTime = Date.now();
+    const isFallback = i > 0;
+
     try {
-      // Initialize Google Generative AI
-      const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-      const model = genAI.getGenerativeModel({
-        model: MODEL_NAME,
-        systemInstruction: systemPrompt
-      });
+      console.log(`[AI Request] Trying model (${i + 1}/${AI_MODELS.length}): ${currentModel}`);
 
-      // Prepare history for Gemini
-      const history = [];
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 20000);
 
-      // Add conversation history
-      conversationHistory.forEach(item => {
-        history.push({
-          role: item.role === 'user' ? 'user' : 'model',
-          parts: [{ text: item.content }]
-        });
-      });
+      const messages = [
+        { role: "system", content: systemPrompt },
+        ...conversationHistory.map((item) => ({
+          role: item.role === "user" ? "user" : "assistant",
+          content: item.content,
+        })),
+        { role: "user", content: message },
+      ];
 
-      // Start chat with history
-      const chat = model.startChat({
-        history: history,
-        generationConfig: {
-          maxOutputTokens: aiConfig.maxTokens,
-          temperature: aiConfig.defaultTemperature
-        }
-      });
+      const completion = await openai.chat.completions.create(
+        {
+          model: currentModel,
+          messages: messages,
+          temperature: 0.7,
+          max_tokens: 200,
+        },
+        { signal: controller.signal }
+      );
 
-      // Send message and get response
-      const result = await chat.sendMessage(message);
-      const response = await result.response;
-      const aiResponse = response.text();
+      clearTimeout(timeoutId);
 
-      // Log the interaction
-      try {
-        await insertChatbotLog({
-          user_query: message,
-          bot_response: aiResponse,
-          response_source: 'gemini'
-        });
-      } catch (logError) {
-        console.error('Failed to log chatbot interaction:', logError);
-      }
+      const aiResponse = completion.choices[0]?.message?.content;
+      if (!aiResponse) throw new Error("Received empty response from AI provider");
+
+      const totalDuration = Date.now() - startTime;
+      console.log(`[AI Success] Response generated using ${currentModel} in ${totalDuration}ms`);
+
+      // ---------------- ANALYTICS LOGGING ----------------
+      insertChatbotLog({
+        session_id: sessionId,
+        user_message: message,
+        ai_response: aiResponse,
+        model_used: currentModel,
+        provider: "openrouter",
+        response_time_ms: totalDuration,
+        status: isFallback ? "fallback" : "success"
+      }).catch((err) => console.warn("[Chatbot Logs] Background log failed:", err.message));
+      // ----------------------------------------------------
 
       return aiResponse.trim();
+
     } catch (error) {
-      console.error(`Attempt ${retryCount + 1} failed:`, error);
+      const attemptDuration = Date.now() - attemptStartTime;
+      const statusCode = error.status || error.response?.status;
+      
+      console.error(`[AI Error] ${currentModel} failed: ${error.message} (Status: ${statusCode})`);
 
-      // Check if we should retry based on error type
-      const shouldRetry =
-        retryCount < MAX_RETRIES &&
-        (error.message.includes('429') || // Rate limit
-          error.message.includes('500') || // Server error
-          error.message.includes('network') || // Network error
-          error.message.includes('fetch') || // Fetch error
-          error.message.includes('timeout')); // Timeout
+      const isRateLimited = statusCode === 429;
+      const isUnavailable = statusCode === 404 || statusCode === 502 || statusCode === 504;
+      const isRetryableError = statusCode === 500 || statusCode === 503 || error.name === "AbortError";
+      const isFatal = statusCode === 401 || statusCode === 403;
 
-      if (shouldRetry) {
-        // Wait for the specified delay before retrying
-        await new Promise(resolve => setTimeout(resolve, RETRY_DELAYS[retryCount]));
-        return makeAPICall(retryCount + 1);
-      } else {
-        // If all retries exhausted, throw a user-friendly error
-        if (error.message.includes('429')) {
-          throw new Error(aiConfig.rateLimitMessage);
-        } else {
-          throw error;
-        }
+      if (isFatal) {
+        // Log fatal error before breaking
+        insertChatbotLog({
+            session_id: sessionId,
+            user_message: message,
+            status: "failed",
+            error_message: `Fatal: ${error.message}`,
+            model_used: currentModel
+        }).catch(() => {});
+        break;
       }
-    }
-  };
 
-  try {
-    return await makeAPICall();
-  } catch (error) {
-    console.error('All retry attempts failed:', error);
-    if (error.message.includes('429')) {
-      throw new Error(aiConfig.rateLimitMessage);
-    }
-    // Log the specific error for debugging
-    console.error('AI Service Error Details:', {
-      message: error.message,
-      stack: error.stack,
-      modelName: MODEL_NAME,
-      apiKeyPresent: !!GEMINI_API_KEY,
-      apiKeyLength: GEMINI_API_KEY ? GEMINI_API_KEY.length : 0
-    });
+      if (isRateLimited) {
+        console.warn(`[AI Fallback] Rate limit reached for ${currentModel}, switching model...`);
+      } else if (isUnavailable) {
+        console.warn(`[AI Fallback] Endpoint unavailable for ${currentModel}, switching model...`);
+      }
 
-    // More specific error messages based on error type
-    if (error.message && error.message.includes('API_KEY_INVALID')) {
-      throw new Error('Invalid Google Gemini API key. Please check your API configuration.');
-    } else if (error.message && error.message.includes('MODEL_NOT_FOUND')) {
-      throw new Error(`AI model '${MODEL_NAME}' not found. Please check your model configuration.`);
-    } else if (error.message && error.message.includes('location is not supported')) {
-      throw new Error('Google Gemini service is not available in your region.');
-    } else {
-      throw new Error(aiConfig.serviceFailureMessage);
+      if (i < AI_MODELS.length - 1) {
+        if (isRetryableError) await new Promise(r => setTimeout(r, 1000));
+        continue;
+      }
+
+      // Log final exhaustion
+      insertChatbotLog({
+        session_id: sessionId,
+        user_message: message,
+        status: "failed",
+        error_message: "All models exhausted",
+        response_time_ms: Date.now() - startTime
+      }).catch(() => {});
     }
   }
+
+  throw new Error("Our AI assistant is temporarily busy. Please contact CoZone support directly.");
 };

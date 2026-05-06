@@ -1,5 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
+import ws from 'ws';
+
+global.WebSocket = ws;
 
 dotenv.config();
 
@@ -8,139 +11,96 @@ const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
 
 if (!supabaseUrl || !supabaseServiceKey) {
-  throw new Error('Supabase URL and Service Key are required in environment variables');
+  console.warn('[Chatbot Logs] WARNING: Supabase credentials missing. Logging will be disabled.');
 }
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey, {
-  auth: {
-    persistSession: false
-  }
-});
+const supabase = (supabaseUrl && supabaseServiceKey) 
+  ? createClient(supabaseUrl, supabaseServiceKey, {
+      auth: { persistSession: false },
+      global: { fetch: (...args) => fetch(...args) },
+      realtime: { websocket: ws }
+    })
+  : null;
 
 /**
- * Insert chatbot knowledge entry
- * @param {Object} knowledgeData - Knowledge base entry data
- * @returns {Promise<Object>} Inserted data
+ * Startup Validation: Verify Supabase connection and table structure
  */
-export const insertKnowledgeEntry = async (knowledgeData) => {
+export const validateLoggingSystem = async () => {
+  if (!supabase) return;
+  
   try {
     const { data, error } = await supabase
-      .from('cozone_chatbot_knowledge')
-      .insert([knowledgeData])
-      .select();
+      .from('cozone_chatbot_logs')
+      .select('id')
+      .limit(1);
 
     if (error) {
-      throw new Error(`Supabase insert error: ${error.message}`);
+      if (error.message.includes('model_used')) {
+          console.warn('[Chatbot Logs] SCHEMA MISMATCH: Please run the SQL migration in db/migrations/002_update_chatbot_logs.sql');
+      } else {
+          console.warn(`[Chatbot Logs] CONNECTION ISSUE: ${error.message}`);
+      }
+    } else {
+      console.log('[Chatbot Logs] Supabase logging system initialized successfully');
     }
-
-    return data[0];
-  } catch (error) {
-    console.error('Error inserting knowledge entry:', error);
-    throw error;
+  } catch (err) {
+    console.warn('[Chatbot Logs] Initialization failed:', err.message);
   }
 };
 
 /**
- * Search knowledge base by category
- * @param {string} category - Category to search for
- * @returns {Promise<Array>} Matching knowledge entries
- */
-export const searchKnowledgeByCategory = async (category) => {
-  try {
-    const { data, error } = await supabase
-      .from('cozone_chatbot_knowledge')
-      .select('*')
-      .eq('category', category);
-
-    if (error) {
-      throw new Error(`Supabase query error: ${error.message}`);
-    }
-
-    return data;
-  } catch (error) {
-    console.error('Error searching knowledge by category:', error);
-    throw error;
-  }
-};
-
-/**
- * Search knowledge base by keywords
- * @param {Array} keywords - Keywords to search for
- * @returns {Promise<Array>} Matching knowledge entries
- */
-export const searchKnowledgeByKeywords = async (keywords) => {
-  try {
-    let query = supabase
-      .from('cozone_chatbot_knowledge')
-      .select('*');
-
-    // If keywords provided, search for any matching keywords
-    if (keywords && keywords.length > 0) {
-      keywords.forEach((keyword, index) => {
-        if (index === 0) {
-          query = query.or(`keywords.cs.{${keyword}}`);
-        } else {
-          query = query.or(`keywords.cs.{${keyword}}`);
-        }
-      });
-    }
-
-    const { data, error } = await query;
-
-    if (error) {
-      throw new Error(`Supabase query error: ${error.message}`);
-    }
-
-    return data;
-  } catch (error) {
-    console.error('Error searching knowledge by keywords:', error);
-    throw error;
-  }
-};
-
-/**
- * Insert chatbot log entry
- * @param {Object} logData - Log entry data
- * @returns {Promise<Object>} Inserted data
+ * Insert production-ready chatbot analytics log
+ * @param {Object} logData - Analytics data
+ * @returns {Promise<void>} - Never throws
  */
 export const insertChatbotLog = async (logData) => {
+  if (!supabase) return;
+
   try {
-    const { data, error } = await supabase
+    const payload = {
+      session_id: logData.session_id,
+      user_message: logData.user_message || logData.user_query, // Backward compatibility
+      ai_response: logData.ai_response || logData.bot_response, // Backward compatibility
+      model_used: logData.model_used,
+      provider: logData.provider || 'openrouter',
+      response_time_ms: logData.response_time_ms || logData.processing_time_ms,
+      status: logData.status || 'success',
+      error_message: logData.error_message,
+      created_at: new Date().toISOString()
+    };
+
+    const { error } = await supabase
       .from('cozone_chatbot_logs')
-      .insert([logData])
-      .select();
+      .insert([payload]);
 
     if (error) {
-      throw new Error(`Supabase insert error: ${error.message}`);
+      console.warn(`[Chatbot Logs] Insert failed: ${error.message}`);
+    } else {
+      // console.log('[Chatbot Logs] Interaction stored successfully');
     }
-
-    return data[0];
   } catch (error) {
-    console.error('Error inserting chatbot log:', error);
-    throw error;
+    // CRITICAL: Never let logging failure crash the AI service
+    console.warn('[Chatbot Logs] Silent error during log insertion:', error.message);
   }
 };
 
 /**
- * Get recent chatbot logs
- * @param {number} limit - Number of recent logs to retrieve (default: 10)
- * @returns {Promise<Array>} Recent log entries
+ * Legacy support or other knowledge functions can remain below...
  */
-export const getRecentLogs = async (limit = 10) => {
-  try {
-    const { data, error } = await supabase
-      .from('cozone_chatbot_logs')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(limit);
-
-    if (error) {
-      throw new Error(`Supabase query error: ${error.message}`);
+export const searchKnowledgeByKeywords = async (keywords) => {
+    if (!supabase) return [];
+    try {
+        let query = supabase.from('cozone_chatbot_knowledge').select('*');
+        if (keywords && keywords.length > 0) {
+            keywords.forEach((keyword) => {
+                query = query.or(`keywords.cs.{${keyword}}`);
+            });
+        }
+        const { data, error } = await query;
+        if (error) throw error;
+        return data;
+    } catch (error) {
+        console.error('Error searching knowledge:', error);
+        return [];
     }
-
-    return data;
-  } catch (error) {
-    console.error('Error getting recent logs:', error);
-    throw error;
-  }
 };

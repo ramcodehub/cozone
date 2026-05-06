@@ -1,5 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
+import ws from 'ws';
+
+global.WebSocket = ws;
 
 dotenv.config();
 
@@ -14,6 +17,12 @@ if (!supabaseUrl || !supabaseServiceKey) {
 const supabase = createClient(supabaseUrl, supabaseServiceKey, {
   auth: {
     persistSession: false
+  },
+  global: {
+    fetch: (...args) => fetch(...args)
+  },
+  realtime: {
+    websocket: ws
   }
 });
 

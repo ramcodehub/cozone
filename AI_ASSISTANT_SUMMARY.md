@@ -1,16 +1,16 @@
 # CoZone AI Assistant - Implementation Summary
 
-This document summarizes the complete implementation of the CoZone AI Assistant using Google Gemini 1.5 Flash model.
+This document summarizes the complete implementation of the CoZone AI Assistant using Google Gemini 2.0 Flash model.
 
 ## Overview
 
-The CoZone AI Assistant is a fully functional chat interface that integrates with Google's Gemini 1.5 Flash model to provide intelligent assistance to users visiting the CoZone website. The assistant can answer questions about services, pricing, booking procedures, and general inquiries.
+The CoZone AI Assistant is a fully functional chat interface that integrates with Google's Gemini 2.0 Flash model to provide intelligent assistance to users visiting the CoZone website. The assistant can answer questions about services, pricing, booking procedures, and general inquiries.
 
 ## Key Features Implemented
 
 ### Backend Features
 - ✅ Integration with Google Generative AI SDK
-- ✅ Use of Gemini 1.5 Flash model for optimal performance
+- ✅ Use of Gemini 2.0 Flash model for optimal performance
 - ✅ Session-based conversation memory management
 - ✅ Input sanitization for security
 - ✅ Comprehensive error handling
@@ -60,7 +60,7 @@ frontend/src/components/Assistant/
 
 ### 1. Google Gemini Integration
 - Uses official `@google/generative-ai` SDK
-- Implements `models/gemini-1.5-flash` model for fast responses with highest free quota
+- Implements `models/gemini-2.0-flash` model for fast responses with highest free quota
 - Maintains conversation history through chat sessions
 - Applies system prompt for consistent behavior
 
@@ -100,7 +100,7 @@ frontend/src/components/Assistant/
 ```json
 {
   "success": true,
-  "response": "AI-generated response",
+  "reply": "AI-generated response",
   "sessionId": "Same session identifier"
 }
 ```
@@ -154,4 +154,4 @@ The assistant has been tested for:
 
 ## Conclusion
 
-The CoZone AI Assistant is now fully implemented and ready for use. It provides an intelligent, responsive, and secure way for users to interact with CoZone services through natural language conversations powered by Google's Gemini 1.5 Flash model.
+The CoZone AI Assistant is now fully implemented and ready for use. It provides an intelligent, responsive, and secure way for users to interact with CoZone services through natural language conversations powered by Google's Gemini 2.0 Flash model.
