@@ -1,58 +1,74 @@
 import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { normalizeMessage } from './messageUtils';
+import { createMessage } from '../../utils/chatMessage';
 import styles from './Assistant.module.css';
 
 /**
- * MessageBubble Component - Hardened for Production
+ * Hardened MessageBubble Component
+ * Uses centralized createMessage factory for absolute property safety.
  */
 const MessageBubble = ({ message: rawMessage }) => {
-  // Normalize the message object immediately upon receiving it
-  const message = normalizeMessage(rawMessage);
+  // 1. Immediate Normalization
+  const message = createMessage(rawMessage || {});
   
   const [displayedText, setDisplayedText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Safe helper to format time
-  const formatTime = (date) => {
-    try {
-      const d = date instanceof Date ? date : new Date(date);
-      if (isNaN(d.getTime())) return "";
-      return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    } catch (e) {
-      return '';
-    }
-  };
+  // 2. Safe Text Reference
+  const safeText = message.text || "";
+  const isBot = message.role === 'assistant';
 
-  // Safe text reference
-  const safeText = message.text;
-
-  // Reset animation for new messages
+  // 3. Reset animation for new messages
   useEffect(() => {
-    if (message.sender === 'bot' && message.isTyping) {
-      setDisplayedText('');
-      setCurrentIndex(0);
-    } else {
+    // If it's a typing bot message, reset animation
+    if (isBot && !message.loading && displayedText === '' && currentIndex === 0) {
+      // Logic for starting animation if needed
+    } else if (!isBot || !message.loading) {
       setDisplayedText(safeText);
     }
-  }, [message.id, message.sender, message.isTyping, safeText]);
+  }, [message.id, isBot, message.loading, safeText]);
 
-  // Typing effect logic
+  // 4. Typing animation with strict boundary checks
   useEffect(() => {
-    if (message.sender === 'bot' && message.isTyping && currentIndex < safeText.length) {
+    if (isBot && !message.loading && currentIndex < (safeText || "").length) {
       const timeout = setTimeout(() => {
         setDisplayedText(prev => (typeof prev === 'string' ? prev : "") + (safeText[currentIndex] || ""));
         setCurrentIndex(prev => prev + 1);
       }, 15);
       return () => clearTimeout(timeout);
     }
-  }, [currentIndex, message.isTyping, message.sender, safeText]);
+  }, [currentIndex, isBot, message.loading, safeText]);
+
+  // 5. Safe Time Formatting
+  const formatTime = (ts) => {
+    try {
+      const d = new Date(ts);
+      return isNaN(d.getTime()) ? '' : d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    } catch (e) {
+      return '';
+    }
+  };
+
+  // If loading, render typing indicator inside bubble
+  if (message.loading) {
+    return (
+      <div className={`${styles.messageBubble} ${styles.botMessage}`}>
+        <div className={styles.messageContent}>
+          <div className={styles.typingIndicator}>
+            <div className={styles.typingDot}></div>
+            <div className={styles.typingDot}></div>
+            <div className={styles.typingDot}></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className={`${styles.messageBubble} ${message.sender === 'user' ? styles.userMessage : styles.botMessage}`}>
+    <div className={`${styles.messageBubble} ${isBot ? styles.botMessage : styles.userMessage}`}>
       <div className={styles.messageContent}>
         <div className={styles.messageText}>
-          {message.sender === 'bot' ? (
+          {isBot ? (
             <ReactMarkdown 
               components={{
                 strong: ({...props}) => <strong {...props} />,
@@ -65,11 +81,11 @@ const MessageBubble = ({ message: rawMessage }) => {
           ) : (
             displayedText || ""
           )}
-          {message.sender === 'bot' && message.isTyping && currentIndex < safeText.length && (
+          {isBot && currentIndex < (safeText || "").length && (
             <span className={styles.cursor}>|</span>
           )}
         </div>
-        <span className={styles.messageTime}>{formatTime(message.timestamp)}</span>
+        <span className={styles.messageTime}>{formatTime(message.createdAt)}</span>
       </div>
     </div>
   );

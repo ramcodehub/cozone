@@ -1,43 +1,42 @@
 import { useState, useRef, useEffect } from 'react';
 import MessageBubble from './MessageBubble';
 import InitialScreen from './InitialScreen';
-import { normalizeMessage, normalizeMessageArray } from './messageUtils';
+import { createMessage, normalizeMessages } from '../../utils/chatMessage';
 // @ts-ignore
 import styles from './Assistant.module.css';
 // @ts-ignore
 import aiAssistantIcon from '../../assets/logos/aiassistant.png';
 
 /**
- * ChatWindow Component - Hardened for Production with Message Normalization
+ * ChatWindow Component - Fully Refactored for Absolute Stability
  */
 const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
-  const [messages, setMessages] = useState([]);
+  // Initialize with a safe welcome message
+  const [messages, setMessages] = useState([
+    createMessage({
+      role: "assistant",
+      text: "Hi! Welcome to CoZone. How can I help you today?"
+    })
+  ]);
+  
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isListening, setIsListening] = useState(false);
   const [error, setError] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showPromptModal, setShowPromptModal] = useState(false);
   
   const messagesEndRef = useRef(null);
-  const recognitionRef = useRef(null);
   const sessionIdRef = useRef(null);
 
-  // Initialize session
   useEffect(() => {
     if (!sessionIdRef.current) {
       sessionIdRef.current = `sess_${Date.now()}`;
     }
   }, []);
 
-  // Auto-scroll logic with safety
   useEffect(() => {
-    try {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    } catch (e) {
-      console.warn("Scroll to bottom failed", e);
-    }
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);
 
   const handleSend = async (manualText = null) => {
@@ -46,17 +45,16 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
     
     if (!cleanInput || isLoading) return;
 
-    setError(null);
-
-    // 1. Add User Message (Normalized)
-    const userMsg = normalizeMessage({
-      text: cleanInput,
-      sender: 'user'
+    // 1. Create and add user message
+    const userMessage = createMessage({
+      role: "user",
+      text: cleanInput
     });
 
-    setMessages(prev => normalizeMessageArray([...prev, userMsg]));
+    setMessages(prev => normalizeMessages([...prev, userMessage]));
     setInputValue('');
     setIsLoading(true);
+    setError(null);
 
     try {
       const isDev = window.location.hostname === 'localhost';
@@ -68,34 +66,25 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
         body: JSON.stringify({ message: cleanInput, sessionId: sessionIdRef.current })
       });
 
-      if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
-
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("Invalid response from server");
-      }
+      if (!response.ok) throw new Error("Server communication failed");
 
       const data = await response.json();
 
-      // 2. Safe Response Extraction
-      const aiText = data?.reply || data?.message || "Received invalid response format.";
-      
-      const botMsg = normalizeMessage({
-        text: String(aiText),
-        sender: 'bot',
-        isTyping: true
+      // 2. Normalize AI response
+      const assistantMessage = createMessage({
+        role: "assistant",
+        text: typeof data?.reply === 'string' ? data.reply : (data?.message || "Sorry, I couldn't process that.")
       });
 
-      setMessages(prev => normalizeMessageArray([...prev, botMsg]));
+      setMessages(prev => normalizeMessages([...prev, assistantMessage]));
 
     } catch (err) {
-      console.error("[Chat API Error]:", err);
-      const errBotMsg = normalizeMessage({
-        text: "I'm having trouble connecting. Please try again or contact support.",
-        sender: 'bot',
-        isTyping: true
+      console.error("[AI Assistant Error]:", err);
+      const errorMessage = createMessage({
+        role: "assistant",
+        text: "I'm having trouble connecting right now. Please try again later."
       });
-      setMessages(prev => normalizeMessageArray([...prev, errBotMsg]));
+      setMessages(prev => normalizeMessages([...prev, errorMessage]));
     } finally {
       setIsLoading(false);
     }
@@ -110,14 +99,18 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
   };
 
   const handleRefresh = () => {
-    setMessages([]);
+    setMessages([
+      createMessage({
+        role: "assistant",
+        text: "Hi! Welcome to CoZone. How can I help you today?"
+      })
+    ]);
     setInputValue('');
-    setError(null);
     setIsLoading(false);
   };
 
-  // Safe message mapping
-  const safeMessages = normalizeMessageArray(messages);
+  // Safe rendering pipeline
+  const safeMessages = normalizeMessages(messages);
 
   return (
     <div className={`${styles.chatWindow} ${isFullscreen ? styles.fullscreen : ''}`}>
@@ -126,7 +119,7 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
           <div className={styles.botAvatar}><img src={aiAssistantIcon} alt="AI" /></div>
           <div>
             <h3 className={styles.headerTitle}>CoZone AI Assistant</h3>
-            <p className={styles.headerSubtitle}>Always ready to help</p>
+            <p className={styles.headerSubtitle}>Ready to assist you</p>
           </div>
         </div>
         <div className={styles.headerActions}>
@@ -143,18 +136,19 @@ const ChatWindow = ({ onClose, chatWindowWrapperRef }) => {
       </div>
 
       <div className={styles.messagesContainer}>
-        {safeMessages.length === 0 && !isLoading ? (
+        {safeMessages.length <= 1 && !isLoading && !inputValue ? (
           <InitialScreen onExampleClick={handlePromptSelect} onCategoryClick={(c) => { setSelectedCategory(c); setShowPromptModal(true); }} />
         ) : (
           <>
             {safeMessages.map((m) => (
               <MessageBubble key={m.id} message={m} />
             ))}
+            
+            {/* Loading Indicator as a specialized message */}
             {isLoading && (
-              <div className={`${styles.messageBubble} ${styles.botMessage}`}>
-                <div className={styles.typingIndicator}><div className={styles.typingDot}></div><div className={styles.typingDot}></div><div className={styles.typingDot}></div></div>
-              </div>
+              <MessageBubble message={createMessage({ role: 'assistant', text: '', loading: true })} />
             )}
+            
             <div ref={messagesEndRef} />
           </>
         )}
