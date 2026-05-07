@@ -27,6 +27,12 @@ window.addEventListener("unhandledrejection", (event) => {
   );
 });
 
+console.log(
+  "%cCoZone Frontend Build Version:",
+  "color: #00ff00; font-weight: bold;",
+  __BUILD_TIMESTAMP__
+);
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Router>

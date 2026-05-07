@@ -68,7 +68,7 @@ RewriteRule . index.html [L]
 <IfModule mod_headers.c>
     # Set Cache-Control Headers for better static asset optimization
     <FilesMatch "\.(js|css|png|jpg|jpeg|gif|ico|svg|webp|woff2|woff)$">
-        Header set Cache-Control "max-age=31536000, public"
+        Header set Cache-Control "max-age=31536000, public, immutable"
     </FilesMatch>
     # Never cache the main index.html file to ensure users always get the latest layout/code
     <FilesMatch "^index\.html$">
